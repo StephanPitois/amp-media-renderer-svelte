@@ -1,62 +1,73 @@
-html, body {
-	position: relative;
-	width: 100%;
-	height: 100%;
+.hidden {
+    display: none !important;
 }
 
-body {
-	color: #333;
-	margin: 0;
-	padding: 8px;
-	box-sizing: border-box;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+.amp-ff1 {
+    font-family: 'Lobster', cursive;
+    font-family: 'Lobster Two', cursive;
 }
 
-a {
-	color: rgb(0,100,200);
-	text-decoration: none;
+.amp-ff2 {
+    font-family: 'Volkhov', serif;
+    font-family: 'Abril Fatface', cursive;
 }
 
-a:hover {
-	text-decoration: underline;
+.amp-ff3 {
+    font-family: 'Alfa Slab One', cursive;
+    font-family: 'Lobster Two', cursive;
 }
 
-a:visited {
-	color: rgb(0,80,160);
+.amp-f0 {
+    font-size:5vw;
 }
 
-label {
-	display: block;
+.amp-f1 {
+    font-size:3.5vw;
 }
 
-input, button, select, textarea {
-	font-family: inherit;
-	font-size: inherit;
-	padding: 0.4em;
-	margin: 0 0 0.5em 0;
-	box-sizing: border-box;
-	border: 1px solid #ccc;
-	border-radius: 2px;
+.amp-f2 {
+    font-size:2.5vw;
 }
 
-input:disabled {
-	color: #ccc;
+.amp-f3 {
+    font-size:2vw;
 }
 
-input[type="range"] {
-	height: 0;
+.amp-f4 {
+    font-size:1.5vw;
 }
 
-button {
-	color: #333;
-	background-color: #f4f4f4;
-	outline: none;
+.amp-opacity-8 {
+    opacity: 0.8;
 }
 
-button:active {
-	background-color: #ddd;
+.amp-opacity-9 {
+    opacity: 0.9;
 }
 
-button:focus {
-	border-color: #666;
+.amp-aligner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.template-16-9 .template-image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.template-16-9 .template-text {
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
 }
