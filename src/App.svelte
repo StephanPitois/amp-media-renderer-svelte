@@ -2,9 +2,18 @@
 	import Palette from "./Palette.svelte";
 	import ColorPicker from "./ColorPicker.svelte";
 	import ColorSection from "./ColorSection.svelte";
+	import Tabs from "./Tabs.svelte";
 
 	// http://tachyons.io/docs/themes/skins/
 	// https://webaim.org/articles/contrast/#sc143
+
+	let activeTab = "colors";
+	let tabs = [
+		{ id: "colors", title: "Colors"},
+		{ id: "fonts", title: "Fonts"},
+		{ id: "graphics", title: "Graphics"},
+		{ id: "text", title: "Text"}
+	];
 
 	const minContrast = 4.5;
 
@@ -66,7 +75,9 @@
 			Options
 		</header>
 		<div class="h-100 pb5" style="overflow-y: auto">
+			<Tabs bind:activeTab={activeTab} tabs={tabs} />
 			<div class="fl w-100 h-100">
+				{#if activeTab === 'colors'}
 				<div class="pa2 h-100">
 					<ColorSection
 						title="Background"
@@ -85,6 +96,7 @@
 						changeCombination={changeCombination}
 					/>
 				</div>
+				{/if}
 			</div>
 		</div>
 	</div>
