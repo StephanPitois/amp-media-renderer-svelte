@@ -1,6 +1,7 @@
 <script>
 	import Palette from "./Palette.svelte";
 	import ColorPicker from "./ColorPicker.svelte";
+	import ColorSection from "./ColorSection.svelte";
 
 	// http://tachyons.io/docs/themes/skins/
 	// https://webaim.org/articles/contrast/#sc143
@@ -42,10 +43,12 @@
 	}
 
 	function changeColor(event) {
+		// TODO: FIXME: fix error when typing hex code in input box
 		color = chroma(event.target.style.backgroundColor).hex();
 	}
 
 	function changeBackgroundColor(event) {
+		// TODO: FIXME: fix error when typing hex code in input box
 		backgroundColor = chroma(event.target.style.backgroundColor).hex();
 	}
 
@@ -63,50 +66,24 @@
 			Options
 		</header>
 		<div class="h-100 pb5" style="overflow-y: auto">
-			<div class="fl w-100">
-				<div class="pa2">
-					<div class="fl w-50">
-						<div class="pa2">
-							Background Color
-						</div>
-						<div class="pa2">
-							<ColorPicker bind:color={backgroundColor} />
-						</div>
-						<div class="pa2">
-							<Palette colors={colors} clickHandler={changeBackgroundColor} />
-						</div>
-					</div>
-					<div class="fl w-50">
-						<div class="pa2">
-							Text Color
-						</div>
-						<div class="pa2">
-							<ColorPicker bind:color={color} />
-						</div>
-						<div class="pa2">
-							<Palette colors={colors} clickHandler={changeColor} />
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="fl w-100">
-				<div class="pa2">
-					<div class="fl w-50">
-						<div class="pa2">
-							Combinations for Background Color
-						</div>
-						<div class="pa2">
-							<Palette combinations={combinationsForSelectedBackgroundColor} clickHandler={changeCombination} />
-						</div>
-					</div>
-					<div class="fl w-50">
-						<div class="pa2">
-							Combinations for Text Color
-						</div>
-						<div class="pa2">
-							<Palette combinations={combinationsForSelectedTextColor} clickHandler={changeCombination} />
-						</div>
-					</div>
+			<div class="fl w-100 h-100">
+				<div class="pa2 h-100">
+					<ColorSection
+						title="Background"
+						bind:color={backgroundColor}
+						colors={colors}
+						combinations={combinationsForSelectedBackgroundColor}
+						changeColor={changeBackgroundColor}
+						changeCombination={changeCombination}
+					/>
+					<ColorSection
+						title="Text"
+						bind:color={color}
+						colors={colors}
+						combinations={combinationsForSelectedTextColor}
+						changeColor={changeColor}
+						changeCombination={changeCombination}
+					/>
 				</div>
 			</div>
 		</div>

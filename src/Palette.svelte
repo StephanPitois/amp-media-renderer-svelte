@@ -9,6 +9,8 @@
 		cursor: pointer;
 		width: 30px;
 		height: 30px;
+		max-width: 9.09%;
+		max-height: 9.09%;
 		margin-right: 0;
 		margin-bottom: 0;
         font-weight: 600 !important;
