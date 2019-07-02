@@ -7,6 +7,12 @@
 	// http://tachyons.io/docs/themes/skins/
 	// https://webaim.org/articles/contrast/#sc143
 
+	const params = new URLSearchParams(window.location.search);
+	const options = {
+		color: params.get("color"),
+		bgcolor: params.get("bgcolor")
+	};
+
 	let activeTab = "colors";
 	let tabs = [
 		{ id: "colors", title: "Colors"},
@@ -17,8 +23,16 @@
 
 	const minContrast = 4.5;
 
-	let color = '#000000';
-	let backgroundColor = '#ffffff';
+	function parseColor(color, defaultColor) {
+		if (chroma.valid(color)) {
+			return chroma(color).hex();
+		} else {
+			return defaultColor || '#000000';
+		};
+	}
+
+	let color = parseColor(options.color, "#000000");
+	let backgroundColor = parseColor(options.bgcolor, "#ffffff");
 
 	let colors = [];
 	let getScale = (arr) => {
@@ -47,18 +61,16 @@
 		.map(c => { return { color: color, backgroundColor: c }; });
 
 	function changeCombination(event) {
-		color = chroma(event.target.style.color).hex();
-		backgroundColor = chroma(event.target.style.backgroundColor).hex();
+		color = parseColor(event.target.style.color);
+		backgroundColor = parseColor(event.target.style.backgroundColor);
 	}
 
 	function changeColor(event) {
-		// TODO: FIXME: fix error when typing hex code in input box
-		color = chroma(event.target.style.backgroundColor).hex();
+		color = parseColor(event.target.style.backgroundColor);
 	}
 
 	function changeBackgroundColor(event) {
-		// TODO: FIXME: fix error when typing hex code in input box
-		backgroundColor = chroma(event.target.style.backgroundColor).hex();
+		backgroundColor = parseColor(event.target.style.backgroundColor);
 	}
 
 </script>
