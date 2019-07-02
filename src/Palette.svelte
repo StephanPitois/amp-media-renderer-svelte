@@ -7,12 +7,11 @@
 <style>
 	.color-tile-sm {
 		cursor: pointer;
-		width: 28px;
-		height: 28px;
-		margin-right: 2px;
-		margin-bottom: 2px;
-		box-shadow: inset 0 0 1px #000000;
-		font-weight: 600 !important;
+		width: 30px;
+		height: 30px;
+		margin-right: 0;
+		margin-bottom: 0;
+        font-weight: 600 !important;
 		padding-left: 0;
 		padding-right: 0;
 	}

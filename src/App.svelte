@@ -7,59 +7,31 @@
 
 	const minContrast = 4.5;
 
-	let palette = [
-		{ key: 'black', color: '#000000' },
-		{ key: 'gray-1', color: '#111111' },
-		{ key: 'gray-2', color: '#333333' },
-		{ key: 'gray-3', color: '#555555' },
-		{ key: 'gray-4', color: '#777777' },
-		{ key: 'gray-5', color: '#999999' },
-		{ key: 'gray-6', color: '#aaaaaa' },
-		{ key: 'gray-7', color: '#cccccc' },
-		{ key: 'gray-8', color: '#eeeeee' },
-		{ key: 'gray-9', color: '#f4f4f4' },
-		{ key: 'white', color: '#ffffff' },
-		{ key: 'dark-red', color: '#e7040f' },
-		{ key: 'red', color: '#ff4136' },
-		{ key: 'light-red', color: '#ff725c' },
-		{ key: 'washed-red', color: '#ffdfdf' },
-		{ key: 'orange', color: '#ff6300' },
-		{ key: 'gold', color: '#ffb700' },
-		{ key: 'yellow', color: '#ffd700' },
-		{ key: 'light-yellow', color: '#fbf1a9' },
-		{ key: 'washed-yellow', color: '#fffceb' },
-		{ key: 'bright-yellow', color: '#ffff00' },
-		{ key: 'dark-green', color: '#137752' },
-		{ key: 'green', color: '#19a974' },
-		{ key: 'light-green', color: '#9eebcf' },
-		{ key: 'washed-green', color: '#e8fdf5' },
-		{ key: 'navy', color: '#001b44' },
-		{ key: 'dark-blue', color: '#00449e' },
-		{ key: 'blue', color: '#357edd' },
-		{ key: 'light-blue', color: '#96ccff' },
-		{ key: 'lightest-blue', color: '#cdecff' },
-		{ key: 'washed-blue', color: '#f6fffe' },
-		{ key: 'purple', color: '#5e2ca5' },
-		{ key: 'light-purple', color: '#a463f2' },
-		{ key: 'dark-pink', color: '#d5008f' },
-		{ key: 'hot-pink', color: '#ff41b4' },
-		{ key: 'pink', color: '#ff80cc' },
-		{ key: 'light-pink', color: '#ffa3d7' }
-	];
-	let colors = _.map(palette, 'color');
 	let color = '#000000';
 	let backgroundColor = '#ffffff';
 
-	// var extra = chroma.scale(['ff6300', 'ffff00']).mode('lab').colors(12);
-	// var extra2 = chroma.scale(['ffff00', 'FFFCEB']).mode('lab').colors(12);
-	// colors = colors.concat(extra);
-	// colors = colors.concat(extra2);
+	let colors = [];
+	let getScale = (arr) => {
+		return chroma.scale(arr).mode('lab').colors(11);
+	};
+	colors = colors.concat(getScale(['000000', 'ffffff']));
+	colors = colors.concat(getScale(['8B4513', 'fef9f6']));
+	colors = colors.concat(getScale(['d5008f', 'ff41b4', 'ff80cc', 'ffa3d7', 'fff5fb']));
+	colors = colors.concat(getScale(['e7040f', 'ff4136', 'ff725c', 'fff5f5']));
+	colors = colors.concat(getScale(['ff6300', 'ffb700', 'ffd700', 'fbf1a9', 'fffceb']));
+	colors = colors.concat(getScale(['ffff00', 'fffff5']));
+	colors = colors.concat(getScale(['137752', '19a974', '9eebcf', 'e8fdf5']));
+	colors = colors.concat(getScale(['001b44', '00449e', '357edd', '96ccff', 'cdecff', 'f6fffe']));
+	colors = colors.concat(getScale(['5e2ca5', 'a463f2', 'f9f6fe']));
 
 	$: currentContrast = chroma.contrast(color, backgroundColor);
+
 	$: currentContrastOK = currentContrast >= minContrast;
+
 	$: combinationsForSelectedBackgroundColor = (colors
 		.filter(c => chroma.contrast(c, backgroundColor) >= minContrast))
 		.map(c => { return { color: c, backgroundColor: backgroundColor }; });
+
 	$: combinationsForSelectedTextColor = (colors
 		.filter(c => chroma.contrast(c, color) >= minContrast))
 		.map(c => { return { color: color, backgroundColor: c }; });
@@ -137,8 +109,15 @@
 					</div>
 				</div>
 			</div>
-			<div class="fl w-100 pv2 ph3">
-				{#if !currentContrastOK}
+		</div>
+	</div>
+	<div class="fn fl-ns w-50-ns h-100 bl-ns b--mid-gray">
+		<header class="pv2 ph3 bb b--light-gray">
+			Preview
+		</header>
+		<div class="h-100 pb5" style="overflow-y: auto">
+			{#if !currentContrastOK}
+				<div class="xfl w-100 pa3">
 					<div class="flex items-center justify-center pa4 bg-lightest-blue navy">
 					<span class="lh-title ml3">
 						<strong>Warning!</strong>
@@ -147,15 +126,8 @@
 						Hint: use one of the suggested color combinations.
 					</span>
 					</div>
-				{/if}
-			</div>
-		</div>
-	</div>
-	<div class="fn fl-ns w-50-ns h-100 bl-ns b--mid-gray">
-		<header class="pv2 ph3 bb b--light-gray">
-			Preview
-		</header>
-		<div class="h-100 pb5" style="overflow-y: auto">
+				</div>
+			{/if}
 			<div class="pa2">
 				<div class="pa2">
 					<div class="shadow-5" style="
