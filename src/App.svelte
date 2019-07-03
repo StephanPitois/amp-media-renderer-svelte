@@ -3,6 +3,8 @@
 	import ColorPicker from "./ColorPicker.svelte";
 	import ColorSection from "./ColorSection.svelte";
 	import Tabs from "./Tabs.svelte";
+	import Template from "./Template.svelte";
+	import TextEditor from "./TextEditor.svelte";
 
 	// http://tachyons.io/docs/themes/skins/
 	// https://webaim.org/articles/contrast/#sc143
@@ -10,15 +12,29 @@
 	const params = new URLSearchParams(window.location.search);
 	const options = {
 		color: params.get("color"),
-		bgcolor: params.get("bgcolor")
+		bgcolor: params.get("bgcolor"),
+		brand: params.get("brand"),
+		brandsub: params.get("brandsub"),
+		title: params.get("title"),
+		dates: params.get("dates"),
+		billing: params.get("billing"),
+		licensing: params.get("licensing"),
+		sponsors: params.get("sponsors")
 	};
+
+	let brand = options.brand || 'Amelia Musical Playhouse';
+	let brandsub = options.brandsub || 'Presents';
+	let title = options.title || '';
+	let dates = options.dates || '';
+	let billing = options.billing || '';
+	let licensing = options.licensing || '';
+	let sponsors = options.sponsors || '';
 
 	let activeTab = "colors";
 	let tabs = [
 		{ id: "colors", title: "Colors"},
-		{ id: "fonts", title: "Fonts"},
-		{ id: "graphics", title: "Graphics"},
-		{ id: "text", title: "Text"}
+		{ id: "text", title: "Text"},
+		{ id: "graphics", title: "Graphics"}
 	];
 
 	const minContrast = 4.5;
@@ -109,6 +125,19 @@
 					/>
 				</div>
 				{/if}
+				{#if activeTab === 'text'}
+				<div class="pa2 h-100">
+					<TextEditor
+						bind:brand={brand}
+						bind:brandsub={brandsub}
+						bind:title={title}
+						bind:dates={dates}
+						bind:billing={billing}
+						bind:licensing={licensing}
+						bind:sponsors={sponsors}
+					/>
+				</div>
+				{/if}
 			</div>
 		</div>
 	</div>
@@ -136,7 +165,16 @@
 						height: 216px;
 						color: {color};
 						background-color: {backgroundColor};">
-						<div class="pa4 tc w-100">Text Sample</div>
+						<Template
+							color={color}
+							brand={brand}
+							brandsub={brandsub}
+							title={title}
+							dates={dates}
+							billing={billing}
+							licensing={licensing}
+							sponsors={sponsors}
+						/>
 					</div>
 				</div>
 			</div>
