@@ -16,8 +16,17 @@
         <TextField label="Below Brand" bind:value={brandsub}/>
         <TextField label="Title" bind:value={title}/>
         <TextField label="Dates" bind:value={dates}/>
-        <!-- FIXME: Billing, Licensing should be text areas (multi line) -->
-        <TextField label="Billing" bind:value={billing}/>
+        <!-- <TextField label="Billing" bind:value={billing}/> -->
+        <div>
+            <label for="comment" class="f6 b db mb2">Billing</label>
+            <textarea
+                id="comment"
+                name="comment"
+                class="db border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2"
+                rows="5"
+                bind:value="{billing}"
+                aria-describedby="comment-desc" />
+        </div>
         <TextField label="Licensing" bind:value={licensing}/>
         <TextField label="Sponsors" bind:value={sponsors}/>
     </form>

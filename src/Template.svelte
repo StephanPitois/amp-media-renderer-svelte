@@ -11,7 +11,6 @@
     export let fontSize = '20px';
 
     let fontSizes = {
-        default: fontSize,
         brand: '75%',
         brandsub: '35%',
         title: '100%',
@@ -32,7 +31,7 @@
     }
 </style>
 
-<div class="flex template-wrapper w-100 h-100 pa3 tc" style="font-size: {fontSizes.default}">
+<div class="flex template-wrapper w-100 h-100 pa3 tc" style="font-size: {fontSize}">
     <!-- <div class="template-image" style="opacity: 0">
     </div> -->
     <div class="template-text amp-aligner w-100 fl" style="color: {color}">
@@ -60,7 +59,7 @@
         </div>
         {#if billing}
         <div class="amp-f4 pv1" style="font-size: {fontSizes.billing};">
-            {billing}
+            {@html billing}
         </div>
         {/if}
         {#if licensing}

@@ -2,42 +2,12 @@
 	import Palette from "./Palette.svelte";
 	import ColorPicker from "./ColorPicker.svelte";
 	import ColorSection from "./ColorSection.svelte";
-	import Tabs from "./Tabs.svelte";
+	import Tabs from "./Tabs2.svelte";
 	import Template from "./Template.svelte";
 	import TextEditor from "./TextEditor.svelte";
 
 	// http://tachyons.io/docs/themes/skins/
 	// https://webaim.org/articles/contrast/#sc143
-
-	const params = new URLSearchParams(window.location.search);
-	const options = {
-		color: params.get("color"),
-		bgcolor: params.get("bgcolor"),
-		brand: params.get("brand"),
-		brandsub: params.get("brandsub"),
-		title: params.get("title"),
-		dates: params.get("dates"),
-		billing: params.get("billing"),
-		licensing: params.get("licensing"),
-		sponsors: params.get("sponsors")
-	};
-
-	let brand = options.brand || 'Amelia Musical Playhouse';
-	let brandsub = options.brandsub || 'Presents';
-	let title = options.title || '';
-	let dates = options.dates || '';
-	let billing = options.billing || '';
-	let licensing = options.licensing || '';
-	let sponsors = options.sponsors || '';
-
-	let activeTab = "colors";
-	let tabs = [
-		{ id: "colors", title: "Colors"},
-		{ id: "text", title: "Text"},
-		{ id: "graphics", title: "Graphics"}
-	];
-
-	const minContrast = 4.5;
 
 	function parseColor(color, defaultColor) {
 		if (chroma.valid(color)) {
@@ -47,8 +17,38 @@
 		};
 	}
 
-	let color = parseColor(options.color, "#000000");
-	let backgroundColor = parseColor(options.bgcolor, "#ffffff");
+	function lineBreaksToHtml (str) {
+		return str.replace(/(?:\\[rn]|[\r\n]+)+/g, '<br>').replace('\r\n', '<br>');
+	}
+
+	function fixLineBreaks (str) {
+		return str.replace('\r\n', '\r\n');
+	}
+
+	function stripHtml (str) {
+		return str.replace(/(<([^>]+)>)/ig, '');
+	}
+
+	const params = new URLSearchParams(window.location.search);
+
+	let color = parseColor(params.get("color"), "#000000");
+	let backgroundColor = parseColor(params.get("bgcolor"), "#ffffff");
+	let brand = params.get("brand") || 'Amelia Musical Playhouse';
+	let brandsub = params.get("brandsub") || 'Presents';
+	let title = params.get("title") || '';
+	let dates = params.get("dates") || '';
+	let billing = lineBreaksToHtml(stripHtml(params.get("billing") || ''));
+	let licensing = params.get("licensing") || '';
+	let sponsors = stripHtml(params.get("sponsors") || '');
+
+	let activeTab = "colors";
+	let tabs = [
+		{ id: "colors", title: "Colors"},
+		{ id: "text", title: "Text"},
+		{ id: "graphics", title: "Graphics"}
+	];
+
+	const minContrast = 4.5;
 
 	let colors = [];
 	let getScale = (arr) => {
@@ -89,6 +89,25 @@
 		backgroundColor = parseColor(event.target.style.backgroundColor);
 	}
 
+	let tplWidth = '385px';
+	let tplHeight = '216px';
+	let tplFontSize = '20px';
+
+	function resizePreview(event) {
+		console.log(event.target.innerWidth);
+		let newWidth = event.target.innerWidth / 2 - 40;
+		let newHeight = newWidth / 1.77777777778;
+		let newFontSize = newWidth / 19.25;
+		tplWidth = '' + newWidth.toFixed(2) + 'px';
+		tplHeight = '' + newHeight.toFixed(2) + 'px';
+		tplFontSize = '' + newFontSize.toFixed(2) + 'px';
+		console.log(tplFontSize);
+	}
+
+	window.addEventListener("resize", resizePreview);
+
+	window.dispatchEvent(new Event('resize'));
+
 </script>
 
 <style>
@@ -99,7 +118,7 @@
 
 <div class="sans-serif gray w-100" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0;">
 	<div class="fn fl-ns w-50-ns h-100">
-		<header class="pv2 ph3 bb b--light-gray">
+		<header class="pv2 ph3 bb b--moon-gray">
 			Options
 		</header>
 		<div class="h-100 pb5" style="overflow-y: auto">
@@ -141,8 +160,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="fn fl-ns w-50-ns h-100 bl-ns b--mid-gray">
-		<header class="pv2 ph3 bb b--light-gray">
+	<div class="fn fl-ns w-50-ns h-100 bl-ns b--moon-gray">
+		<header class="pv2 ph3 bb b--moon-gray">
 			Preview
 		</header>
 		<div class="h-100 pb5" style="overflow-y: auto">
@@ -158,14 +177,16 @@
 					</div>
 				</div>
 			{/if}
-			<div class="pa2">
-				<div class="pa2">
+			<div class="pa2 h-100">
+				<div
+					class="pa2 flex items-center justify-center h-100">
 					<div class="shadow-5" style="
-						width: 385px;
-						height: 216px;
+						width: {tplWidth};
+						height: {tplHeight};
 						color: {color};
 						background-color: {backgroundColor};">
 						<Template
+							fontSize={tplFontSize}
 							color={color}
 							brand={brand}
 							brandsub={brandsub}
