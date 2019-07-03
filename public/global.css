@@ -32,7 +32,7 @@
     flex-direction: column;
 }
 
-.template-wrapper .template-image {
+/* .template-wrapper .template-image {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -42,12 +42,12 @@
     right: 0;
     bottom: 0;
     left: 0;
-}
+} */
 
-.xxx-template-wrapper .template-text {
+/* .xxx-template-wrapper .template-text {
     position: absolute;
     top:0;
     bottom:0;
     left:0;
     right:0;
-}
+} */

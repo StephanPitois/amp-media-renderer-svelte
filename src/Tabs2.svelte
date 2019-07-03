@@ -19,13 +19,13 @@
     }
 </style>
 
-<div class="fl w-100 xpa1 xba bg-light-gray xbt xbb">
+<div class="fl w-100 bg-light-gray">
     <div class="flex justify-center tc">
         {#each tabs as tab}
             <a
                 id="{tab.id}"
                 style="cursor: pointer;"
-                class="tab w-third f6 gray bg-light-gray link ph3 pv3 xma1 dib bb br b--moon-gray"
+                class="tab w-third f6 gray bg-light-gray link ph3 pv3 dib bb br b--moon-gray"
                 class:blue={activeTab === tab.id}
                 class:bg-white={activeTab === tab.id}
                 class:active={activeTab === tab.id}

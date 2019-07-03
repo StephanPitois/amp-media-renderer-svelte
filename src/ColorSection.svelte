@@ -10,8 +10,8 @@
     export let changeCombination;
 </script>
 
-<div class="fl w-50 pa1 h-100">
-    <div class="pa1 ba b--light-gray h-100" style="overflow-y: auto">
+<div class="fl w-100 pa1 xxxh-100">
+    <div class="pa1 ba b--light-gray xxxh-100" xxxstyle="overflow-y: auto">
         <div class="pa2">
             {title}
         </div>

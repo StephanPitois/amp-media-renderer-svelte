@@ -93,15 +93,17 @@
 	let tplHeight = '216px';
 	let tplFontSize = '20px';
 
+	let horizontalSplit = false;
+
 	function resizePreview(event) {
-		console.log(event.target.innerWidth);
-		let newWidth = event.target.innerWidth / 2 - 40;
+		let containerWidth = event.target.innerWidth;
+		horizontalSplit = containerWidth > 700;
+		let newWidth = (horizontalSplit ? containerWidth / 2 : containerWidth) - 40;
 		let newHeight = newWidth / 1.77777777778;
 		let newFontSize = newWidth / 19.25;
 		tplWidth = '' + newWidth.toFixed(2) + 'px';
 		tplHeight = '' + newHeight.toFixed(2) + 'px';
 		tplFontSize = '' + newFontSize.toFixed(2) + 'px';
-		console.log(tplFontSize);
 	}
 
 	window.addEventListener("resize", resizePreview);
@@ -114,59 +116,84 @@
 	button {
 		cursor: pointer;
 	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto;
+		grid-template-areas:
+			'options preview';
+	}
+
+	.main-layout__options {
+		grid-area: options;
+	}
+
+	.main-layout__preview {
+		grid-area: preview;
+	}
+
+	@media (max-width: 700px) {
+		.grid {
+			grid-template-columns: auto;
+			grid-template-rows: 50% 50%;
+			grid-template-areas:
+				'preview'
+				'options';
+		}
+	}
 </style>
 
-<div class="sans-serif gray w-100" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0;">
-	<div class="fn fl-ns w-50-ns h-100">
+<div class="grid sans-serif gray h-100 w-100" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0;">
+	<div class="main-layout__options" style="overflow-y: auto;">
 		<header class="pv2 ph3 bb b--moon-gray">
 			Options
 		</header>
-		<div class="h-100 pb5" style="overflow-y: auto">
-			<Tabs bind:activeTab={activeTab} tabs={tabs} />
-			<div class="fl w-100 h-100">
-				{#if activeTab === 'colors'}
-				<div class="pa2 h-100">
-					<ColorSection
-						title="Background"
-						bind:color={backgroundColor}
-						colors={colors}
-						combinations={combinationsForSelectedBackgroundColor}
-						changeColor={changeBackgroundColor}
-						changeCombination={changeCombination}
-					/>
-					<ColorSection
-						title="Text"
-						bind:color={color}
-						colors={colors}
-						combinations={combinationsForSelectedTextColor}
-						changeColor={changeColor}
-						changeCombination={changeCombination}
-					/>
-				</div>
-				{/if}
-				{#if activeTab === 'text'}
-				<div class="pa2 h-100">
-					<TextEditor
-						bind:brand={brand}
-						bind:brandsub={brandsub}
-						bind:title={title}
-						bind:dates={dates}
-						bind:billing={billing}
-						bind:licensing={licensing}
-						bind:sponsors={sponsors}
-					/>
-				</div>
-				{/if}
+		<Tabs bind:activeTab={activeTab} tabs={tabs} />
+		<div class="fl w-100 h-100">
+			{#if activeTab === 'colors'}
+			<div class="pa2 h-100">
+				<ColorSection
+					title="Background"
+					bind:color={backgroundColor}
+					colors={colors}
+					combinations={combinationsForSelectedBackgroundColor}
+					changeColor={changeBackgroundColor}
+					changeCombination={changeCombination}
+				/>
+				<ColorSection
+					title="Text"
+					bind:color={color}
+					colors={colors}
+					combinations={combinationsForSelectedTextColor}
+					changeColor={changeColor}
+					changeCombination={changeCombination}
+				/>
 			</div>
+			{/if}
+			{#if activeTab === 'text'}
+			<div class="pa2 h-100">
+				<TextEditor
+					bind:brand={brand}
+					bind:brandsub={brandsub}
+					bind:title={title}
+					bind:dates={dates}
+					bind:billing={billing}
+					bind:licensing={licensing}
+					bind:sponsors={sponsors}
+				/>
+			</div>
+			{/if}
 		</div>
 	</div>
-	<div class="fn fl-ns w-50-ns h-100 bl-ns b--moon-gray">
+	<div class="b--moon-gray main-layout__preview"
+		 class:bl={horizontalSplit}>
 		<header class="pv2 ph3 bb b--moon-gray">
 			Preview
 		</header>
-		<div class="h-100 pb5" style="overflow-y: auto">
+		<div class="xxx-h-100">
 			{#if !currentContrastOK}
-				<div class="xfl w-100 pa3">
+				<div class="w-100 pa3">
 					<div class="flex items-center justify-center pa4 bg-lightest-blue navy">
 					<span class="lh-title ml3">
 						<strong>Warning!</strong>
