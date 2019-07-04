@@ -89,9 +89,20 @@
 		backgroundColor = parseColor(event.target.style.backgroundColor);
 	}
 
-	let tplWidth = '385px';
-	let tplHeight = '216px';
-	let tplFontSize = '20px';
+	// FIXME: THIS CODE IS GETTING MESSY!
+
+	// let customWidth = 1920;
+	// let customHeight = 1080;
+	let customWidth = 385;
+	let customHeight = 216;
+
+	let tplWidth = customWidth + 'px';
+	let tplHeight = customHeight + 'px';
+	let tplFontSize = (customWidth / 19.25) + 'px';
+
+	let tplWidthPreview = '0'; // Arbitrary default value overriden on load/resize
+	let tplHeightPreview = '0'; // Arbitrary default value overriden on load/resize
+	let tplFontSizePreview = '0'; // Arbitrary default value overriden on load/resize
 
 	let horizontalSplit = false;
 
@@ -107,13 +118,13 @@
 	function resizePreview(event) {
 		let containerWidth = event.target.innerWidth;
 		horizontalSplit = containerWidth > 700;
-		let padding = horizontalSplit ? 40 : 20;
+		let padding = 100; // horizontalSplit ? 40 : 20;
 		let newWidth = (horizontalSplit ? containerWidth / 2 : containerWidth) - padding;
-		let newHeight = newWidth / 1.77777777778;
+		let newHeight = newWidth / (customWidth / customHeight);
 		let newFontSize = newWidth / 19.25;
-		tplWidth = '' + newWidth.toFixed(2) + 'px';
-		tplHeight = '' + newHeight.toFixed(2) + 'px';
-		tplFontSize = '' + newFontSize.toFixed(2) + 'px';
+		tplWidthPreview = '' + newWidth.toFixed(2) + 'px';
+		tplHeightPreview = '' + newHeight.toFixed(2) + 'px';
+		tplFontSizePreview = '' + newFontSize.toFixed(2) + 'px';
 	}
 
 	window.addEventListener("resize", resizePreview);
@@ -151,6 +162,19 @@
 				'preview'
 				'options';
 		}
+	}
+
+/* FIXME: HIDE OFF CANVAS, MAKE BIGGER - actual size */
+	#canvasSource {
+		/* FIXME: remove this line display: none*/
+		display: none;
+		position: fixed;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		z-index: 1000;
+		margin: auto auto;
 	}
 </style>
 
@@ -214,7 +238,30 @@
 			{/if}
 		</header>
 		<div class="flex items-center justify-center h-100 h-auto-ns">
-			<div class="shadow-5 mv3" style="
+			<!-- TODO: the wrapper div should be in the template -->
+			<div
+				class="shadow-5 mv3"
+				style="
+				width: {tplWidthPreview};
+				height: {tplHeightPreview};
+				color: {color};
+				background-color: {backgroundColor};">
+				<Template
+					fontSize={tplFontSizePreview}
+					color={color}
+					brand={brand}
+					brandsub={brandsub}
+					title={title}
+					dates={dates}
+					billing={billing}
+					licensing={licensing}
+					sponsors={sponsors}
+				/>
+			</div>
+			<div
+				id="canvasSource"
+				class="shadow-5 mv3"
+				style="
 				width: {tplWidth};
 				height: {tplHeight};
 				color: {color};
