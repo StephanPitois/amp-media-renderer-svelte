@@ -98,7 +98,8 @@
 	function resizePreview(event) {
 		let containerWidth = event.target.innerWidth;
 		horizontalSplit = containerWidth > 700;
-		let newWidth = (horizontalSplit ? containerWidth / 2 : containerWidth) - (horizontalSplit ? 40 : 0);
+		let padding = horizontalSplit ? 40 : 20;
+		let newWidth = (horizontalSplit ? containerWidth / 2 : containerWidth) - padding;
 		let newHeight = newWidth / 1.77777777778;
 		let newFontSize = newWidth / 19.25;
 		tplWidth = '' + newWidth.toFixed(2) + 'px';
@@ -146,11 +147,11 @@
 </style>
 
 <div class="grid sans-serif gray h-100 w-100" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0;">
-	<div class="main-layout__options bg-white" style="overflow-y: auto;">
+	<div class="main-layout__options bg-white bt bw0-ns b--moon-gray" style="overflow-y: auto;">
 		<header class="pv2 ph3 bb b--moon-gray dn db-ns">
 			Options
 		</header>
-		<div class="bt bw0-ns b--moon-gray">
+		<div>
 			<Tabs bind:activeTab={activeTab} tabs={tabs} />
 			<div class="fl w-100 h-100">
 				{#if activeTab === 'colors'}
@@ -201,8 +202,8 @@
 			<span class="br2 dib fr bg-white fw6 gray ph1">Poor contrast :(</span>
 			{/if}
 		</header>
-		<div class="pa3-ns flex items-center justify-center h-100 h-auto-ns">
-			<div class="shadow-5" style="
+		<div class="flex items-center justify-center h-100 h-auto-ns">
+			<div class="shadow-5 mv3" style="
 				width: {tplWidth};
 				height: {tplHeight};
 				color: {color};
