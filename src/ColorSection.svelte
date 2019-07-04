@@ -10,14 +10,11 @@
     export let combinations = [];
     export let changeColor;
     export let changeCombination;
-    export let activeSection = '';
-    export let expanded = activeSection === id;
+    export let expanded = true;
+    export let toggleExpanded = (id) => {};
 
-    function toggleExpanded() {
-        expanded = !expanded;
-        if (expanded) {
-            activeSection = id;
-        }
+    function onToggleExpanded() {
+        toggleExpanded(id);
     }
 </script>
 
@@ -25,7 +22,7 @@
     <div class="bb b--moon-gray xxxh-100" xxxstyle="overflow-y: auto">
         <div class="cursor-pointer pa2 b--light-gray flex items-center justify-between"
              class:bb={expanded}
-             on:click={toggleExpanded}>
+             on:click={onToggleExpanded}>
             <span class="w-third">{title}</span>
             <span class="w-third br2 dib ml1 tc" style="background-color: {color}; width: 20%;">&nbsp;</span>
             {#if expanded}

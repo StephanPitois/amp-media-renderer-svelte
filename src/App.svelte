@@ -95,6 +95,15 @@
 
 	let horizontalSplit = false;
 
+	let activeColorSection = "cs-bg-color";
+    function toggleExpanded(id) {
+		if (activeColorSection === id) {
+			activeColorSection = '';
+		} else {
+			activeColorSection = id;
+		}
+    }
+
 	function resizePreview(event) {
 		let containerWidth = event.target.innerWidth;
 		horizontalSplit = containerWidth > 700;
@@ -111,7 +120,6 @@
 
 	window.dispatchEvent(new Event('resize'));
 
-	let activeColorSection = "cs-bg-color";
 </script>
 
 <style>
@@ -164,7 +172,8 @@
 						combinations={combinationsForSelectedBackgroundColor}
 						changeColor={changeBackgroundColor}
 						changeCombination={changeCombination}
-						bind:activeSection={activeColorSection}
+						expanded={activeColorSection === 'cs-bg-color'}
+						toggleExpanded={toggleExpanded}
 					/>
 					<ColorSection
 						id="cs-color"
@@ -174,7 +183,8 @@
 						combinations={combinationsForSelectedTextColor}
 						changeColor={changeColor}
 						changeCombination={changeCombination}
-						bind:activeSection={activeColorSection}
+						expanded={activeColorSection === 'cs-color'}
+						toggleExpanded={toggleExpanded}
 					/>
 				</div>
 				{/if}
@@ -196,6 +206,7 @@
 	</div>
 	<div class="b--moon-gray main-layout__preview"
 		 class:bl={horizontalSplit}>
+		 <!-- FIXME: dn db-ns currently hides Contrast indicator :() -->
 		<header class="pv2 ph3 bb b--moon-gray dn db-ns">
 			Preview
 			{#if !currentContrastOK}
