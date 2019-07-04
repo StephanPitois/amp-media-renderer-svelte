@@ -98,7 +98,7 @@
 	function resizePreview(event) {
 		let containerWidth = event.target.innerWidth;
 		horizontalSplit = containerWidth > 700;
-		let newWidth = (horizontalSplit ? containerWidth / 2 : containerWidth) - 40;
+		let newWidth = (horizontalSplit ? containerWidth / 2 : containerWidth) - (horizontalSplit ? 40 : 0);
 		let newHeight = newWidth / 1.77777777778;
 		let newFontSize = newWidth / 19.25;
 		tplWidth = '' + newWidth.toFixed(2) + 'px';
@@ -146,81 +146,78 @@
 </style>
 
 <div class="grid sans-serif gray h-100 w-100" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0;">
-	<div class="main-layout__options" style="overflow-y: auto;">
-		<header class="pv2 ph3 bb b--moon-gray">
+	<div class="main-layout__options bg-white" style="overflow-y: auto;">
+		<header class="pv2 ph3 bb b--moon-gray dn db-ns">
 			Options
 		</header>
-		<Tabs bind:activeTab={activeTab} tabs={tabs} />
-		<div class="fl w-100 h-100">
-			{#if activeTab === 'colors'}
-			<div class="xpa2 h-100">
-				<ColorSection
-					id="cs-bg-color"
-					title="Background"
-					bind:color={backgroundColor}
-					colors={colors}
-					combinations={combinationsForSelectedBackgroundColor}
-					changeColor={changeBackgroundColor}
-					changeCombination={changeCombination}
-					bind:activeSection={activeColorSection}
-				/>
-				<ColorSection
-					id="cs-color"
-					title="Text"
-					bind:color={color}
-					colors={colors}
-					combinations={combinationsForSelectedTextColor}
-					changeColor={changeColor}
-					changeCombination={changeCombination}
-					bind:activeSection={activeColorSection}
-				/>
+		<div class="bt bw0-ns b--moon-gray">
+			<Tabs bind:activeTab={activeTab} tabs={tabs} />
+			<div class="fl w-100 h-100">
+				{#if activeTab === 'colors'}
+				<div class="xpa2 h-100">
+					<ColorSection
+						id="cs-bg-color"
+						title="Background"
+						bind:color={backgroundColor}
+						colors={colors}
+						combinations={combinationsForSelectedBackgroundColor}
+						changeColor={changeBackgroundColor}
+						changeCombination={changeCombination}
+						bind:activeSection={activeColorSection}
+					/>
+					<ColorSection
+						id="cs-color"
+						title="Text"
+						bind:color={color}
+						colors={colors}
+						combinations={combinationsForSelectedTextColor}
+						changeColor={changeColor}
+						changeCombination={changeCombination}
+						bind:activeSection={activeColorSection}
+					/>
+				</div>
+				{/if}
+				{#if activeTab === 'text'}
+				<div class="pa2 h-100">
+					<TextEditor
+						bind:brand={brand}
+						bind:brandsub={brandsub}
+						bind:title={title}
+						bind:dates={dates}
+						bind:billing={billing}
+						bind:licensing={licensing}
+						bind:sponsors={sponsors}
+					/>
+				</div>
+				{/if}
 			</div>
-			{/if}
-			{#if activeTab === 'text'}
-			<div class="pa2 h-100">
-				<TextEditor
-					bind:brand={brand}
-					bind:brandsub={brandsub}
-					bind:title={title}
-					bind:dates={dates}
-					bind:billing={billing}
-					bind:licensing={licensing}
-					bind:sponsors={sponsors}
-				/>
-			</div>
-			{/if}
 		</div>
 	</div>
 	<div class="b--moon-gray main-layout__preview"
 		 class:bl={horizontalSplit}>
-		<header class="pv2 ph3 bb b--moon-gray">
+		<header class="pv2 ph3 bb b--moon-gray dn db-ns">
 			Preview
 			{#if !currentContrastOK}
 			<span class="br2 dib fr bg-white fw6 gray ph1">Poor contrast :(</span>
 			{/if}
 		</header>
-		<div class="xxx-h-100">
-			<div class="pa2 h-100">
-				<div
-					class="pa2 flex items-center justify-center h-100">
-					<div class="shadow-5" style="
-						width: {tplWidth};
-						height: {tplHeight};
-						color: {color};
-						background-color: {backgroundColor};">
-						<Template
-							fontSize={tplFontSize}
-							color={color}
-							brand={brand}
-							brandsub={brandsub}
-							title={title}
-							dates={dates}
-							billing={billing}
-							licensing={licensing}
-							sponsors={sponsors}
-						/>
-					</div>
-				</div>
+		<div class="pa3-ns flex items-center justify-center h-100 h-auto-ns">
+			<div class="shadow-5" style="
+				width: {tplWidth};
+				height: {tplHeight};
+				color: {color};
+				background-color: {backgroundColor};">
+				<Template
+					fontSize={tplFontSize}
+					color={color}
+					brand={brand}
+					brandsub={brandsub}
+					title={title}
+					dates={dates}
+					billing={billing}
+					licensing={licensing}
+					sponsors={sponsors}
+				/>
 			</div>
 		</div>
 	</div>

@@ -35,7 +35,7 @@
             {/if}
         </div>
         {#if expanded}
-        <div>
+        <div class="pa3" style="overflow-y: auto">
             <div class="pa2">
                 <ColorPicker bind:color={color} />
             </div>
