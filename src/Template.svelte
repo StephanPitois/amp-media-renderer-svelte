@@ -22,19 +22,19 @@
 
 </script>
 
-<style>
+<!-- <style>
     .amp-aligner {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
     }
-</style>
+</style> -->
 
 <div class="flex template-wrapper w-100 h-100 pa3 tc" style="font-size: {fontSize}">
     <!-- <div class="template-image" style="opacity: 0">
     </div> -->
-    <div class="template-text amp-aligner w-100 fl" style="color: {color}">
+    <div class="template-text flex items-center justify-center flex-column w-100 fl" style="color: {color}">
         {#if brand}
         <div class="amp-f1 amp-ff1 fw1 bw1 pv1" style="font-size: {fontSizes.brand};">
             {brand}

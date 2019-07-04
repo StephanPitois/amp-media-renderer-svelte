@@ -24,8 +24,7 @@
         {#each tabs as tab}
             <a
                 id="{tab.id}"
-                style="cursor: pointer;"
-                class="tab w-third f6 gray bg-light-gray link ph3 pv3 dib bb br b--moon-gray"
+                class="tab cursor-pointer w-third f6 gray bg-light-gray link ph3 pv3 dib bb br b--moon-gray"
                 class:blue={activeTab === tab.id}
                 class:bg-white={activeTab === tab.id}
                 class:active={activeTab === tab.id}

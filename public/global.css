@@ -1,6 +1,6 @@
-.hidden {
+/* .hidden {
     display: none !important;
-}
+} */
 
 .amp-ff1 {
     font-family: 'Lobster', cursive;
@@ -25,11 +25,15 @@
     opacity: 0.9;
 }
 
-.amp-aligner {
+/* .amp-aligner {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+} */
+
+.cursor-pointer {
+    cursor: pointer;
 }
 
 /* .template-wrapper .template-image {

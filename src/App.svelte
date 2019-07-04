@@ -110,6 +110,7 @@
 
 	window.dispatchEvent(new Event('resize'));
 
+	let activeColorSection = "cs-bg-color";
 </script>
 
 <style>
@@ -152,22 +153,26 @@
 		<Tabs bind:activeTab={activeTab} tabs={tabs} />
 		<div class="fl w-100 h-100">
 			{#if activeTab === 'colors'}
-			<div class="pa2 h-100">
+			<div class="xpa2 h-100">
 				<ColorSection
+					id="cs-bg-color"
 					title="Background"
 					bind:color={backgroundColor}
 					colors={colors}
 					combinations={combinationsForSelectedBackgroundColor}
 					changeColor={changeBackgroundColor}
 					changeCombination={changeCombination}
+					bind:activeSection={activeColorSection}
 				/>
 				<ColorSection
+					id="cs-color"
 					title="Text"
 					bind:color={color}
 					colors={colors}
 					combinations={combinationsForSelectedTextColor}
 					changeColor={changeColor}
 					changeCombination={changeCombination}
+					bind:activeSection={activeColorSection}
 				/>
 			</div>
 			{/if}

@@ -3,36 +3,35 @@
 	import ColorPicker from "./ColorPicker.svelte";
 	import icons from "./icons.js"
 
+    export let id;
     export let title = '';
     export let color = '';
     export let colors = [];
     export let combinations = [];
     export let changeColor;
     export let changeCombination;
-    export let expanded = true;
+    export let activeSection = '';
+    export let expanded = activeSection === id;
 
     function toggleExpanded() {
         expanded = !expanded;
+        if (expanded) {
+            activeSection = id;
+        }
     }
 </script>
 
-<style>
-    .btn-expand,
-    .btn-collapse {
-        cursor: pointer;
-    }
-</style>
-
-<div class="fl w-100 pa1 xxxh-100">
-    <div class="ba b--light-gray xxxh-100" xxxstyle="overflow-y: auto">
-        <div class="pa2 b--light-gray flex items-center justify-between"
-             class:bb={expanded}>
+<div id={id} class="fl w-100 xpa1 xxxh-100">
+    <div class="bb b--moon-gray xxxh-100" xxxstyle="overflow-y: auto">
+        <div class="cursor-pointer pa2 b--light-gray flex items-center justify-between"
+             class:bb={expanded}
+             on:click={toggleExpanded}>
             <span class="w-third">{title}</span>
             <span class="w-third br2 dib ml1 tc" style="background-color: {color}; width: 20%;">&nbsp;</span>
             {#if expanded}
-            <span on:click={toggleExpanded} class="w-third tr btn-collapse dib gray">{@html icons.chevronUp}</span>
+            <span class="w-third tr btn-collapse dib gray">{@html icons.chevronUp}</span>
             {:else}
-            <span on:click={toggleExpanded} class="w-third tr btn-expand dib gray">{@html icons.chevronDown}</span>
+            <span class="w-third tr btn-expand dib gray">{@html icons.chevronDown}</span>
             {/if}
         </div>
         {#if expanded}
