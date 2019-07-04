@@ -190,20 +190,11 @@
 		 class:bl={horizontalSplit}>
 		<header class="pv2 ph3 bb b--moon-gray">
 			Preview
+			{#if !currentContrastOK}
+			<span class="br2 dib fr bg-white fw6 gray ph1">Poor contrast :(</span>
+			{/if}
 		</header>
 		<div class="xxx-h-100">
-			{#if !currentContrastOK}
-				<div class="w-100 pa3">
-					<div class="flex items-center justify-center pa4 bg-lightest-blue navy">
-					<span class="lh-title ml3">
-						<strong>Warning!</strong>
-						The contrast is too low ({currentContrast.toFixed(2)}:1).
-						A minimum contrast of 4.5:1 is recommended to ensure that the text is still readable against the background color.
-						Hint: use one of the suggested color combinations.
-					</span>
-					</div>
-				</div>
-			{/if}
 			<div class="pa2 h-100">
 				<div
 					class="pa2 flex items-center justify-center h-100">
