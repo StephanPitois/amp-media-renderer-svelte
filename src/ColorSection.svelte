@@ -10,7 +10,7 @@
     export let combinations = [];
     export let changeColor;
     export let changeCombination;
-    export let expanded = true;
+    export let expanded = false;
     export let toggleExpanded = (id) => {};
 
     function onToggleExpanded() {
@@ -20,7 +20,7 @@
 
 <div id={id} class="fl w-100 xpa1 xxxh-100">
     <div class="bb b--moon-gray xxxh-100" xxxstyle="overflow-y: auto">
-        <div class="cursor-pointer pa2 b--light-gray flex items-center justify-between"
+        <div class="cursor-pointer pa3 b--light-gray flex items-center justify-between"
              class:bb={expanded}
              on:click={onToggleExpanded}>
             <span class="w-third">{title}</span>
@@ -32,7 +32,7 @@
             {/if}
         </div>
         {#if expanded}
-        <div class="pa3" style="overflow-y: auto">
+        <div class="pa2 bg-near-white" style="overflow-y: auto">
             <div class="pa2">
                 <ColorPicker bind:color={color} />
             </div>

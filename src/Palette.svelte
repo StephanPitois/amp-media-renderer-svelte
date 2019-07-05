@@ -7,16 +7,24 @@
 <style>
 	.color-tile-sm {
 		cursor: pointer;
-		width: 30px;
-		height: 30px;
-		max-width: 9.09%;
-		max-height: 9.09%;
+		width: 29.828px;
+		height: 29.828px;
+		/* max-width: 9.09%;
+		max-height: 9.09%; */
 		margin-right: 0;
 		margin-bottom: 0;
         font-weight: 600 !important;
 		padding-left: 0;
 		padding-right: 0;
 	}
+
+    @media (max-width: 700px) {
+        .color-tile-sm {
+            width: 33px;
+            height: 33px;
+        }
+    }
+
 	button.color-tile-sm:focus {
 		outline: 0;
     }

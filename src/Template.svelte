@@ -22,11 +22,18 @@
 
 </script>
 
+<style>
+    .justify-evenly {
+        justify-content: space-evenly;
+    }
+</style>
+
 <div class="flex template-wrapper w-100 h-100 pa3 tc" style="font-size: {fontSize}">
     <!-- <div class="template-image" style="opacity: 0">
     </div> -->
+    <!-- FIXME: ad pv1 to each div or some other vertical spacing -->
     <div
-        class="template-text flex items-center justify-around flex-column w-100 fl"
+        class="template-text flex items-center justify-center flex-column w-100 fl"
         style="color: {color}">
         {#if brand}
         <div

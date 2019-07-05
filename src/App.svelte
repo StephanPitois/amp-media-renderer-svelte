@@ -91,10 +91,10 @@
 
 	// FIXME: THIS CODE IS GETTING MESSY!
 
-	// let customWidth = 1920;
-	// let customHeight = 1080;
-	let customWidth = 385;
-	let customHeight = 216;
+	let customWidth = 1920;
+	let customHeight = 1080;
+	// let customWidth = 385;
+	// let customHeight = 216;
 
 	let tplWidth = customWidth + 'px';
 	let tplHeight = customHeight + 'px';
@@ -106,7 +106,8 @@
 
 	let horizontalSplit = false;
 
-	let activeColorSection = "cs-bg-color";
+	// let activeColorSection = "cs-bg-color";
+	let activeColorSection = "";
     function toggleExpanded(id) {
 		if (activeColorSection === id) {
 			activeColorSection = '';
@@ -118,8 +119,10 @@
 	function resizePreview(event) {
 		let containerWidth = event.target.innerWidth;
 		horizontalSplit = containerWidth > 700;
-		let padding = 100; // horizontalSplit ? 40 : 20;
-		let newWidth = (horizontalSplit ? containerWidth / 2 : containerWidth) - padding;
+		let padding = horizontalSplit ? 60 : 20;
+		// let optionsWidth = containerWidth / 2;
+		let optionsWidth = containerWidth - 361;
+		let newWidth = (horizontalSplit ? optionsWidth : containerWidth) - padding;
 		let newHeight = newWidth / (customWidth / customHeight);
 		let newFontSize = newWidth / 19.25;
 		tplWidthPreview = '' + newWidth.toFixed(2) + 'px';
@@ -138,12 +141,28 @@
 		cursor: pointer;
 	}
 
-	.grid {
+	/* .grid {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: auto;
 		grid-template-areas:
 			'options preview';
+	} */
+
+	/* .grid {
+		display: grid;
+		grid-template-columns: 360px auto;
+		grid-template-rows: auto;
+		grid-template-areas:
+			'options preview';
+	} */
+
+	.grid {
+		display: grid;
+		grid-template-columns: auto 361px;
+		grid-template-rows: auto;
+		grid-template-areas:
+			'preview options';
 	}
 
 	.main-layout__options {
@@ -179,10 +198,12 @@
 </style>
 
 <div class="grid sans-serif gray h-100 w-100" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0;">
-	<div class="main-layout__options bg-white bt bw0-ns b--moon-gray" style="overflow-y: auto;">
-		<header class="pv2 ph3 bb b--moon-gray dn db-ns">
+	<div
+		class="main-layout__options bg-white bt bt-0-ns bl-ns b--moon-gray"
+		style="overflow-y: auto;">
+		<!-- <header class="pv2 ph3 bb b--moon-gray dn db-ns">
 			Options
-		</header>
+		</header> -->
 		<div>
 			<Tabs bind:activeTab={activeTab} tabs={tabs} />
 			<div class="fl w-100 h-100">
@@ -228,15 +249,15 @@
 			</div>
 		</div>
 	</div>
-	<div class="b--moon-gray main-layout__preview"
+	<div class="main-layout__preview bg-white b--moon-gray"
 		 class:bl={horizontalSplit}>
 		 <!-- FIXME: dn db-ns currently hides Contrast indicator :() -->
-		<header class="pv2 ph3 bb b--moon-gray dn db-ns">
+		<!-- <header class="pv2 ph3 bb b--moon-gray dn db-ns">
 			Preview
 			{#if !currentContrastOK}
 			<span class="br2 dib fr bg-white fw6 gray ph1">Poor contrast :(</span>
 			{/if}
-		</header>
+		</header> -->
 		<div class="flex items-center justify-center h-100 h-auto-ns">
 			<!-- TODO: the wrapper div should be in the template -->
 			<div
