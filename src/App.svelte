@@ -9,6 +9,14 @@
 	// http://tachyons.io/docs/themes/skins/
 	// https://webaim.org/articles/contrast/#sc143
 
+	// @custom-media --breakpoint-not-small screen and (min-width: 30em);
+	// @custom-media --breakpoint-medium screen and (min-width: 30em) and (max-width: 60em);
+	// @custom-media --breakpoint-large screen and (min-width: 60em);
+
+	// If body has default pixel size of 16px, then:
+	//	- 30em = 480px
+	//	- 60em = 960px
+
 	function parseColor(color, defaultColor) {
 		if (chroma.valid(color)) {
 			return chroma(color).hex();
@@ -118,8 +126,8 @@
 
 	function resizePreview(event) {
 		let containerWidth = event.target.innerWidth;
-		horizontalSplit = containerWidth > 700;
-		let padding = horizontalSplit ? 60 : 20;
+		horizontalSplit = containerWidth > 960;
+		let padding = containerWidth > 960 ? 120 : containerWidth > 480 ? 100 : 30;
 		// let optionsWidth = containerWidth / 2;
 		let optionsWidth = containerWidth - 361;
 		let newWidth = (horizontalSplit ? optionsWidth : containerWidth) - padding;
@@ -159,10 +167,21 @@
 
 	.grid {
 		display: grid;
-		grid-template-columns: auto 361px;
-		grid-template-rows: auto;
+		grid-template-columns: auto;
+		grid-template-rows: 50% 50%;
 		grid-template-areas:
-			'preview options';
+			'preview'
+			'options';
+	}
+
+	@media (min-width: 960px) {
+		.grid {
+			display: grid;
+			grid-template-columns: auto 361px;
+			grid-template-rows: auto;
+			grid-template-areas:
+				'preview options';
+		}
 	}
 
 	.main-layout__options {
@@ -171,16 +190,6 @@
 
 	.main-layout__preview {
 		grid-area: preview;
-	}
-
-	@media (max-width: 700px) {
-		.grid {
-			grid-template-columns: auto;
-			grid-template-rows: 50% 50%;
-			grid-template-areas:
-				'preview'
-				'options';
-		}
 	}
 
 /* FIXME: HIDE OFF CANVAS, MAKE BIGGER - actual size */
@@ -199,7 +208,7 @@
 
 <div class="grid sans-serif gray h-100 w-100" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0;">
 	<div
-		class="main-layout__options bg-white bt bt-0-ns bl-ns b--moon-gray"
+		class="main-layout__options bg-white bt bt-0-l bl-l b--moon-gray"
 		style="overflow-y: auto;">
 		<!-- <header class="pv2 ph3 bb b--moon-gray dn db-ns">
 			Options
@@ -258,7 +267,7 @@
 			<span class="br2 dib fr bg-white fw6 gray ph1">Poor contrast :(</span>
 			{/if}
 		</header> -->
-		<div class="flex items-center justify-center h-100 h-auto-ns">
+		<div class="flex items-center justify-center h-100 h-auto-l">
 			<!-- TODO: the wrapper div should be in the template -->
 			<div
 				class="shadow-5 mv3"

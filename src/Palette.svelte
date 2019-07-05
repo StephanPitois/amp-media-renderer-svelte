@@ -5,23 +5,33 @@
 </script>
 
 <style>
-	.color-tile-sm {
-		cursor: pointer;
-		width: 29.828px;
-		height: 29.828px;
-		/* max-width: 9.09%;
-		max-height: 9.09%; */
-		margin-right: 0;
-		margin-bottom: 0;
-        font-weight: 600 !important;
-		padding-left: 0;
-		padding-right: 0;
-	}
+    .palette {
+        max-width: 379px;
+    }
 
-    @media (max-width: 700px) {
+    .color-tile-sm {
+        cursor: pointer;
+        width: 33px;
+        height: 33px;
+        max-width: 9.09090909091%;
+        margin-right: 0;
+        margin-bottom: 0;
+        font-weight: 600 !important;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    @media (min-width: 960px) {
         .color-tile-sm {
+            cursor: pointer;
             width: 33px;
             height: 33px;
+            max-width: none;
+            margin-right: 0;
+            margin-bottom: 0;
+            font-weight: 600 !important;
+            padding-left: 0;
+            padding-right: 0;
         }
     }
 
@@ -30,18 +40,20 @@
     }
 </style>
 
-{#if !!combinations && combinations.length > 0}
-    {#each combinations as combination}
-    <button
-        class="br0 bn color-tile-sm fw9"
-        style="color: {combination.color}; background-color: {combination.backgroundColor}"
-        on:click={clickHandler}>Aa</button>
-    {/each}
-{:else if !!colors && colors.length > 0}
-    {#each colors as color}
-    <button
-        class="br0 bn color-tile-sm fw9"
-        style="background-color: {color}"
-        on:click={clickHandler}>&nbsp;</button>
-    {/each}
-{/if}
+<div class="palette">
+    {#if !!combinations && combinations.length > 0}
+        {#each combinations as combination}
+        <button
+            class="br0 bn color-tile-sm fw9"
+            style="color: {combination.color}; background-color: {combination.backgroundColor}"
+            on:click={clickHandler}>Aa</button>
+        {/each}
+    {:else if !!colors && colors.length > 0}
+        {#each colors as color}
+        <button
+            class="br0 bn color-tile-sm fw9"
+            style="background-color: {color}"
+            on:click={clickHandler}>&nbsp;</button>
+        {/each}
+    {/if}
+</div>
