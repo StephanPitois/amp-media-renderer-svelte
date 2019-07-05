@@ -24,8 +24,8 @@
     @media (min-width: 960px) {
         .color-tile-sm {
             cursor: pointer;
-            width: 33px;
-            height: 33px;
+            width: 29.828px;
+            height: 29.828px;
             max-width: none;
             margin-right: 0;
             margin-bottom: 0;
