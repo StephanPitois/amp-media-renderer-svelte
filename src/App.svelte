@@ -168,9 +168,11 @@
 	.grid {
 		display: grid;
 		grid-template-columns: auto;
-		grid-template-rows: 50% 50%;
+		grid-template-rows: 50px calc(50% - 50px) 50px auto;
 		grid-template-areas:
+			'preview-nav'
 			'preview'
+			'options-nav'
 			'options';
 	}
 
@@ -178,18 +180,27 @@
 		.grid {
 			display: grid;
 			grid-template-columns: auto 361px;
-			grid-template-rows: auto;
+			grid-template-rows: 50px auto;
 			grid-template-areas:
+				'preview-nav options-nav'
 				'preview options';
 		}
 	}
 
-	.main-layout__options {
-		grid-area: options;
+	.main-layout__preview-nav {
+		grid-area: preview-nav;
 	}
 
 	.main-layout__preview {
 		grid-area: preview;
+	}
+
+	.main-layout__options-nav {
+		grid-area: options-nav;
+	}
+
+	.main-layout__options {
+		grid-area: options;
 	}
 
 /* FIXME: HIDE OFF CANVAS, MAKE BIGGER - actual size */
@@ -207,67 +218,18 @@
 </style>
 
 <div class="grid sans-serif gray h-100 w-100" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0;">
-	<div
-		class="main-layout__options bg-white bt bt-0-l bl-l b--moon-gray"
-		style="overflow-y: auto;">
-		<!-- <header class="pv2 ph3 bb b--moon-gray dn db-ns">
-			Options
-		</header> -->
+	<div class="main-layout__preview-nav flex items-center justify-between h-100 bb b--moon-gray ph3">
 		<div>
-			<Tabs bind:activeTab={activeTab} tabs={tabs} />
-			<div class="fl w-100 h-100">
-				{#if activeTab === 'colors'}
-				<div class="xpa2 h-100">
-					<ColorSection
-						id="cs-bg-color"
-						title="Background"
-						bind:color={backgroundColor}
-						colors={colors}
-						combinations={combinationsForSelectedBackgroundColor}
-						changeColor={changeBackgroundColor}
-						changeCombination={changeCombination}
-						expanded={activeColorSection === 'cs-bg-color'}
-						toggleExpanded={toggleExpanded}
-					/>
-					<ColorSection
-						id="cs-color"
-						title="Text"
-						bind:color={color}
-						colors={colors}
-						combinations={combinationsForSelectedTextColor}
-						changeColor={changeColor}
-						changeCombination={changeCombination}
-						expanded={activeColorSection === 'cs-color'}
-						toggleExpanded={toggleExpanded}
-					/>
-				</div>
-				{/if}
-				{#if activeTab === 'text'}
-				<div class="pa2 h-100">
-					<TextEditor
-						bind:brand={brand}
-						bind:brandsub={brandsub}
-						bind:title={title}
-						bind:dates={dates}
-						bind:billing={billing}
-						bind:licensing={licensing}
-						bind:sponsors={sponsors}
-					/>
-				</div>
-				{/if}
-			</div>
+			<strong>Facebook Event Cover</strong>
+			<br><small>{customWidth}px × {customHeight}px</small>
 		</div>
+		{#if !currentContrastOK}
+		<div class="br2 dib fr bg-white fw6 gray ">Poor Contrast</div>
+		{/if}
 	</div>
 	<div class="main-layout__preview bg-white b--moon-gray"
 		 class:bl={horizontalSplit}>
-		 <!-- FIXME: dn db-ns currently hides Contrast indicator :() -->
-		<!-- <header class="pv2 ph3 bb b--moon-gray dn db-ns">
-			Preview
-			{#if !currentContrastOK}
-			<span class="br2 dib fr bg-white fw6 gray ph1">Poor contrast :(</span>
-			{/if}
-		</header> -->
-		<div class="flex items-center justify-center h-100 h-auto-l">
+		<div class="flex items-center justify-center h-100 xxx-h-auto-l">
 			<!-- TODO: the wrapper div should be in the template -->
 			<div
 				class="shadow-5 mv3"
@@ -308,6 +270,54 @@
 					sponsors={sponsors}
 				/>
 			</div>
+		</div>
+	</div>
+	<div class="main-layout__options-nav bt bt-0-l bl-l b--moon-gray">
+		<Tabs bind:activeTab={activeTab} tabs={tabs} />
+	</div>
+	<div
+		class="main-layout__options bg-white bl-l b--moon-gray"
+		style="overflow-y: auto;">
+		<div class="fl w-100 h-100">
+			{#if activeTab === 'colors'}
+			<div class="xpa2 h-100">
+				<ColorSection
+					id="cs-bg-color"
+					title="Background"
+					bind:color={backgroundColor}
+					colors={colors}
+					combinations={combinationsForSelectedBackgroundColor}
+					changeColor={changeBackgroundColor}
+					changeCombination={changeCombination}
+					expanded={activeColorSection === 'cs-bg-color'}
+					toggleExpanded={toggleExpanded}
+				/>
+				<ColorSection
+					id="cs-color"
+					title="Text"
+					bind:color={color}
+					colors={colors}
+					combinations={combinationsForSelectedTextColor}
+					changeColor={changeColor}
+					changeCombination={changeCombination}
+					expanded={activeColorSection === 'cs-color'}
+					toggleExpanded={toggleExpanded}
+				/>
+			</div>
+			{/if}
+			{#if activeTab === 'text'}
+			<div class="pa2 h-100">
+				<TextEditor
+					bind:brand={brand}
+					bind:brandsub={brandsub}
+					bind:title={title}
+					bind:dates={dates}
+					bind:billing={billing}
+					bind:licensing={licensing}
+					bind:sponsors={sponsors}
+				/>
+			</div>
+			{/if}
 		</div>
 	</div>
 </div>

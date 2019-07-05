@@ -19,8 +19,8 @@
     }
 </style>
 
-<div class="fl w-100 bg-light-gray">
-    <div class="flex justify-center tc">
+<div class="fl w-100 h-100 bg-light-gray">
+    <div class="flex justify-center tc h-100">
         {#each tabs as tab}
             <a
                 id="{tab.id}"

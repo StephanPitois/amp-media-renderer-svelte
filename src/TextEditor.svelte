@@ -11,7 +11,7 @@
 </script>
 
 <div>
-    <form class="pa4 black-80">
+    <form class="pa2 black-80">
         <TextField label="Brand" bind:value={brand}/>
         <TextField label="Below Brand" bind:value={brandsub}/>
         <TextField label="Title" bind:value={title}/>
