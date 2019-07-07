@@ -8,26 +8,25 @@
 </script>
 
 <style>
-    .tab {
-        border-bottom: 1px solid #CCC !important;
-    }
     .tab.active {
         border-bottom: 1px solid #FFF !important;
-        background-color: #FFF !important;
-        color: #000 !important;
+    }
+    .tab:last-of-type {
+        border-right: none !important;
     }
     a:focus {
         outline: 0;
     }
 </style>
 
-<div class="fl w-100 ph2 pt3 pb1">
-    <div class="mh1 bb b--moon-gray">
+<div class="fl w-100 h-100 bg-light-gray">
+    <div class="flex justify-center tc h-100">
         {#each tabs as tab}
             <a
                 id="{tab.id}"
-                style="margin-bottom: -1px; cursor: pointer;"
-                class="tab f6 dark-gray bg-light-gray link bl bt br br2 br--top ph3 pv2 mv0 ml1 mr1 dib b--moon-gray"
+                class="tab cursor-pointer w-third f6 gray bg-light-gray link ph3 pv3 dib bb br b--moon-gray"
+                class:blue={activeTab === tab.id}
+                class:bg-white={activeTab === tab.id}
                 class:active={activeTab === tab.id}
                 on:click={clickHandler}
                 href="#">{tab.title}</a>

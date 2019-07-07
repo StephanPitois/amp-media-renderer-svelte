@@ -18,8 +18,8 @@
     }
 </script>
 
-<div id={id} class="fl w-100 xpa1 xxxh-100">
-    <div class="bb b--moon-gray xxxh-100" xxxstyle="overflow-y: auto">
+<div id={id} class="fl w-100">
+    <div class="bb b--moon-gray">
         <div class="cursor-pointer pa3 b--light-gray flex items-center justify-between"
              class:bb={expanded}
              on:click={onToggleExpanded}>

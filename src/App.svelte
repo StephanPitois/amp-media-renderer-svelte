@@ -2,7 +2,7 @@
 	import Palette from "./Palette.svelte";
 	import ColorPicker from "./ColorPicker.svelte";
 	import ColorSection from "./ColorSection.svelte";
-	import Tabs from "./Tabs2.svelte";
+	import Tabs from "./Tabs.svelte";
 	import Template from "./Template.svelte";
 	import TextEditor from "./TextEditor.svelte";
 
@@ -97,12 +97,8 @@
 		backgroundColor = parseColor(event.target.style.backgroundColor);
 	}
 
-	// FIXME: THIS CODE IS GETTING MESSY!
-
 	let customWidth = 1920;
 	let customHeight = 1080;
-	// let customWidth = 385;
-	// let customHeight = 216;
 
 	let tplWidth = customWidth + 'px';
 	let tplHeight = customHeight + 'px';
@@ -114,7 +110,6 @@
 
 	let horizontalSplit = false;
 
-	// let activeColorSection = "cs-bg-color";
 	let activeColorSection = "";
     function toggleExpanded(id) {
 		if (activeColorSection === id) {
@@ -128,7 +123,6 @@
 		let containerWidth = event.target.innerWidth;
 		horizontalSplit = containerWidth > 960;
 		let padding = containerWidth > 960 ? 120 : containerWidth > 480 ? 100 : 30;
-		// let optionsWidth = containerWidth / 2;
 		let optionsWidth = containerWidth - 361;
 		let newWidth = (horizontalSplit ? optionsWidth : containerWidth) - padding;
 		let newHeight = newWidth / (customWidth / customHeight);
@@ -148,22 +142,6 @@
 	button {
 		cursor: pointer;
 	}
-
-	/* .grid {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: auto;
-		grid-template-areas:
-			'options preview';
-	} */
-
-	/* .grid {
-		display: grid;
-		grid-template-columns: 360px auto;
-		grid-template-rows: auto;
-		grid-template-areas:
-			'options preview';
-	} */
 
 	.grid {
 		display: grid;
@@ -224,7 +202,7 @@
 			<br><small>{customWidth}px × {customHeight}px</small>
 		</div>
 		{#if !currentContrastOK}
-		<div class="br2 dib fr bg-white fw6 gray ">Poor Contrast</div>
+		<div class="br2 dib fr bg-white fw6 dark-red">Poor contrast</div>
 		{/if}
 	</div>
 	<div class="main-layout__preview bg-white b--moon-gray"
@@ -237,9 +215,13 @@
 				width: {tplWidthPreview};
 				height: {tplHeightPreview};
 				color: {color};
-				background-color: {backgroundColor};">
+				xxx-background-image: url(https://www.ameliamusicalplayhouse.com/wp-content/uploads/art-deco-pattern-e1561811480283.jpg);
+				background-size: cover;
+				background-repeat: no-repeat;
+				background-position: center center;">
 				<Template
 					fontSize={tplFontSizePreview}
+					backgroundColor={backgroundColor}
 					color={color}
 					brand={brand}
 					brandsub={brandsub}

@@ -1,7 +1,3 @@
-/* .hidden {
-    display: none !important;
-} */
-
 .amp-ff1 {
     font-family: 'Lobster', cursive;
     font-family: 'Lobster Two', cursive;
@@ -17,41 +13,6 @@
     font-family: 'Lobster Two', cursive;
 }
 
-.amp-opacity-8 {
-    opacity: 0.8;
-}
-
-.amp-opacity-9 {
-    opacity: 0.9;
-}
-
-/* .amp-aligner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-} */
-
 .cursor-pointer {
     cursor: pointer;
 }
-
-/* .template-wrapper .template-image {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-color: white;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-} */
-
-/* .xxx-template-wrapper .template-text {
-    position: absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-} */
