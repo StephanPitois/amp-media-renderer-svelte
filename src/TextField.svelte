@@ -7,7 +7,7 @@
     <label for="name" class="f6 b db mb2">{label}</label>
     <input
         id="name"
-        class="input-reset ba b--black-20 pa2 mb2 db w-100"
+        class="input-reset ba b--black-20 pa2 mb3 db w-100"
         type="text"
         bind:value={value}
         aria-describedby="name-desc">

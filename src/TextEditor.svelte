@@ -22,7 +22,7 @@
             <textarea
                 id="comment"
                 name="comment"
-                class="db border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2"
+                class="db border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb3"
                 rows="5"
                 bind:value="{billing}"
                 aria-describedby="comment-desc" />

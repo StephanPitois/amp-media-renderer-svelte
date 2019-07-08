@@ -8,6 +8,7 @@
 	import Tabs from "./Tabs.svelte";
 	import Template from "./Template.svelte";
 	import TextEditor from "./TextEditor.svelte";
+    import TextField from "./TextField.svelte";
 
 	// http://tachyons.io/docs/themes/skins/
 	// https://webaim.org/articles/contrast/#sc143
@@ -27,11 +28,12 @@
 	let backgroundAlphaPercent = config.defaultBackgroundAlpha;
 	let brand = params.get("brand") || config.defaultBrand;
 	let brandsub = params.get("brandsub") || config.defaultBrandSub;
-	let title = params.get("title") || '';
-	let dates = params.get("dates") || '';
+	let title = params.get("title");
+	let dates = params.get("dates");
 	let billing = utils.lineBreaksToHtml(utils.stripHtml(params.get("billing") || ''));
-	let licensing = params.get("licensing") || '';
+	let licensing = params.get("licensing");
 	let sponsors = utils.stripHtml(params.get("sponsors") || '');
+	let backgroundImageUrl = params.get("bgimage");
 
 	let activeTab = "colors";
 	let tabs = [
@@ -191,7 +193,7 @@
 				fontSize={tplFontSizePreview}
 				backgroundColor={backgroundColor}
 				backgroundAlpha={backgroundAlpha}
-				backgroundImage="url(https://www.ameliamusicalplayhouse.com/wp-content/uploads/art-deco-pattern-e1561811480283.jpg)"
+				backgroundImage="url({backgroundImageUrl})"
 				color={color}
 				brand={brand}
 				brandsub={brandsub}
@@ -269,13 +271,21 @@
 			</div>
 			{/if}
 			{#if activeTab === 'graphics'}
-			<div class="pa3 h-100">
-				Image Opacity (%)
-				<div class="pv3">
-					<label>
-						<input type=number bind:value={backgroundAlphaPercent} min=0 max=100>
-						<input type=range bind:value={backgroundAlphaPercent} min=0 max=100>
-					</label>
+			<div class="pa2 h-100">
+				<div class="pa2 black-80">
+					<div>
+						<label for="bg-alpha-input" class="f6 b db mb2">Image Opacity: {backgroundAlphaPercent}%</label>
+						<div id="bg-alpha-input" class="mb3">
+							<label>
+								<!-- <input type=number bind:value={backgroundAlphaPercent} min=0 max=100> -->
+								<input class="w-100 mt2" type=range bind:value={backgroundAlphaPercent} min=0 max=100>
+							</label>
+						</div>
+					</div>
+					<TextField label="Image URL" bind:value={backgroundImageUrl}/>
+					{#if backgroundImageUrl}
+					<img src="{backgroundImageUrl}" class="w-50">
+					{/if}
 				</div>
 			</div>
 			{/if}
