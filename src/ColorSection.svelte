@@ -32,7 +32,7 @@
             {/if}
         </div>
         {#if expanded}
-        <div class="pa2 bg-near-white" style="overflow-y: auto">
+        <div class="pa2 bg-near-white amp-scroll-y">
             <div class="pa2">
                 <ColorPicker bind:color={color} />
             </div>

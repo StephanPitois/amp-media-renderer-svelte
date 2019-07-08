@@ -1,4 +1,7 @@
 <script>
+	import config from "./config.js";
+	import utils from "./utils.js";
+
 	import Palette from "./Palette.svelte";
 	import ColorPicker from "./ColorPicker.svelte";
 	import ColorSection from "./ColorSection.svelte";
@@ -17,38 +20,18 @@
 	//	- 30em = 480px
 	//	- 60em = 960px
 
-	function parseColor(color, defaultColor) {
-		if (chroma.valid(color)) {
-			return chroma(color).hex();
-		} else {
-			return defaultColor || '#000000';
-		};
-	}
-
-	function lineBreaksToHtml (str) {
-		return str.replace(/(?:\\[rn]|[\r\n]+)+/g, '<br>').replace('\r\n', '<br>');
-	}
-
-	function fixLineBreaks (str) {
-		return str.replace('\r\n', '\r\n');
-	}
-
-	function stripHtml (str) {
-		return str.replace(/(<([^>]+)>)/ig, '');
-	}
-
 	const params = new URLSearchParams(window.location.search);
 
-	let color = parseColor(params.get("color"), "#000000");
-	let backgroundColor = parseColor(params.get("bgcolor"), "#ffffff");
-	let backgroundAlphaPercent = 10;
-	let brand = params.get("brand") || 'Amelia Musical Playhouse';
-	let brandsub = params.get("brandsub") || 'Presents';
+	let color = utils.parseColor(params.get("color"), config.defaultColor);
+	let backgroundColor = utils.parseColor(params.get("bgcolor"), config.defaultBackgroundColor);
+	let backgroundAlphaPercent = config.defaultBackgroundAlpha;
+	let brand = params.get("brand") || config.defaultBrand;
+	let brandsub = params.get("brandsub") || config.defaultBrandSub;
 	let title = params.get("title") || '';
 	let dates = params.get("dates") || '';
-	let billing = lineBreaksToHtml(stripHtml(params.get("billing") || ''));
+	let billing = utils.lineBreaksToHtml(utils.stripHtml(params.get("billing") || ''));
 	let licensing = params.get("licensing") || '';
-	let sponsors = stripHtml(params.get("sponsors") || '');
+	let sponsors = utils.stripHtml(params.get("sponsors") || '');
 
 	let activeTab = "colors";
 	let tabs = [
@@ -57,47 +40,42 @@
 		{ id: "graphics", title: "Graphics"}
 	];
 
-	const minContrast = 4.5;
-
 	let colors = [];
-	let getScale = (arr) => {
-		return chroma.scale(arr).mode('lab').colors(11);
-	};
-	colors = colors.concat(getScale(['000000', 'ffffff']));
-	colors = colors.concat(getScale(['8B4513', 'fef9f6']));
-	colors = colors.concat(getScale(['d5008f', 'ff41b4', 'ff80cc', 'ffa3d7', 'fff5fb']));
-	colors = colors.concat(getScale(['e7040f', 'ff4136', 'ff725c', 'fff5f5']));
-	colors = colors.concat(getScale(['ff6300', 'ffb700', 'ffd700', 'fbf1a9', 'fffceb']));
-	colors = colors.concat(getScale(['ffff00', 'fffff5']));
-	colors = colors.concat(getScale(['137752', '19a974', '9eebcf', 'e8fdf5']));
-	colors = colors.concat(getScale(['001b44', '00449e', '357edd', '96ccff', 'cdecff', 'f6fffe']));
-	colors = colors.concat(getScale(['5e2ca5', 'a463f2', 'f9f6fe']));
+	colors = colors.concat(utils.getScale(['000000', 'ffffff']));
+	colors = colors.concat(utils.getScale(['8B4513', 'fef9f6']));
+	colors = colors.concat(utils.getScale(['d5008f', 'ff41b4', 'ff80cc', 'ffa3d7', 'fff5fb']));
+	colors = colors.concat(utils.getScale(['e7040f', 'ff4136', 'ff725c', 'fff5f5']));
+	colors = colors.concat(utils.getScale(['ff6300', 'ffb700', 'ffd700', 'fbf1a9', 'fffceb']));
+	colors = colors.concat(utils.getScale(['ffff00', 'fffff5']));
+	colors = colors.concat(utils.getScale(['137752', '19a974', '9eebcf', 'e8fdf5']));
+	colors = colors.concat(utils.getScale(['001b44', '00449e', '357edd', '96ccff', 'cdecff', 'f6fffe']));
+	colors = colors.concat(utils.getScale(['5e2ca5', 'a463f2', 'f9f6fe']));
 
 	$: backgroundAlpha = (100 - backgroundAlphaPercent) / 100;
 
 	$: currentContrast = chroma.contrast(color, backgroundColor);
 
-	$: currentContrastOK = currentContrast >= minContrast;
+	$: currentContrastOK = currentContrast >= config.minimumContrast;
 
 	$: combinationsForSelectedBackgroundColor = (colors
-		.filter(c => chroma.contrast(c, backgroundColor) >= minContrast))
+		.filter(c => chroma.contrast(c, backgroundColor) >= config.minimumContrast))
 		.map(c => { return { color: c, backgroundColor: backgroundColor }; });
 
 	$: combinationsForSelectedTextColor = (colors
-		.filter(c => chroma.contrast(c, color) >= minContrast))
+		.filter(c => chroma.contrast(c, color) >= config.minimumContrast))
 		.map(c => { return { color: color, backgroundColor: c }; });
 
 	function changeCombination(event) {
-		color = parseColor(event.target.style.color);
-		backgroundColor = parseColor(event.target.style.backgroundColor);
+		color = utils.parseColor(event.target.style.color);
+		backgroundColor = utils.parseColor(event.target.style.backgroundColor);
 	}
 
 	function changeColor(event) {
-		color = parseColor(event.target.style.backgroundColor);
+		color = utils.parseColor(event.target.style.backgroundColor);
 	}
 
 	function changeBackgroundColor(event) {
-		backgroundColor = parseColor(event.target.style.backgroundColor);
+		backgroundColor = utils.parseColor(event.target.style.backgroundColor);
 	}
 
 	let customWidth = 1920;
@@ -142,10 +120,6 @@
 </script>
 
 <style>
-	button {
-		cursor: pointer;
-	}
-
 	.grid {
 		display: grid;
 		grid-template-columns: auto;
@@ -198,7 +172,7 @@
 	}
 </style>
 
-<div class="grid sans-serif gray h-100 w-100" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0;">
+<div class="grid sans-serif gray h-100 w-100 amp-fullscreen">
 	<div class="main-layout__preview-nav flex items-center justify-between h-100 bb b--moon-gray ph3">
 		<div>
 			<strong>Facebook Event Cover</strong>
@@ -210,7 +184,7 @@
 	</div>
 	<div class="main-layout__preview bg-white b--moon-gray"
 		 class:bl={horizontalSplit}>
-		<div class="flex items-center justify-center h-100 xxx-h-auto-l">
+		<div class="flex items-center justify-center h-100">
 			<Template
 				width={tplWidthPreview}
 				height={tplHeightPreview}
@@ -253,11 +227,10 @@
 		<Tabs bind:activeTab={activeTab} tabs={tabs} />
 	</div>
 	<div
-		class="main-layout__options bg-white bl-l b--moon-gray"
-		style="overflow-y: auto;">
+		class="main-layout__options bg-white bl-l b--moon-gray amp-scroll-y">
 		<div class="fl w-100 h-100">
 			{#if activeTab === 'colors'}
-			<div class="xpa2 h-100">
+			<div class="h-100">
 				<ColorSection
 					id="cs-bg-color"
 					title="Background"
@@ -299,10 +272,10 @@
 			<div class="pa3 h-100">
 				Image Opacity (%)
 				<div class="pv3">
-				<label>
-					<input type=number bind:value={backgroundAlphaPercent} min=0 max=100>
-					<input type=range bind:value={backgroundAlphaPercent} min=0 max=100>
-				</label>
+					<label>
+						<input type=number bind:value={backgroundAlphaPercent} min=0 max=100>
+						<input type=range bind:value={backgroundAlphaPercent} min=0 max=100>
+					</label>
 				</div>
 			</div>
 			{/if}
