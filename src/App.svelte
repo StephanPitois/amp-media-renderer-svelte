@@ -41,6 +41,7 @@
 
 	let color = parseColor(params.get("color"), "#000000");
 	let backgroundColor = parseColor(params.get("bgcolor"), "#ffffff");
+	let backgroundAlphaPercent = 10;
 	let brand = params.get("brand") || 'Amelia Musical Playhouse';
 	let brandsub = params.get("brandsub") || 'Presents';
 	let title = params.get("title") || '';
@@ -71,6 +72,8 @@
 	colors = colors.concat(getScale(['137752', '19a974', '9eebcf', 'e8fdf5']));
 	colors = colors.concat(getScale(['001b44', '00449e', '357edd', '96ccff', 'cdecff', 'f6fffe']));
 	colors = colors.concat(getScale(['5e2ca5', 'a463f2', 'f9f6fe']));
+
+	$: backgroundAlpha = (100 - backgroundAlphaPercent) / 100;
 
 	$: currentContrast = chroma.contrast(color, backgroundColor);
 
@@ -208,31 +211,23 @@
 	<div class="main-layout__preview bg-white b--moon-gray"
 		 class:bl={horizontalSplit}>
 		<div class="flex items-center justify-center h-100 xxx-h-auto-l">
-			<!-- TODO: the wrapper div should be in the template -->
-			<div
-				class="shadow-5 mv3"
-				style="
-				width: {tplWidthPreview};
-				height: {tplHeightPreview};
-				color: {color};
-				xxx-background-image: url(https://www.ameliamusicalplayhouse.com/wp-content/uploads/art-deco-pattern-e1561811480283.jpg);
-				background-size: cover;
-				background-repeat: no-repeat;
-				background-position: center center;">
-				<Template
-					fontSize={tplFontSizePreview}
-					backgroundColor={backgroundColor}
-					color={color}
-					brand={brand}
-					brandsub={brandsub}
-					title={title}
-					dates={dates}
-					billing={billing}
-					licensing={licensing}
-					sponsors={sponsors}
-				/>
-			</div>
-			<div
+			<Template
+				width={tplWidthPreview}
+				height={tplHeightPreview}
+				fontSize={tplFontSizePreview}
+				backgroundColor={backgroundColor}
+				backgroundAlpha={backgroundAlpha}
+				backgroundImage="url(https://www.ameliamusicalplayhouse.com/wp-content/uploads/art-deco-pattern-e1561811480283.jpg)"
+				color={color}
+				brand={brand}
+				brandsub={brandsub}
+				title={title}
+				dates={dates}
+				billing={billing}
+				licensing={licensing}
+				sponsors={sponsors}
+			/>
+			<!-- <div
 				id="canvasSource"
 				class="shadow-5 mv3"
 				style="
@@ -251,7 +246,7 @@
 					licensing={licensing}
 					sponsors={sponsors}
 				/>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<div class="main-layout__options-nav bt bt-0-l bl-l b--moon-gray">
@@ -298,6 +293,17 @@
 					bind:licensing={licensing}
 					bind:sponsors={sponsors}
 				/>
+			</div>
+			{/if}
+			{#if activeTab === 'graphics'}
+			<div class="pa3 h-100">
+				Image Opacity (%)
+				<div class="pv3">
+				<label>
+					<input type=number bind:value={backgroundAlphaPercent} min=0 max=100>
+					<input type=range bind:value={backgroundAlphaPercent} min=0 max=100>
+				</label>
+				</div>
 			</div>
 			{/if}
 		</div>
