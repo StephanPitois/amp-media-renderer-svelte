@@ -1,6 +1,7 @@
 <script>
 	import config from "./config.js";
 	import utils from "./utils.js";
+	import icons from "./icons.js";
 
 	import Palette from "./Palette.svelte";
 	import ColorPicker from "./ColorPicker.svelte";
@@ -218,7 +219,10 @@
 			<br><small>{customWidth}px × {customHeight}px</small>
 		</div>
 		<div>
-			<button on:click={renderCanvas}>Download</button>
+			<a class="no-underline gray dim inline-flex items-center mv2 tc br2 pv2" on:click={renderCanvas} title="Download">
+				{@html icons.download}
+				<span class="f6 ml2">Download</span>
+			</a>
 		</div>
 		{#if !currentContrastOK}
 		<div class="br2 dib fr bg-white fw6 dark-red">Poor contrast</div>
@@ -297,7 +301,6 @@
 						<label for="bg-alpha-input" class="f6 b db mb2">Image Opacity: {backgroundAlphaPercent}%</label>
 						<div id="bg-alpha-input" class="mb3">
 							<label>
-								<!-- <input type=number bind:value={backgroundAlphaPercent} min=0 max=100> -->
 								<input class="w-100 mt2" type=range bind:value={backgroundAlphaPercent} min=0 max=100>
 							</label>
 						</div>
