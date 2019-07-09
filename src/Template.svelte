@@ -1,4 +1,6 @@
 <script>
+    export let id = '';
+    export let isCanvasSource = false;
     export let width;
     export let height;
     export let fontSize = '20px';
@@ -37,10 +39,19 @@
         padding-top: 0.5%;
         padding-bottom: 0.5%;
     }
+
+    .canvasSource {
+        position: fixed;
+		top: -100000px;
+		left: -100000px;
+		z-index: 1000;
+    }
 </style>
 
 <div
+    id={id}
     class="shadow-5 mv3"
+    class:canvasSource={isCanvasSource}
     style="
     width: {width};
     height: {height};

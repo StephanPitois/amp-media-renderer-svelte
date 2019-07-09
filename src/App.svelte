@@ -119,6 +119,31 @@
 
 	window.dispatchEvent(new Event('resize'));
 
+	function renderCanvas() {
+		let elementId = "canvasSource";
+		let canvasId = "canvas";
+		let element = document.getElementById(elementId);
+		html2canvas(element, {
+			width: customWidth,
+			height: customHeight,
+			windowWidth: customWidth,
+			windowHeight: customHeight,
+			allowTaint: false,
+			useCORS: true
+		}).then(function (canvas) {
+			var a = document.createElement('a');
+			// toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+			a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+			a.download = title + '.jpg';
+			a.click();
+			// let can = document.getElementById(canvasId);
+			// if (can.childNodes.length > 0) {
+			// 	can.removeChild(can.childNodes[0]);
+			// }
+			// can.appendChild(canvas);
+		});
+	}
+
 </script>
 
 <style>
@@ -159,26 +184,41 @@
 	.main-layout__options {
 		grid-area: options;
 	}
-
-/* FIXME: HIDE OFF CANVAS, MAKE BIGGER - actual size */
-	#canvasSource {
-		/* FIXME: remove this line display: none*/
-		display: none;
-		position: fixed;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-		z-index: 1000;
-		margin: auto auto;
-	}
 </style>
 
+<div
+	id="canvas"
+	style="z-index: 10000; position: fixed; top: 0; left: 0; max-width: 100px; max-height: 50px; overflow: hidden;">
+</div>
+
 <div class="grid sans-serif gray h-100 w-100 amp-fullscreen">
+
+	<Template
+		id="canvasSource"
+		isCanvasSource="true"
+		width={tplWidth}
+		height={tplHeight}
+		fontSize={tplFontSize}
+		backgroundColor={backgroundColor}
+		backgroundAlpha={backgroundAlpha}
+		backgroundImage="url({backgroundImageUrl})"
+		color={color}
+		brand={brand}
+		brandsub={brandsub}
+		title={title}
+		dates={dates}
+		billing={billing}
+		licensing={licensing}
+		sponsors={sponsors}
+	/>
+
 	<div class="main-layout__preview-nav flex items-center justify-between h-100 bb b--moon-gray ph3">
 		<div>
 			<strong>Facebook Event Cover</strong>
 			<br><small>{customWidth}px × {customHeight}px</small>
+		</div>
+		<div>
+			<button on:click={renderCanvas}>Download</button>
 		</div>
 		{#if !currentContrastOK}
 		<div class="br2 dib fr bg-white fw6 dark-red">Poor contrast</div>
@@ -186,7 +226,7 @@
 	</div>
 	<div class="main-layout__preview bg-white b--moon-gray"
 		 class:bl={horizontalSplit}>
-		<div class="flex items-center justify-center h-100">
+		 <div class="flex items-center justify-center flex-column h-100">
 			<Template
 				width={tplWidthPreview}
 				height={tplHeightPreview}
@@ -203,26 +243,6 @@
 				licensing={licensing}
 				sponsors={sponsors}
 			/>
-			<!-- <div
-				id="canvasSource"
-				class="shadow-5 mv3"
-				style="
-				width: {tplWidth};
-				height: {tplHeight};
-				color: {color};
-				background-color: {backgroundColor};">
-				<Template
-					fontSize={tplFontSize}
-					color={color}
-					brand={brand}
-					brandsub={brandsub}
-					title={title}
-					dates={dates}
-					billing={billing}
-					licensing={licensing}
-					sponsors={sponsors}
-				/>
-			</div> -->
 		</div>
 	</div>
 	<div class="main-layout__options-nav bt bt-0-l bl-l b--moon-gray">
