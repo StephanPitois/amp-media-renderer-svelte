@@ -34,7 +34,8 @@
 	let billing = utils.lineBreaksToHtml(utils.stripHtml(params.get("billing") || ''));
 	let licensing = params.get("licensing");
 	let sponsors = utils.stripHtml(params.get("sponsors") || '');
-	let backgroundImageUrl = params.get("bgimage");
+	// See also _redirects
+	let backgroundImageUrl = (params.get("bgimage") || '').replace('https://www.ameliamusicalplayhouse.com/wp-content', '');
 
 	let activeTab = "colors";
 	let tabs = [
