@@ -17,7 +17,7 @@ function fixLineBreaks (str) {
 }
 
 function stripHtml (str) {
-  return str.replace(/(<([^>]+)>)/ig, '');
+  return str.replace('<br>', '~~~~br~~~~').replace(/(<([^>]+)>)/ig, '').replace('~~~~br~~~~', '<br>');
 }
 
 function getScale (arr) {
