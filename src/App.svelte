@@ -121,9 +121,7 @@
 	window.dispatchEvent(new Event('resize'));
 
 	function renderCanvas() {
-		let elementId = "canvasSource";
-		let canvasId = "canvas";
-		let element = document.getElementById(elementId);
+		let element = document.getElementById("canvasSource");
 		html2canvas(element, {
 			width: customWidth,
 			height: customHeight,
@@ -133,15 +131,11 @@
 			useCORS: true
 		}).then(function (canvas) {
 			var a = document.createElement('a');
-			// toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+			// a.href = canvas.toDataURL();
+			// a.download = title + '.png';
 			a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
 			a.download = title + '.jpg';
 			a.click();
-			// let can = document.getElementById(canvasId);
-			// if (can.childNodes.length > 0) {
-			// 	can.removeChild(can.childNodes[0]);
-			// }
-			// can.appendChild(canvas);
 		});
 	}
 
@@ -186,11 +180,6 @@
 		grid-area: options;
 	}
 </style>
-
-<div
-	id="canvas"
-	style="z-index: 10000; position: fixed; top: 0; left: 0; max-width: 100px; max-height: 50px; overflow: hidden;">
-</div>
 
 <div class="grid sans-serif gray h-100 w-100 amp-fullscreen">
 
