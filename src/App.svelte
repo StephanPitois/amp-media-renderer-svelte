@@ -33,7 +33,7 @@
 	let dates = params.get("dates");
 
 	let billing = utils.stripHtml(utils.lineBreaksToHtml(params.get("billing") || ''));
-	let billing2 = window.atob(params.get("billing2") || '');
+	let billing2 = utils.lineBreaksToHtml(window.atob(params.get("billing2") || ''));
 	billing = billing2;
 
 	let licensing = params.get("licensing");
