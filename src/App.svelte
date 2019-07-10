@@ -26,7 +26,7 @@
 
 	let color = utils.parseColor(params.get("color"), config.defaultColor);
 	let backgroundColor = utils.parseColor(params.get("bgcolor"), config.defaultBackgroundColor);
-	let backgroundAlphaPercent = config.defaultBackgroundAlpha;
+	let backgroundAlphaPercent = params.get("bgimageopacity") || config.defaultBackgroundAlpha;
 	let brand = params.get("brand") || config.defaultBrand;
 	let brandsub = params.get("brandsub") || config.defaultBrandSub;
 	let title = params.get("title");
