@@ -31,7 +31,7 @@
 	let brandsub = params.get("brandsub") || config.defaultBrandSub;
 	let title = params.get("title");
 	let dates = params.get("dates");
-	let billing = utils.lineBreaksToHtml(utils.stripHtml(window.atob(params.get("billing") || '')));
+	let billingRaw = window.atob(params.get("billing") || '');
 	let licensing = params.get("licensing");
 	let sponsors = utils.stripHtml(params.get("sponsors") || '');
 	// See also _redirects
@@ -54,6 +54,8 @@
 	colors = colors.concat(utils.getScale(['137752', '19a974', '9eebcf', 'e8fdf5']));
 	colors = colors.concat(utils.getScale(['001b44', '00449e', '357edd', '96ccff', 'cdecff', 'f6fffe']));
 	colors = colors.concat(utils.getScale(['5e2ca5', 'a463f2', 'f9f6fe']));
+
+	$: billing = utils.lineBreaksToHtml(utils.stripHtml(billingRaw));
 
 	$: backgroundAlpha = (100 - backgroundAlphaPercent) / 100;
 
@@ -278,7 +280,7 @@
 					bind:brandsub={brandsub}
 					bind:title={title}
 					bind:dates={dates}
-					bind:billing={billing}
+					bind:billing={billingRaw}
 					bind:licensing={licensing}
 					bind:sponsors={sponsors}
 				/>
