@@ -31,11 +31,7 @@
 	let brandsub = params.get("brandsub") || config.defaultBrandSub;
 	let title = params.get("title");
 	let dates = params.get("dates");
-
-	let billing = utils.stripHtml(utils.lineBreaksToHtml(params.get("billing") || ''));
-	let billing2 = utils.lineBreaksToHtml(window.atob(params.get("billing2") || ''));
-	billing = billing2;
-
+	let billing = utils.lineBreaksToHtml(utils.stripHtml(window.atob(params.get("billing") || '')));
 	let licensing = params.get("licensing");
 	let sponsors = utils.stripHtml(params.get("sponsors") || '');
 	// See also _redirects

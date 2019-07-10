@@ -9,7 +9,6 @@ function parseColor (color, defaultColor) {
 }
 
 function lineBreaksToHtml (str) {
-  // return str.replace(/(?:\\[rn]|[\r\n]+)+/g, '<br>').replace('\r\n', '<br>');
   return str.replace(/(?:\r\n|\r|\n)/g, '<br>');
 }
 
@@ -18,7 +17,7 @@ function fixLineBreaks (str) {
 }
 
 function stripHtml (str) {
-  return str.replace('<br>', '~~~~br~~~~').replace(/(<([^>]+)>)/ig, '').replace('~~~~br~~~~', '<br>');
+  return str.replace(/(<([^>]+)>)/ig, '');
 }
 
 function getScale (arr) {
