@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f1fd27f5-35d2-4037-bb26-502132ac52f9/deploy-status)](https://app.netlify.com/sites/objective-volhard-a23ec9/deploys)
+
 *Psst — looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 
 ---
