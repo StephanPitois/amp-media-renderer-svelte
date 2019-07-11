@@ -50,7 +50,7 @@
 
 <div
     id={id}
-    class="shadow-5 mv3"
+    class="mv3"
     class:canvasSource={isCanvasSource}
     style="
     width: {width};

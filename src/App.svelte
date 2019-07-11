@@ -222,7 +222,7 @@
 	</div>
 	<div class="main-layout__preview bg-white b--moon-gray"
 		 class:bl={horizontalSplit}>
-		 <div class="flex items-center justify-center flex-column h-100">
+		 <div class="flex items-center justify-center flex-column h-100 bg-near-white">
 			<Template
 				width={tplWidthPreview}
 				height={tplHeightPreview}

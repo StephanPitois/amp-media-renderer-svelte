@@ -20,7 +20,7 @@
 
 <div id={id} class="fl w-100">
     <div class="bb b--moon-gray">
-        <div class="cursor-pointer pa3 b--light-gray flex items-center justify-between"
+        <div class="cursor-pointer pa3 b--moon-gray flex items-center justify-between"
              class:bb={expanded}
              on:click={onToggleExpanded}>
             <span class="w-third">{title}</span>
