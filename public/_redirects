@@ -1,1 +1,2 @@
 /uploads/*  https://www.ameliamusicalplayhouse.com/wp-content/uploads/:splat  200
+/pexels/*  https://images.pexels.com/photos/:splat  200
