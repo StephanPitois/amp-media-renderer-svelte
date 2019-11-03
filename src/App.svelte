@@ -24,8 +24,8 @@
 
 	const params = new URLSearchParams(window.location.search);
 
-	let color = utils.parseColor(params.get("color"), config.defaultColor);
-	let backgroundColor = utils.parseColor(params.get("bgcolor"), config.defaultBackgroundColor);
+	let color = "#FFFFFF"; // utils.parseColor(params.get("color"), config.defaultColor);
+	let backgroundColor = "#111111"; // utils.parseColor(params.get("bgcolor"), config.defaultBackgroundColor);
 	let backgroundAlphaPercent = params.get("bgimageopacity") || config.defaultBackgroundAlpha;
 	let brand = params.get("brand") || config.defaultBrand;
 	let brandsub = params.get("brandsub") || config.defaultBrandSub;
@@ -33,14 +33,15 @@
 	let dates = params.get("dates");
 	let billingRaw = window.atob(params.get("billing") || '');
 	let licensing = params.get("licensing");
-	let sponsors = utils.stripHtml(params.get("sponsors") || '');
+	let sponsors = 'Sponsored by ' + utils.stripHtml(params.get("sponsors") || '');
+	let sponsors2 = '';
 	// See also _redirects
-	let backgroundImageUrl = (params.get("bgimage") || '').replace('https://www.ameliamusicalplayhouse.com/wp-content', '');
+	let backgroundImageUrl = (params.get("bgimage") || '').replace('https://www.ameliamusicalplayhouse.com/wp-content', '') || config.defaultImage;
 
-	let activeTab = "colors";
+	let activeTab = "text";
 	let tabs = [
-		{ id: "colors", title: "Colors"},
 		{ id: "text", title: "Text"},
+		// { id: "colors", title: "Colors"},
 		{ id: "graphics", title: "Graphics"}
 	];
 
@@ -84,8 +85,10 @@
 		backgroundColor = utils.parseColor(event.target.style.backgroundColor);
 	}
 
-	let customWidth = 1920;
+	let customWidth = 2160;
 	let customHeight = 1080;
+	// let customWidth = 1920;
+	// let customHeight = 1080;
 
 	let tplWidth = customWidth + 'px';
 	let tplHeight = customHeight + 'px';
@@ -184,7 +187,7 @@
 	}
 </style>
 
-<div class="grid sans-serif gray h-100 w-100 amp-fullscreen">
+<div class="grid roboto gray h-100 w-100 amp-fullscreen">
 
 	<Template
 		id="canvasSource"
@@ -203,11 +206,12 @@
 		billing={billing}
 		licensing={licensing}
 		sponsors={sponsors}
+		sponsors2={sponsors2}
 	/>
 
 	<div class="main-layout__preview-nav flex items-center justify-between h-100 bb b--moon-gray ph3">
 		<div>
-			<strong>Facebook Event Cover</strong>
+			<strong>Horizontal</strong>
 			<br><small>{customWidth}px × {customHeight}px</small>
 		</div>
 		<div>
@@ -238,6 +242,7 @@
 				billing={billing}
 				licensing={licensing}
 				sponsors={sponsors}
+				sponsors2={sponsors2}
 			/>
 		</div>
 	</div>
@@ -283,20 +288,21 @@
 					bind:billing={billingRaw}
 					bind:licensing={licensing}
 					bind:sponsors={sponsors}
+					bind:sponsors2={sponsors2}
 				/>
 			</div>
 			{/if}
 			{#if activeTab === 'graphics'}
 			<div class="pa2 h-100">
 				<div class="pa2 black-80">
-					<div>
+					<!-- <div>
 						<label for="bg-alpha-input" class="f6 b db mb2">Image Opacity: {backgroundAlphaPercent}%</label>
 						<div id="bg-alpha-input" class="mb3">
 							<label>
 								<input class="w-100 mt2" type=range bind:value={backgroundAlphaPercent} min=0 max=100>
 							</label>
 						</div>
-					</div>
+					</div> -->
 					<TextField label="Image URL" bind:value={backgroundImageUrl}/>
 					{#if backgroundImageUrl}
 					<img src="{backgroundImageUrl}" class="w-50">

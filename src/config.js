@@ -1,9 +1,10 @@
 let config = {
   defaultColor: '#FFFFFF',
   defaultBackgroundColor: '#000000',
-  defaultBackgroundAlpha: 0,
+  defaultBackgroundAlpha: 100,
   defaultBrand: 'Amelia Musical Playhouse',
   defaultBrandSub: 'Presents',
+  defaultImage: 'sample.jpg',
   minimumContrast: 4.5
 };
 
