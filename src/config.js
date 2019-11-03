@@ -4,7 +4,7 @@ let config = {
   defaultBackgroundAlpha: 100,
   defaultBrand: 'Amelia Musical Playhouse',
   defaultBrandSub: 'Presents',
-  defaultImage: 'sample.jpg',
+  defaultImage: 'image-placeholder.jpg',
   minimumContrast: 4.5
 };
 
