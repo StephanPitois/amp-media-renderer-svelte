@@ -33,8 +33,13 @@
 	let dates = params.get("dates");
 	let billingRaw = window.atob(params.get("billing") || '');
 	let licensing = params.get("licensing");
-	let sponsors = 'Sponsored by ' + utils.stripHtml(params.get("sponsors") || '');
+
+	let sponsors = utils.stripHtml(params.get("sponsors") || '');
+	if (sponsors) {
+		sponsors = 'Sponsored by ' + sponsors;
+	}
 	let sponsors2 = '';
+
 	// See also _redirects
 	let backgroundImageUrl = (params.get("bgimage") || '').replace('https://www.ameliamusicalplayhouse.com/wp-content', '') || config.defaultImage;
 
