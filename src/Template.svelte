@@ -41,6 +41,27 @@
     padding-bottom: 0.5%;
   } */
 
+  .padding-left-2 {
+    padding-left: 2%;
+  }
+
+  .padding-right-2 {
+    padding-right: 2%;
+  }
+
+  .padding-vertical-4 {
+    padding-top: 4%;
+    padding-bottom: 4%;
+  }
+
+  .padding-left-4 {
+    padding-left: 4%;
+  }
+
+  .padding-right-4 {
+    padding-right: 4%;
+  }
+
   .padding-5 {
     padding: 5% 5%;
   }
@@ -77,52 +98,55 @@
     style="font-size: {fontSize};">
 
     <div
-      class="padding-5 bg-white"
+      class="xxx-padding-vertical-4 xxx-padding-left-4 xxx-padding-right-2 bg-white h-100"
       style="width: {height}">
       <div class="aspect-ratio aspect-ratio--1x1">
         <div
           class="aspect-ratio--object cover"
-          style="background-image: {backgroundImage}; background-position: center;" />
+          style="background-image: {backgroundImage}; background-position: center;">
+        </div>
       </div>
     </div>
 
-    <div
-      class="template-text tc flex items-center justify-center flex-column h-100 fl bg-black-90 light-gray padding-vertical-5"
-      style="color: {color}; background-color: {backgroundColor}; width: calc(100% - {height});">
-      <img
-        class="xxx-padding-vertical-5 xxx-bg-green"
-        style="width: calc({height} / 3)"
-        src="logo.png"
-        alt="AMP Logo" />
-      <!-- <Logo color="{color}" width="{logoWidth}" /> -->
-      {#if dates}
-        <div
-          class="fw7 ttu padding-vertical-15 xxx-bg-red"
-          style="font-size: {fontSizes.dates};">
-          {dates}
-        </div>
-      {/if}
-      {#if brand}
-        <div
-          class="fw7 ttu padding-bottom-5 xxx-bg-silver"
-          style="font-size: {fontSizes.brand};">
-          {brand}
-        </div>
-      {/if}
-      {#if sponsors}
-        <div
-          class="fw3 xxx-padding-vertical-5 xxx-bg-blue"
-          style="font-size: {fontSizes.sponsors};">
-          {sponsors}
-        </div>
-      {/if}
-      {#if sponsors2}
-        <div
-          class="fw3 xxx-padding-vertical-5 xxx-bg-blue"
-          style="font-size: {fontSizes.sponsors};">
-          {sponsors2}
-        </div>
-      {/if}
+    <div class="xxx-padding-vertical-4 xxx-padding-left-2 xxx-padding-right-4 bg-white h-100" style="width: calc(100% - {height});">
+      <div
+        class="template-text tc flex items-center justify-center flex-column w-100 h-100 fl bg-black-90 light-gray"
+        style="color: {color}; background-color: {backgroundColor};">
+        <img
+          class="xxx-padding-vertical-5 xxx-bg-green"
+          style="width: calc({height} / 3)"
+          src="logo.png"
+          alt="AMP Logo" />
+        <!-- <Logo color="{color}" width="{logoWidth}" /> -->
+        {#if dates}
+          <div
+            class="fw7 ttu padding-vertical-15 xxx-bg-red"
+            style="font-size: {fontSizes.dates};">
+            {dates}
+          </div>
+        {/if}
+        {#if brand}
+          <div
+            class="fw7 ttu padding-bottom-5 xxx-bg-silver"
+            style="font-size: {fontSizes.brand};">
+            {brand}
+          </div>
+        {/if}
+        {#if sponsors}
+          <div
+            class="fw3 xxx-padding-vertical-5 xxx-bg-blue"
+            style="font-size: {fontSizes.sponsors};">
+            {sponsors}
+          </div>
+        {/if}
+        {#if sponsors2}
+          <div
+            class="fw3 xxx-padding-vertical-5 xxx-bg-blue"
+            style="font-size: {fontSizes.sponsors};">
+            {sponsors2}
+          </div>
+        {/if}
+      </div>
     </div>
 
   </div>
