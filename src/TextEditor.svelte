@@ -13,6 +13,7 @@
 
 <div>
     <form class="pa2 black-80">
+        <TextField label="Title" bind:value={title}/>
         <TextField label="Dates" bind:value={dates}/>
         <!-- <div>
             <label for="dates" class="f6 b db mb2">Dates</label>
@@ -38,7 +39,6 @@
                 aria-describedby="sponsors-desc" />
         </div> -->
         <!-- <TextField label="Below Brand" bind:value={brandsub}/> -->
-        <!-- <TextField label="Title" bind:value={title}/> -->
         <!-- <TextField label="Billing" bind:value={billing}/> -->
         <!-- <div>
             <label for="comment" class="f6 b db mb2">Billing</label>

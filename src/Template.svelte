@@ -22,8 +22,8 @@
 
   let fontSizes = {
     title: "70%",
-    dates: "70%",
-    brand: "45%",
+    dates: "55%",
+    brand: "35%",
     sponsors: "40%",
     // brand: "55%",
     // sponsors: "40%",
@@ -117,34 +117,36 @@
       <div
         class="template-text tc flex items-center justify-evenly xxx-justify-center flex-column w-100 h-100 fl xxx-xxx-bg-black-90 light-gray"
         style="color: {color}; background-color: {backgroundColor};">
-        <img
-          class="xxx-padding-vertical-5"
-          style="{logoStyle}"
-          src="logo.png"
-          alt="AMP Logo" />
         <!-- <Logo color="{color}" width="{logoWidth}" /> -->
-        <!-- {#if title}
+        <div>
+        {#if title}
           <div
-            class="fw7 ttu padding-vertical-5"
+            class="fw6 ttu padding-bottom-5"
             style="font-size: {fontSizes.title};">
             {title}
           </div>
-        {/if} -->
-        <div>
+        {/if}
         {#if dates}
           <div
-            class="fw6 ttu xxx-padding-vertical-15"
+            class="fw5 ttu xxx-padding-vertical-15"
             style="font-size: {fontSizes.dates};">
             {dates}
           </div>
         {/if}
-        {#if brand}
-          <div
-            class="fw5 ttu xxx-padding-bottom-5"
-            style="font-size: {fontSizes.brand};">
-            {brand}
-          </div>
-        {/if}
+        </div>
+        <div>
+          <img
+            class="xxx-padding-vertical-5"
+            style="{logoStyle}"
+            src="logo.png"
+            alt="AMP Logo" />
+          {#if brand}
+            <div
+              class="fw5 ttu xxx-padding-bottom-5"
+              style="font-size: {fontSizes.brand};">
+              {brand}
+            </div>
+          {/if}
         </div>
         {#if sponsors || sponsors2}
           <div>

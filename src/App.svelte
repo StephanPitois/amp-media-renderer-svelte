@@ -288,7 +288,7 @@
 			<br><small>{customWidth}px × {customHeight}px</small>
 		</div>
 		<div>
-		  <a class="f6 link dim br1 ba ph3 pv2 mv2 dib gray" on:click={showSizes}>Change Size</a>
+		  <a class="f6 link dim br1 ba ph3 pv2 mv2 dib gray" on:click={showSizes}>Sizes</a>
 		</div>
 		<div>
 			<a class="no-underline gray dim inline-flex items-center mv2 tc br2 pv2" on:click={renderCanvas} title="Download">
