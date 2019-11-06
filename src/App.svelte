@@ -259,6 +259,9 @@
 		vertical={vertical}
 	/>
 
+	<!-- FIXME: It appears that the full size canvas is NOT being resized when we change sizes.
+			Use computed W x H instead? -->
+
 	<div class="bg-white gray tc" class:db={sizesVisible} class:dn={!sizesVisible} style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; z-index: 1000;">
 		<ul class="list pl0 ml0 mt5 center mw7 ba b--light-silver br3">
 			<li class="ph3 pv2 bb b--light-silver">

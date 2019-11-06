@@ -146,18 +146,22 @@
           </div>
         {/if}
         </div>
-        {#if sponsors}
-          <div
-            class="fw2 xxx-padding-vertical-5"
-            style="font-size: {fontSizes.sponsors};">
-            {sponsors}
-          </div>
-        {/if}
-        {#if sponsors2}
-          <div
-            class="fw2 xxx-padding-vertical-5"
-            style="font-size: {fontSizes.sponsors};">
-            {sponsors2}
+        {#if sponsors || sponsors2}
+          <div>
+          {#if sponsors}
+            <div
+              class="fw2 xxx-padding-vertical-5"
+              style="font-size: {fontSizes.sponsors};">
+              {sponsors}
+            </div>
+          {/if}
+          {#if sponsors2}
+            <div
+              class="fw2 xxx-padding-vertical-5"
+              style="font-size: {fontSizes.sponsors};">
+              {sponsors2}
+            </div>
+          {/if}
           </div>
         {/if}
       </div>
