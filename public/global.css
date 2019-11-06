@@ -6,6 +6,26 @@
     font-family: 'Roboto', sans-serif;
 }
 
+.nunito-sans {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.lato {
+    font-family: 'Lato', sans-serif;
+}
+
+.montserrat {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.muli {
+    font-family: 'Muli', sans-serif;
+}
+
+.prompt {
+    font-family: 'Prompt', sans-serif;
+}
+
 a,
 button,
 .cursor-pointer {
@@ -18,4 +38,8 @@ button,
 
 .amp-scroll-y {
     overflow-y: auto;
+}
+
+.justify-evenly {
+    justify-content: space-evenly;
 }

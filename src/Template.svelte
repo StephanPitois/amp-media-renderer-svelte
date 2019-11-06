@@ -115,7 +115,7 @@
 
     <div class="xxx-padding-vertical-4 xxx-padding-left-2 xxx-padding-right-4 h-100" style="{infoStyle}">
       <div
-        class="template-text tc flex items-center justify-center flex-column w-100 h-100 fl bg-black-90 light-gray"
+        class="template-text tc flex items-center justify-evenly xxx-justify-center flex-column w-100 h-100 fl xxx-xxx-bg-black-90 light-gray"
         style="color: {color}; background-color: {backgroundColor};">
         <img
           class="xxx-padding-vertical-5"
@@ -130,30 +130,32 @@
             {title}
           </div>
         {/if} -->
+        <div>
         {#if dates}
           <div
-            class="fw7 ttu padding-vertical-15"
+            class="fw6 ttu xxx-padding-vertical-15"
             style="font-size: {fontSizes.dates};">
             {dates}
           </div>
         {/if}
         {#if brand}
           <div
-            class="fw7 ttu padding-bottom-5"
+            class="fw5 ttu xxx-padding-bottom-5"
             style="font-size: {fontSizes.brand};">
             {brand}
           </div>
         {/if}
+        </div>
         {#if sponsors}
           <div
-            class="fw3 xxx-padding-vertical-5"
+            class="fw2 xxx-padding-vertical-5"
             style="font-size: {fontSizes.sponsors};">
             {sponsors}
           </div>
         {/if}
         {#if sponsors2}
           <div
-            class="fw3 xxx-padding-vertical-5"
+            class="fw2 xxx-padding-vertical-5"
             style="font-size: {fontSizes.sponsors};">
             {sponsors2}
           </div>

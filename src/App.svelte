@@ -27,7 +27,7 @@
 	let vertical = false;
 
 	let color = "#FFFFFF"; // utils.parseColor(params.get("color"), config.defaultColor);
-	let backgroundColor = "#111111"; // utils.parseColor(params.get("bgcolor"), config.defaultBackgroundColor);
+	let backgroundColor = "#202020"; // utils.parseColor(params.get("bgcolor"), config.defaultBackgroundColor);
 	let backgroundAlphaPercent = params.get("bgimageopacity") || config.defaultBackgroundAlpha;
 	let brand = params.get("brand") || config.defaultBrand;
 	let brandsub = params.get("brandsub") || config.defaultBrandSub;
@@ -236,7 +236,7 @@
 	}
 </style>
 
-<div class="grid roboto gray h-100 w-100 amp-fullscreen">
+<div class="grid prompt xxx-montserrat gray h-100 w-100 amp-fullscreen">
 
 	<Template
 		id="canvasSource"
@@ -270,12 +270,12 @@
 			<li class="ph3 pv2 bb b--light-silver">
 				<a class="f6 link dim dib gray" on:click={() => changeSize('Facebook Group Cover', 1640, 856)}>Facebook Group Cover - 1640px × 856px</a>
 			</li>
-			<li class="ph3 pv2 bb b--light-silver">
+			<li class="ph3 pv2 xxx-bb b--light-silver">
 				<a class="f6 link dim dib gray" on:click={() => changeSize('Facebook Link', 1200, 628)}>Facebook Link / Facebook Ad (Link) - 1200px × 628px</a>
 			</li>
-			<li class="ph3 pv2 xxx-bb b--light-silver">
+			<!-- <li class="ph3 pv2 xxx-bb b--light-silver">
 				<a class="f6 link dim dib gray" on:click={() => changeSize('Facebook Post', 1200, 900)}>Facebook Post - 1200px × 900px</a>
-			</li>
+			</li> -->
 		</ul>
 	</div>
 
