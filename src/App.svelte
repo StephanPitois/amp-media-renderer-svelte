@@ -28,7 +28,7 @@
 	let dark = true;
 
 	$: color = dark ? "#FFFFFF": "#202020"; // utils.parseColor(params.get("color"), config.defaultColor);
-	$: backgroundColor = dark ? "#202020" : "#FFFFFF"; // utils.parseColor(params.get("bgcolor"), config.defaultBackgroundColor);
+	$: backgroundColor = dark ? "#202020" : "F4F4F4"; // utils.parseColor(params.get("bgcolor"), config.defaultBackgroundColor);
 
 	let backgroundAlphaPercent = params.get("bgimageopacity") || config.defaultBackgroundAlpha;
 	let brand = params.get("brand") || config.defaultBrand;
