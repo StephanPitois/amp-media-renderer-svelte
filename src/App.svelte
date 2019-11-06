@@ -25,9 +25,11 @@
 	const params = new URLSearchParams(window.location.search);
 
 	let vertical = false;
+	let dark = true;
 
-	let color = "#FFFFFF"; // utils.parseColor(params.get("color"), config.defaultColor);
-	let backgroundColor = "#202020"; // utils.parseColor(params.get("bgcolor"), config.defaultBackgroundColor);
+	$: color = dark ? "#FFFFFF": "#202020"; // utils.parseColor(params.get("color"), config.defaultColor);
+	$: backgroundColor = dark ? "#202020" : "#FFFFFF"; // utils.parseColor(params.get("bgcolor"), config.defaultBackgroundColor);
+
 	let backgroundAlphaPercent = params.get("bgimageopacity") || config.defaultBackgroundAlpha;
 	let brand = params.get("brand") || config.defaultBrand;
 	let brandsub = params.get("brandsub") || config.defaultBrandSub;
@@ -125,9 +127,9 @@
 		let screenHeight = event.target.innerHeight;
 		horizontalSplit = screenWidth >= 960;
 		// horizontalSplit = screenWidth > screenHeight;
-		console.log(screenWidth);
-		console.log(screenHeight);
-		console.log(horizontalSplit);
+		// console.log(screenWidth);
+		// console.log(screenHeight);
+		// console.log(horizontalSplit);
 		let maxContainerWidth = screenWidth - (horizontalSplit ? sidebarWidth : 0);
 		let maxContainerHeight = screenHeight - (horizontalSplit ? 0 : (screenHeight / 2));
 		// Add padding
@@ -257,6 +259,7 @@
 		sponsors={sponsors}
 		sponsors2={sponsors2}
 		vertical={vertical}
+		dark={dark}
 	/>
 
 	<!-- FIXME: It appears that the full size canvas is NOT being resized when we change sizes.
@@ -320,6 +323,7 @@
 				sponsors={sponsors}
 				sponsors2={sponsors2}
 				vertical={vertical}
+				dark={dark}
 			/>
 		</div>
 	</div>
@@ -366,6 +370,7 @@
 					bind:licensing={licensing}
 					bind:sponsors={sponsors}
 					bind:sponsors2={sponsors2}
+					bind:dark={dark}
 				/>
 			</div>
 			{/if}

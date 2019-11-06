@@ -9,6 +9,11 @@
     export let licensing = '';
     export let sponsors = '';
     export let sponsors2 = '';
+    export let dark = true;
+
+	function invertColors() {
+        dark = !dark;
+	}
 </script>
 
 <div>
@@ -51,5 +56,6 @@
                 aria-describedby="comment-desc" />
         </div> -->
         <!-- <TextField label="Licensing" bind:value={licensing}/> -->
+        <a class="f6 link dim br1 ba ph3 pv2 mv2 dib gray" on:click={invertColors}>Invert Colors</a>
     </form>
 </div>

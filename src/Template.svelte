@@ -19,6 +19,7 @@
   export let sponsors;
   export let sponsors2;
   export let vertical = false;
+  export let dark = true;
 
   let fontSizes = {
     title: "70%",
@@ -37,6 +38,7 @@
   $: artStyle = "width: " + (vertical ? "100%" : height);
   $: infoStyle = "width: " + (vertical ? "100%" : "calc(100% - " + height + ")");
   $: logoStyle = "width: " + (vertical ? "calc(100% / 3)" : "calc(" + height + " / 3)");
+  $: logo = dark ? "logo.png" : "logo-black.png";
 
 </script>
 
@@ -69,6 +71,11 @@
 
   .padding-5 {
     padding: 5% 5%;
+  }
+
+  .padding-horizontal-10 {
+    padding-left: 10%;
+    padding-right: 10%;
   }
 
   .padding-vertical-5 {
@@ -115,7 +122,7 @@
 
     <div class="xxx-padding-vertical-4 xxx-padding-left-2 xxx-padding-right-4 h-100" style="{infoStyle}">
       <div
-        class="template-text tc flex items-center justify-evenly xxx-justify-center flex-column w-100 h-100 fl xxx-xxx-bg-black-90 light-gray"
+        class="padding-horizontal-10 template-text tc flex items-center justify-evenly xxx-justify-center flex-column w-100 h-100 fl xxx-xxx-bg-black-90 light-gray"
         style="color: {color}; background-color: {backgroundColor};">
         <!-- <Logo color="{color}" width="{logoWidth}" /> -->
         <div>
@@ -138,7 +145,7 @@
           <img
             class="xxx-padding-vertical-5"
             style="{logoStyle}"
-            src="logo.png"
+            src="{logo}"
             alt="AMP Logo" />
           {#if brand}
             <div
