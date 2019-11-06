@@ -18,9 +18,10 @@
   export let licensing;
   export let sponsors;
   export let sponsors2;
+  export let vertical = false;
 
   let fontSizes = {
-    title: "40%",
+    title: "70%",
     dates: "70%",
     brand: "45%",
     sponsors: "40%",
@@ -32,6 +33,10 @@
   };
 
   // $: logoWidth = parseFloat(height.replace('px', '')) / 3;
+
+  $: artStyle = "width: " + (vertical ? "100%" : height);
+  $: infoStyle = "width: " + (vertical ? "100%" : "calc(100% - " + height + ")");
+  $: logoStyle = "width: " + (vertical ? "calc(100% / 3)" : "calc(" + height + " / 3)");
 
 </script>
 
@@ -92,14 +97,14 @@
   {id}
   class=""
   class:canvasSource={isCanvasSource}
-  style=" width: {width}; height: {height}; color: {color};">
+  style=" width: {vertical ? height : width}; height: {vertical ? width : height}; color: {color};">
   <div
-    class="w-100 h-100 flex items-center bg-white"
+    class="w-100 h-100 flex items-center bg-white {vertical ? 'flex-column' : 'flex-row'}"
     style="font-size: {fontSize};">
 
     <div
-      class="xxx-padding-vertical-4 xxx-padding-left-4 xxx-padding-right-2 bg-white h-100"
-      style="width: {height}">
+      class="xxx-padding-vertical-4 xxx-padding-left-4 xxx-padding-right-2 h-100"
+      style="{artStyle}">
       <div class="aspect-ratio aspect-ratio--1x1">
         <div
           class="aspect-ratio--object cover"
@@ -108,40 +113,47 @@
       </div>
     </div>
 
-    <div class="xxx-padding-vertical-4 xxx-padding-left-2 xxx-padding-right-4 bg-white h-100" style="width: calc(100% - {height});">
+    <div class="xxx-padding-vertical-4 xxx-padding-left-2 xxx-padding-right-4 h-100" style="{infoStyle}">
       <div
         class="template-text tc flex items-center justify-center flex-column w-100 h-100 fl bg-black-90 light-gray"
         style="color: {color}; background-color: {backgroundColor};">
         <img
-          class="xxx-padding-vertical-5 xxx-bg-green"
-          style="width: calc({height} / 3)"
+          class="xxx-padding-vertical-5"
+          style="{logoStyle}"
           src="logo.png"
           alt="AMP Logo" />
         <!-- <Logo color="{color}" width="{logoWidth}" /> -->
+        <!-- {#if title}
+          <div
+            class="fw7 ttu padding-vertical-5"
+            style="font-size: {fontSizes.title};">
+            {title}
+          </div>
+        {/if} -->
         {#if dates}
           <div
-            class="fw7 ttu padding-vertical-15 xxx-bg-red"
+            class="fw7 ttu padding-vertical-15"
             style="font-size: {fontSizes.dates};">
             {dates}
           </div>
         {/if}
         {#if brand}
           <div
-            class="fw7 ttu padding-bottom-5 xxx-bg-silver"
+            class="fw7 ttu padding-bottom-5"
             style="font-size: {fontSizes.brand};">
             {brand}
           </div>
         {/if}
         {#if sponsors}
           <div
-            class="fw3 xxx-padding-vertical-5 xxx-bg-blue"
+            class="fw3 xxx-padding-vertical-5"
             style="font-size: {fontSizes.sponsors};">
             {sponsors}
           </div>
         {/if}
         {#if sponsors2}
           <div
-            class="fw3 xxx-padding-vertical-5 xxx-bg-blue"
+            class="fw3 xxx-padding-vertical-5"
             style="font-size: {fontSizes.sponsors};">
             {sponsors2}
           </div>

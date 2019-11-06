@@ -24,6 +24,8 @@
 
 	const params = new URLSearchParams(window.location.search);
 
+	let vertical = false;
+
 	let color = "#FFFFFF"; // utils.parseColor(params.get("color"), config.defaultColor);
 	let backgroundColor = "#111111"; // utils.parseColor(params.get("bgcolor"), config.defaultBackgroundColor);
 	let backgroundAlphaPercent = params.get("bgimageopacity") || config.defaultBackgroundAlpha;
@@ -90,10 +92,12 @@
 		backgroundColor = utils.parseColor(event.target.style.backgroundColor);
 	}
 
-	let customWidth = 2160;
-	let customHeight = 1080;
-	// let customWidth = 1920;
+	let templateName = 'Facebook Event Cover';
+	// let customWidth = 2160;
 	// let customHeight = 1080;
+	let customWidth = 1920;
+	let customHeight = 1080;
+	let sizesVisible = false;
 
 	let tplWidth = customWidth + 'px';
 	let tplHeight = customHeight + 'px';
@@ -115,9 +119,37 @@
     }
 
 	function resizePreview(event) {
+		let paddingPercentage = 10;
+		let sidebarWidth = 361;
+		let screenWidth = event.target.innerWidth;
+		let screenHeight = event.target.innerHeight;
+		horizontalSplit = screenWidth >= 960;
+		// horizontalSplit = screenWidth > screenHeight;
+		console.log(screenWidth);
+		console.log(screenHeight);
+		console.log(horizontalSplit);
+		let maxContainerWidth = screenWidth - (horizontalSplit ? sidebarWidth : 0);
+		let maxContainerHeight = screenHeight - (horizontalSplit ? 0 : (screenHeight / 2));
+		// Add padding
+		maxContainerWidth = maxContainerWidth - paddingPercentage / 100 * maxContainerWidth;
+		let newWidth = maxContainerWidth;
+		let newHeight = maxContainerWidth / (customWidth / customHeight);
+		let newFontSize = maxContainerWidth / 19.25;
+		tplWidthPreview = '' + newWidth.toFixed(2) + 'px';
+		tplHeightPreview = '' + newHeight.toFixed(2) + 'px';
+		tplFontSizePreview = '' + newFontSize.toFixed(2) + 'px';
+	}
+
+	function resizePreview_DEPRECATED(event) {
 		let containerWidth = event.target.innerWidth;
 		horizontalSplit = containerWidth > 960;
-		let padding = containerWidth > 960 ? 120 : containerWidth > 480 ? 100 : 30;
+		let padding = 0;
+		if (vertical) {
+			padding = horizontalSplit ? 480 : 120;
+		}
+		else {
+			padding = horizontalSplit ? 120 : containerWidth > 480 ? 100 : 30;
+		}
 		let optionsWidth = containerWidth - 361;
 		let newWidth = (horizontalSplit ? optionsWidth : containerWidth) - padding;
 		let newHeight = newWidth / (customWidth / customHeight);
@@ -130,6 +162,18 @@
 	window.addEventListener("resize", resizePreview);
 
 	window.dispatchEvent(new Event('resize'));
+
+	function showSizes() {
+		sizesVisible = true;
+	}
+
+	function changeSize(name, w, h) {
+		sizesVisible = false;
+		templateName = name;
+		customWidth = w;
+		customHeight = h;
+		window.dispatchEvent(new Event('resize'));
+	}
 
 	function renderCanvas() {
 		let element = document.getElementById("canvasSource");
@@ -145,7 +189,7 @@
 			// a.href = canvas.toDataURL();
 			// a.download = title + '.png';
 			a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
-			a.download = title + '.jpg';
+			a.download = `${title} - ${templateName} - ${customWidth}x${customHeight}.jpg`;
 			a.click();
 		});
 	}
@@ -212,12 +256,36 @@
 		licensing={licensing}
 		sponsors={sponsors}
 		sponsors2={sponsors2}
+		vertical={vertical}
 	/>
+
+	<div class="bg-white gray tc" class:db={sizesVisible} class:dn={!sizesVisible} style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; z-index: 1000;">
+		<ul class="list pl0 ml0 mt5 center mw7 ba b--light-silver br3">
+			<li class="ph3 pv2 bb b--light-silver">
+				<a class="f6 link dim dib gray" on:click={() => changeSize('Facebook Cover Photo', 820, 360)}>Facebook Cover Photo - 820px × 360px</a>
+			</li>
+			<li class="ph3 pv2 bb b--light-silver">
+				<a class="f6 link dim dib gray" on:click={() => changeSize('Facebook Event Cover', 1920, 1080)}>Facebook Event Cover - 1920px × 1080px</a>
+			</li>
+			<li class="ph3 pv2 bb b--light-silver">
+				<a class="f6 link dim dib gray" on:click={() => changeSize('Facebook Group Cover', 1640, 856)}>Facebook Group Cover - 1640px × 856px</a>
+			</li>
+			<li class="ph3 pv2 bb b--light-silver">
+				<a class="f6 link dim dib gray" on:click={() => changeSize('Facebook Link', 1200, 628)}>Facebook Link / Facebook Ad (Link) - 1200px × 628px</a>
+			</li>
+			<li class="ph3 pv2 xxx-bb b--light-silver">
+				<a class="f6 link dim dib gray" on:click={() => changeSize('Facebook Post', 1200, 900)}>Facebook Post - 1200px × 900px</a>
+			</li>
+		</ul>
+	</div>
 
 	<div class="main-layout__preview-nav flex items-center justify-between h-100 bb b--moon-gray ph3">
 		<div>
-			<strong>Horizontal</strong>
+			<strong>{templateName}</strong>
 			<br><small>{customWidth}px × {customHeight}px</small>
+		</div>
+		<div>
+		  <a class="f6 link dim br1 ba ph3 pv2 mv2 dib gray" on:click={showSizes}>Change Size</a>
 		</div>
 		<div>
 			<a class="no-underline gray dim inline-flex items-center mv2 tc br2 pv2" on:click={renderCanvas} title="Download">
@@ -248,6 +316,7 @@
 				licensing={licensing}
 				sponsors={sponsors}
 				sponsors2={sponsors2}
+				vertical={vertical}
 			/>
 		</div>
 	</div>
