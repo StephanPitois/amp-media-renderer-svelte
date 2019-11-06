@@ -236,7 +236,7 @@
 	}
 </style>
 
-<div class="grid prompt xxx-montserrat gray h-100 w-100 amp-fullscreen">
+<div class="grid roboto xxx-montserrat gray h-100 w-100 amp-fullscreen">
 
 	<Template
 		id="canvasSource"

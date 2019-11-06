@@ -95,7 +95,7 @@
 
 <div
   {id}
-  class=""
+  class="prompt"
   class:canvasSource={isCanvasSource}
   style=" width: {vertical ? height : width}; height: {vertical ? width : height}; color: {color};">
   <div
