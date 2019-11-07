@@ -25,11 +25,13 @@
   $: vertical = parseFloat(height.replace('px', '')) >= parseFloat(width.replace('px', ''));
   $: isSquare = parseFloat(height.replace('px', '')) === parseFloat(width.replace('px', ''));
 
-  $: artStyle    = vertical ? `width: ${isSquare ? 0 : width}; height: ${isSquare ? 0 : width};`
+  $: artStyle    = vertical ? `width: ${isSquare ? '66.66%' : width};
+                               height: ${isSquare ? '66.66%' : width};
+                               padding: ${isSquare ? '5%' : '0'};`
                             : `width: ${height}; height: ${height};`;
 
-  $: infoStyle   = vertical ? `width: ${width}; height: calc(${height} - ${isSquare ? 0 : width});`
-                            : `width: calc(100% - ${height});`;
+  $: infoStyle   = vertical ? `width: ${width}; height: calc(${height} - ${isSquare ? '66.66%' : width});`
+                            : `width: calc(100% - ${height}); height: ${height};`;
 
   $: logoStyle   = vertical ? `width: calc(${width} / 6);`
                             : `width: calc(${height} / 3);`;
@@ -103,9 +105,7 @@ $: logo = dark ? "logo.png" : "logo-black.png";
     class="w-100 h-100 flex items-center bg-white {vertical ? 'flex-column' : 'flex-row'}"
     style="font-size: {fontSize};">
 
-    <div
-      class="h-100"
-      style="{artStyle}">
+    <div style="{artStyle}">
       <div class="aspect-ratio aspect-ratio--1x1">
         <div
           class="aspect-ratio--object cover"
@@ -114,7 +114,7 @@ $: logo = dark ? "logo.png" : "logo-black.png";
       </div>
     </div>
 
-    <div class="h-100" style="{infoStyle}">
+    <div style="{infoStyle}">
       <div
         class="padding-horizontal-10 template-text tc flex items-center justify-evenly flex-column w-100 h-100 fl light-gray"
         style="color: {color}; background-color: {backgroundColor};">
