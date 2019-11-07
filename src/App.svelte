@@ -110,7 +110,7 @@
 			// a.href = canvas.toDataURL();
 			// a.download = title + '.png';
 			a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-			a.download = `${title} - ${templateName} - ${customWidth}x${customHeight}.jpg`;
+			a.download = `${title} - ${templateName} - ${customWidth}x${customHeight}.png`;
 			a.click();
 		});
 	}
