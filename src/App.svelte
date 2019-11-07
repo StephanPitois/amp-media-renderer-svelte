@@ -109,7 +109,7 @@
 			var a = document.createElement('a');
 			// a.href = canvas.toDataURL();
 			// a.download = title + '.png';
-			a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+			a.href = canvas.toDataURL("image/jpeg", 1.0).replace("image/jpeg", "image/octet-stream");
 			a.download = `${title} - ${templateName} - ${customWidth}x${customHeight}.jpg`;
 			a.click();
 		});
