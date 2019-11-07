@@ -37,6 +37,18 @@
 	}
 	let sponsors2 = '';
 
+	let sizes = [
+		{ name: 'Facebook Cover Photo', width: 820, height: 360 },
+		{ name: 'Facebook Event Cover', width: 1920, height: 1080 },
+		{ name: 'Facebook Group Cover', width: 1640, height: 856 },
+		{ name: 'Facebook Link / Ad', width: 1200, height: 628 },
+		{ name: 'Facebook Post', width: 1200, height: 900 },
+		{ name: 'Instagram Post', width: 1080, height: 1080 },
+		{ name: 'Instagram Story', width: 1080, height: 1920 },
+		{ name: 'Twitter Header', width: 1080, height: 500 },
+		{ name: 'Twitter Post', width: 1024, height: 512 }
+	];
+
 	// See also _redirects
 	let backgroundImageUrl = (params.get("bgimage") || '').replace('https://www.ameliamusicalplayhouse.com/wp-content', '') || config.defaultImage;
 
@@ -47,8 +59,6 @@
 	];
 
 	let templateName = 'Facebook Event Cover';
-	// let customWidth = 820;
-	// let customHeight = 360;
 	let customWidth = 1920;
 	let customHeight = 1080;
 	let sizesVisible = false;
@@ -183,27 +193,13 @@
 	<div class="bg-white gray tc h-100 justify-center flex-column" class:db={sizesVisible} class:flex={sizesVisible} class:dn={!sizesVisible} style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; z-index: 1000;">
 		<h1 class="f3">Select a Size:</h1>
 		<ul class="list pl0 ml0 center mw7 ba b--light-silver br3">
-			<li class="pa3 bb b--light-silver">
-				<a href="#0" class="f5 link dim dib gray" on:click={() => changeSize('Facebook Cover Photo', 820, 360)}>Facebook Cover Photo - 820px × 360px</a>
-			</li>
-			<li class="pa3 bb b--light-silver">
-				<a href="#0" class="f5 link dim dib gray" on:click={() => changeSize('Facebook Event Cover', 1920, 1080)}>Facebook Event Cover - 1920px × 1080px</a>
-			</li>
-			<li class="pa3 bb b--light-silver">
-				<a href="#0" class="f5 link dim dib gray" on:click={() => changeSize('Facebook Group Cover', 1640, 856)}>Facebook Group Cover - 1640px × 856px</a>
-			</li>
-			<li class="pa3 bb b--light-silver">
-				<a href="#0" class="f5 link dim dib gray" on:click={() => changeSize('Facebook Link', 1200, 628)}>Facebook Link / Facebook Ad (Link) - 1200px × 628px</a>
-			</li>
-			<li class="pa3 bb b--light-silver">
-				<a href="#0" class="f5 link dim dib gray" on:click={() => changeSize('Facebook Post', 1200, 900)}>Facebook Post - 1200px × 900px</a>
-			</li>
-			<li class="pa3 bb b--light-silver">
-				<a href="#0" class="f5 link dim dib gray" on:click={() => changeSize('Twitter Header', 1500, 500)}>Twitter Header - 1500px × 500px</a>
-			</li>
-			<li class="pa3 bb b--light-silver">
-				<a href="#0" class="f5 link dim dib gray" on:click={() => changeSize('Twitter Post', 1024, 512)}>Twitter Post - 1024px × 512px</a>
-			</li>
+			{#each sizes as size}
+				<li class="pa3 bb b--light-silver">
+					<a  href="#0"
+						class="f5 link dim dib gray"
+						on:click={() => changeSize(size.name, size.width, size.height)}>{size.name} - {size.width}px × {size.height}px</a>
+				</li>
+			{/each}
 			<li class="pa3 b--light-silver">
 				<a href="#0" class="f5 link dim dib gray" on:click={() => sizesVisible = false}>Cancel</a>
 			</li>
