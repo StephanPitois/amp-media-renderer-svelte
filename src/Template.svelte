@@ -1,5 +1,4 @@
 <script>
-	// import Logo from "./Logo.svelte";
 
   export let id = "";
   export let isCanvasSource = false;
@@ -24,8 +23,6 @@
     sponsors: "40%"
   };
 
-  // $: logoWidth = parseFloat(height.replace('px', '')) / 3;
-
   $: artStyle = "width: " + (vertical ? "100%" : height);
   $: infoStyle = "width: " + (vertical ? "100%" : "calc(100% - " + height + ")");
   $: logoStyle = "width: " + (vertical ? "calc(100% / 3)" : "calc(" + height + " / 3)");
@@ -34,10 +31,6 @@
 </script>
 
 <style>
-  /* .padding-vertical {
-    padding-top: 0.5%;
-    padding-bottom: 0.5%;
-  } */
 
   .padding-left-2 {
     padding-left: 2%;
@@ -101,7 +94,7 @@
     style="font-size: {fontSize};">
 
     <div
-      class="xxx-padding-vertical-4 xxx-padding-left-4 xxx-padding-right-2 h-100"
+      class="h-100"
       style="{artStyle}">
       <div class="aspect-ratio aspect-ratio--1x1">
         <div
@@ -111,11 +104,10 @@
       </div>
     </div>
 
-    <div class="xxx-padding-vertical-4 xxx-padding-left-2 xxx-padding-right-4 h-100" style="{infoStyle}">
+    <div class="h-100" style="{infoStyle}">
       <div
-        class="padding-horizontal-10 template-text tc flex items-center justify-evenly xxx-justify-center flex-column w-100 h-100 fl xxx-xxx-bg-black-90 light-gray"
+        class="padding-horizontal-10 template-text tc flex items-center justify-evenly flex-column w-100 h-100 fl light-gray"
         style="color: {color}; background-color: {backgroundColor};">
-        <!-- <Logo color="{color}" width="{logoWidth}" /> -->
         <div>
         {#if title}
           <div
@@ -126,7 +118,7 @@
         {/if}
         {#if dates}
           <div
-            class="fw5 ttu xxx-padding-vertical-15"
+            class="fw5 ttu"
             style="font-size: {fontSizes.dates};">
             {dates}
           </div>
@@ -134,13 +126,13 @@
         </div>
         <div>
           <img
-            class="xxx-padding-vertical-5"
+            class=""
             style="{logoStyle}"
             src="{logo}"
             alt="AMP Logo" />
           {#if brand}
             <div
-              class="fw5 ttu xxx-padding-bottom-5"
+              class="fw5 ttu"
               style="font-size: {fontSizes.brand};">
               {brand}
             </div>
@@ -150,14 +142,14 @@
           <div>
           {#if sponsors}
             <div
-              class="fw2 xxx-padding-vertical-5"
+              class="fw2"
               style="font-size: {fontSizes.sponsors};">
               {sponsors}
             </div>
           {/if}
           {#if sponsors2}
             <div
-              class="fw2 xxx-padding-vertical-5"
+              class="fw2"
               style="font-size: {fontSizes.sponsors};">
               {sponsors2}
             </div>

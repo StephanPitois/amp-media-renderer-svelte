@@ -1,7 +1,7 @@
 <script>
 	import config from "./config.js";
-	import utils from "./utils.js";
 	import icons from "./icons.js";
+	import utils from "./utils.js";
 
 	import Tabs from "./Tabs.svelte";
 	import Template from "./Template.svelte";
@@ -9,8 +9,6 @@
     import TextField from "./TextField.svelte";
 
 	// http://tachyons.io/docs/themes/skins/
-	// https://webaim.org/articles/contrast/#sc143
-
 	// @custom-media --breakpoint-not-small screen and (min-width: 30em);
 	// @custom-media --breakpoint-medium screen and (min-width: 30em) and (max-width: 60em);
 	// @custom-media --breakpoint-large screen and (min-width: 60em);
@@ -83,9 +81,17 @@
 		let maxContainerHeight = screenHeight - (horizontalSplit ? 0 : (screenHeight / 2));
 		// Add padding
 		maxContainerWidth = maxContainerWidth - paddingPercentage / 100 * maxContainerWidth;
+		maxContainerHeight = maxContainerHeight - paddingPercentage / 100 * maxContainerHeight;
+		// Calculate preview size
 		let newWidth = maxContainerWidth;
 		let newHeight = maxContainerWidth / (customWidth / customHeight);
 		let newFontSize = maxContainerWidth / 19.25;
+		// But if height is too big, flip calculation
+		if (newHeight > maxContainerHeight) {
+			newWidth = maxContainerHeight;
+			newHeight = maxContainerHeight / (customWidth / customHeight);
+			newFontSize = maxContainerHeight / 19.25;
+		}
 		tplWidthPreview = '' + newWidth.toFixed(2) + 'px';
 		tplHeightPreview = '' + newHeight.toFixed(2) + 'px';
 		tplFontSizePreview = '' + newFontSize.toFixed(2) + 'px';
@@ -93,10 +99,6 @@
 
 	window.addEventListener("resize", resizePreview);
 	window.dispatchEvent(new Event('resize'));
-
-	function showSizes() {
-		sizesVisible = true;
-	}
 
 	function changeSize(name, w, h) {
 		sizesVisible = false;
@@ -117,8 +119,6 @@
 			useCORS: true
 		}).then(function (canvas) {
 			var a = document.createElement('a');
-			// a.href = canvas.toDataURL();
-			// a.download = title + '.png';
 			a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
 			a.download = `${title} - ${templateName} - ${customWidth}x${customHeight}.jpg`;
 			a.click();
@@ -167,7 +167,27 @@
 	}
 </style>
 
-<div class="grid roboto xxx-montserrat gray h-100 w-100 amp-fullscreen">
+<div class="grid roboto gray h-100 w-100 amp-fullscreen">
+
+	<!-- SELECT A SIZE -->
+
+	<div class="bg-white gray tc h-100 justify-center flex-column" class:db={sizesVisible} class:flex={sizesVisible} class:dn={!sizesVisible} style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; z-index: 1000;">
+		<h1 class="f3">Select a Size:</h1>
+		<ul class="list pl0 ml0 center mw7 ba b--light-silver">
+			{#each sizes as size}
+				<li class="pv3 ph4 bb b--light-silver {templateName === size.name ? 'bg-near-white' : ''}">
+					<a  href="#0"
+						class="f5 link dim dib {templateName === size.name ? 'gray b' : 'gray'}"
+						on:click={() => changeSize(size.name, size.width, size.height)}>{size.name} - {size.width}px × {size.height}px</a>
+				</li>
+			{/each}
+			<li class="pv3 ph4 b--light-silver">
+				<a href="#0" class="b f5 link dim dib gray" on:click={() => sizesVisible = false}>Cancel</a>
+			</li>
+		</ul>
+	</div>
+
+	<!-- FULL SIZE TEMPLATE -->
 
 	<Template
 		id="canvasSource"
@@ -187,24 +207,7 @@
 		dark={dark}
 	/>
 
-	<!-- FIXME: It appears that the full size canvas is NOT being resized when we change sizes.
-			Use computed W x H instead? -->
-
-	<div class="bg-white gray tc h-100 justify-center flex-column" class:db={sizesVisible} class:flex={sizesVisible} class:dn={!sizesVisible} style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; z-index: 1000;">
-		<h1 class="f3">Select a Size:</h1>
-		<ul class="list pl0 ml0 center mw7 ba b--light-silver br3">
-			{#each sizes as size}
-				<li class="pa3 bb b--light-silver">
-					<a  href="#0"
-						class="f5 link dim dib gray"
-						on:click={() => changeSize(size.name, size.width, size.height)}>{size.name} - {size.width}px × {size.height}px</a>
-				</li>
-			{/each}
-			<li class="pa3 b--light-silver">
-				<a href="#0" class="f5 link dim dib gray" on:click={() => sizesVisible = false}>Cancel</a>
-			</li>
-		</ul>
-	</div>
+	<!-- TEMPLATE PREVIEW -->
 
 	<div class="main-layout__preview-nav flex items-center justify-between h-100 bb b--moon-gray ph3">
 		<div>
@@ -212,7 +215,7 @@
 			<br><small>{customWidth}px × {customHeight}px</small>
 		</div>
 		<div>
-		  <a href="#0" class="f6 link dim br1 ba ph3 pv2 mv2 dib gray" on:click={showSizes}>Sizes</a>
+		  <a href="#0" class="f6 link dim br1 ba ph3 pv2 mv2 dib gray" on:click={() => sizesVisible = true}>Sizes</a>
 		</div>
 		<div>
 			<a href="#0" class="no-underline gray dim inline-flex items-center mv2 tc br2 pv2" on:click={renderCanvas} title="Download">
