@@ -1,4 +1,6 @@
 <script>
+	import { onMount } from 'svelte';
+
 	import config from "./config.js";
 	import icons from "./icons.js";
 	import utils from "./utils.js";
@@ -7,6 +9,7 @@
 	import Template from "./Template.svelte";
 	import TextEditor from "./TextEditor.svelte";
     import TextField from "./TextField.svelte";
+    import MultipleChoiceQuestion from "./MultipleChoiceQuestion.svelte";
 
 	// http://tachyons.io/docs/themes/skins/
 	// @custom-media --breakpoint-not-small screen and (min-width: 30em);
@@ -34,6 +37,15 @@
 	}
 	let sponsors2 = '';
 
+	// See also _redirects
+	let backgroundImageUrl = (params.get("bgimage") || '').replace('https://www.ameliamusicalplayhouse.com/wp-content', '') || config.defaultImage;
+
+	let activeTab = "text";
+	let tabs = [
+		{ id: "text", title: "Text"},
+		{ id: "graphics", title: "Graphics"}
+	];
+
 	let sizes = [
 		{ name: 'Facebook Cover Photo', width: 820, height: 360 },
 		{ name: 'Facebook Event Cover', width: 1920, height: 1080 },
@@ -45,24 +57,19 @@
 		{ name: 'Twitter Header', width: 1080, height: 500 },
 		{ name: 'Twitter Post', width: 1024, height: 512 }
 	];
+	let possibleSizes = sizes.map((size, index) => {
+		return {
+			id: index,
+			text: `${size.name} - ${size.width}px × ${size.height}px`
+		};
+	});
+	let selectSizeVisible = false;
+	let selectedSizeIndex = 1; // Facebook Event Cover
+	let selectedSize = sizes[selectedSizeIndex];
 
-	// See also _redirects
-	let backgroundImageUrl = (params.get("bgimage") || '').replace('https://www.ameliamusicalplayhouse.com/wp-content', '') || config.defaultImage;
-
-	let activeTab = "text";
-	let tabs = [
-		{ id: "text", title: "Text"},
-		{ id: "graphics", title: "Graphics"}
-	];
-
-	let templateName = 'Facebook Event Cover';
-	let customWidth = 1920;
-	let customHeight = 1080;
-	let sizesVisible = false;
-
-	$: tplWidth = customWidth + 'px';
-	$: tplHeight = customHeight + 'px';
-	$: tplFontSize = (customWidth / 19.25) + 'px';
+	$: tplWidth = selectedSize.width + 'px';
+	$: tplHeight = selectedSize.height + 'px';
+	$: tplFontSize = (selectedSize.width / 19.25) + 'px';
 
 	let tplWidthPreview = '0'; // Arbitrary default value overriden on load/resize
 	let tplHeightPreview = '0'; // Arbitrary default value overriden on load/resize
@@ -83,12 +90,12 @@
 		maxContainerHeight = maxContainerHeight - paddingPercentage / 100 * maxContainerHeight;
 		// Calculate preview size
 		let newWidth = maxContainerWidth;
-		let newHeight = maxContainerWidth / (customWidth / customHeight);
+		let newHeight = maxContainerWidth / (selectedSize.width / selectedSize.height);
 		let newFontSize = maxContainerWidth / 19.25;
 		// But if height is too big, flip calculation
 		if (newHeight > maxContainerHeight) {
 			newWidth = maxContainerHeight;
-			newHeight = maxContainerHeight / (customWidth / customHeight);
+			newHeight = maxContainerHeight / (selectedSize.width / selectedSize.height);
 			newFontSize = maxContainerHeight / 19.25;
 		}
 		tplWidthPreview = '' + newWidth.toFixed(2) + 'px';
@@ -97,32 +104,42 @@
 	}
 
 	window.addEventListener("resize", resizePreview);
-	window.dispatchEvent(new Event('resize'));
 
-	function changeSize(name, w, h) {
-		sizesVisible = false;
-		templateName = name;
-		customWidth = w;
-		customHeight = h;
+	function refreshPreview(event) {
+		if (event) {
+			selectedSizeIndex = event.detail.selectedAnswerId;
+			selectedSize = sizes[selectedSizeIndex]
+		}
 		window.dispatchEvent(new Event('resize'));
 	}
 
 	function renderCanvas() {
 		let element = document.getElementById("canvasSource");
 		html2canvas(element, {
-			width: customWidth,
-			height: customHeight,
-			windowWidth: customWidth,
-			windowHeight: customHeight,
+			width: selectedSize.width,
+			height: selectedSize.height,
+			windowWidth: selectedSize.width,
+			windowHeight: selectedSize.height,
 			allowTaint: false,
 			useCORS: true
 		}).then(function (canvas) {
 			var a = document.createElement('a');
 			a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
-			a.download = `${title} - ${templateName} - ${customWidth}x${customHeight}.jpg`;
+			a.download = `${title} - ${selectedSize.name} - ${selectedSize.width}x${selectedSize.height}.jpg`;
 			a.click();
 		});
 	}
+
+	onMount(() => {
+		refreshPreview();
+	});
+
+    function handleKeydown(e) {
+		// TODO: this should be more generic
+        if (e.key === 'Escape' && selectSizeVisible) {
+            selectSizeVisible = false;
+       }
+    }
 
 </script>
 
@@ -166,25 +183,19 @@
 	}
 </style>
 
+<svelte:window on:keydown={handleKeydown}/>
+
 <div class="grid roboto gray h-100 w-100 amp-fullscreen">
 
 	<!-- SELECT A SIZE -->
 
-	<div class="bg-white gray tc h-100 justify-center flex-column" class:db={sizesVisible} class:flex={sizesVisible} class:dn={!sizesVisible} style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; z-index: 1000;">
-		<h1 class="f3">Select a Size:</h1>
-		<ul class="list pl0 ml0 center mw7 ba b--light-silver">
-			{#each sizes as size}
-				<li class="pv3 ph4 bb b--light-silver {templateName === size.name ? 'bg-near-white' : ''}">
-					<a  href="#0"
-						class="f5 link dim dib {templateName === size.name ? 'gray b' : 'gray'}"
-						on:click={() => changeSize(size.name, size.width, size.height)}>{size.name} - {size.width}px × {size.height}px</a>
-				</li>
-			{/each}
-			<li class="pv3 ph4 b--light-silver">
-				<a href="#0" class="b f5 link dim dib gray" on:click={() => sizesVisible = false}>Cancel</a>
-			</li>
-		</ul>
-	</div>
+	<MultipleChoiceQuestion
+    	questionText="Select a Size:"
+    	possibleAnswers={possibleSizes}
+		highlightedAnswerId={selectedSizeIndex}
+		bind:visible={selectSizeVisible}
+		on:answerSelected={refreshPreview}
+	/>
 
 	<!-- FULL SIZE TEMPLATE -->
 
@@ -209,11 +220,11 @@
 
 	<div class="main-layout__preview-nav flex items-center justify-between h-100 bb b--moon-gray ph3">
 		<div>
-			<strong>{templateName}</strong>
-			<br><small>{customWidth}px × {customHeight}px</small>
+			<strong>{selectedSize.name}</strong>
+			<br><small>{selectedSize.width}px × {selectedSize.height}px</small>
 		</div>
 		<div>
-		  <a href="#0" class="f6 link dim br1 ba ph3 pv2 mv2 dib gray" on:click={() => sizesVisible = true}>Sizes</a>
+		  <a href="#0" class="f6 link dim br1 ba ph3 pv2 mv2 dib gray" on:click={() => selectSizeVisible = true}>Sizes</a>
 		</div>
 		<div>
 			<a href="#0" class="no-underline gray dim inline-flex items-center mv2 tc br2 pv2" on:click={renderCanvas} title="Download">
