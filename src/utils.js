@@ -20,16 +20,11 @@ function stripHtml (str) {
   return str.replace(/(<([^>]+)>)/ig, '');
 }
 
-function getScale (arr) {
-  return chroma.scale(arr).mode('lab').colors(11);
-}
-
 let utils = {
   parseColor: parseColor,
   lineBreaksToHtml: lineBreaksToHtml,
   fixLineBreaks: fixLineBreaks,
-  stripHtml: stripHtml,
-  getScale: getScale
+  stripHtml: stripHtml
 };
 
 export default utils;

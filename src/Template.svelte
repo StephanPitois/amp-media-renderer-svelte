@@ -6,16 +6,12 @@
   export let width;
   export let height;
   export let fontSize = "20px";
-  export let backgroundAlpha;
   export let backgroundColor;
   export let backgroundImage;
   export let color;
   export let brand;
-  export let brandsub;
   export let title;
   export let dates;
-  export let billing;
-  export let licensing;
   export let sponsors;
   export let sponsors2;
   export let vertical = false;
@@ -25,12 +21,7 @@
     title: "70%",
     dates: "55%",
     brand: "35%",
-    sponsors: "40%",
-    // brand: "55%",
-    // sponsors: "40%",
-    brandsub: "35%",
-    billing: "35%",
-    licensing: "35%"
+    sponsors: "40%"
   };
 
   // $: logoWidth = parseFloat(height.replace('px', '')) / 3;
