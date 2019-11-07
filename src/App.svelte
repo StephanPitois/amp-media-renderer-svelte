@@ -47,10 +47,10 @@
 	];
 
 	let templateName = 'Facebook Event Cover';
-	let customWidth = 820;
-	let customHeight = 360;
-	// let customWidth = 1920;
-	// let customHeight = 1080;
+	// let customWidth = 820;
+	// let customHeight = 360;
+	let customWidth = 1920;
+	let customHeight = 1080;
 	let sizesVisible = false;
 
 	$: tplWidth = customWidth + 'px';
