@@ -184,24 +184,30 @@
 		<h1 class="f3">Select a Size:</h1>
 		<ul class="list pl0 ml0 center mw7 ba b--light-silver br3">
 			<li class="pa3 bb b--light-silver">
-				<a href="#0" class="f4 link dim dib gray" on:click={() => changeSize('Facebook Cover Photo', 820, 360)}>Facebook Cover Photo - 820px × 360px</a>
+				<a href="#0" class="f5 link dim dib gray" on:click={() => changeSize('Facebook Cover Photo', 820, 360)}>Facebook Cover Photo - 820px × 360px</a>
 			</li>
 			<li class="pa3 bb b--light-silver">
-				<a href="#0" class="f4 link dim dib gray" on:click={() => changeSize('Facebook Event Cover', 1920, 1080)}>Facebook Event Cover - 1920px × 1080px</a>
+				<a href="#0" class="f5 link dim dib gray" on:click={() => changeSize('Facebook Event Cover', 1920, 1080)}>Facebook Event Cover - 1920px × 1080px</a>
 			</li>
 			<li class="pa3 bb b--light-silver">
-				<a href="#0" class="f4 link dim dib gray" on:click={() => changeSize('Facebook Group Cover', 1640, 856)}>Facebook Group Cover - 1640px × 856px</a>
+				<a href="#0" class="f5 link dim dib gray" on:click={() => changeSize('Facebook Group Cover', 1640, 856)}>Facebook Group Cover - 1640px × 856px</a>
 			</li>
-			<li class="pa3 xxx-bb b--light-silver">
-				<a href="#0" class="f4 link dim dib gray" on:click={() => changeSize('Facebook Link', 1200, 628)}>Facebook Link / Facebook Ad (Link) - 1200px × 628px</a>
+			<li class="pa3 bb b--light-silver">
+				<a href="#0" class="f5 link dim dib gray" on:click={() => changeSize('Facebook Link', 1200, 628)}>Facebook Link / Facebook Ad (Link) - 1200px × 628px</a>
 			</li>
-			<!-- <li class="ph3 pv2 xxx-bb b--light-silver">
-				<a class="f6 link dim dib gray" on:click={() => changeSize('Facebook Post', 1200, 900)}>Facebook Post - 1200px × 900px</a>
-			</li> -->
+			<li class="pa3 bb b--light-silver">
+				<a href="#0" class="f5 link dim dib gray" on:click={() => changeSize('Facebook Post', 1200, 900)}>Facebook Post - 1200px × 900px</a>
+			</li>
+			<li class="pa3 bb b--light-silver">
+				<a href="#0" class="f5 link dim dib gray" on:click={() => changeSize('Twitter Header', 1500, 500)}>Twitter Header - 1500px × 500px</a>
+			</li>
+			<li class="pa3 bb b--light-silver">
+				<a href="#0" class="f5 link dim dib gray" on:click={() => changeSize('Twitter Post', 1024, 512)}>Twitter Post - 1024px × 512px</a>
+			</li>
+			<li class="pa3 b--light-silver">
+				<a href="#0" class="f5 link dim dib gray" on:click={() => sizesVisible = false}>Cancel</a>
+			</li>
 		</ul>
-		<div>
-			<a href="#0" class="f6 link dim br1 ba ph3 pv2 mv2 dib gray" on:click={() => sizesVisible = false}>Cancel</a>
-		</div>
 	</div>
 
 	<div class="main-layout__preview-nav flex items-center justify-between h-100 bb b--moon-gray ph3">
