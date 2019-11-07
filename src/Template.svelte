@@ -13,7 +13,6 @@
   export let dates;
   export let sponsors;
   export let sponsors2;
-  export let vertical = false;
   export let dark = true;
 
   let fontSizes = {
@@ -23,10 +22,21 @@
     sponsors: "40%"
   };
 
-  $: artStyle = "width: " + (vertical ? "100%" : height);
-  $: infoStyle = "width: " + (vertical ? "100%" : "calc(100% - " + height + ")");
-  $: logoStyle = "width: " + (vertical ? "calc(100% / 3)" : "calc(" + height + " / 3)");
-  $: logo = dark ? "logo.png" : "logo-black.png";
+  $: vertical = parseFloat(height.replace('px', '')) >= parseFloat(width.replace('px', ''));
+  $: isSquare = parseFloat(height.replace('px', '')) === parseFloat(width.replace('px', ''));
+
+  $: artStyle    = vertical ? `width: ${isSquare ? 0 : width}; height: ${isSquare ? 0 : width};`
+                            : `width: ${height}; height: ${height};`;
+
+  $: infoStyle   = vertical ? `width: ${width}; height: calc(${height} - ${isSquare ? 0 : width});`
+                            : `width: calc(100% - ${height});`;
+
+  $: logoStyle   = vertical ? `width: calc(${width} / 6);`
+                            : `width: calc(${height} / 3);`;
+
+  $: canvasStyle = `width: ${width}; height: ${height}; color: ${color};`
+
+$: logo = dark ? "logo.png" : "logo-black.png";
 
 </script>
 
@@ -88,7 +98,7 @@
   {id}
   class="prompt"
   class:canvasSource={isCanvasSource}
-  style=" width: {vertical ? height : width}; height: {vertical ? width : height}; color: {color};">
+  style="{canvasStyle}">
   <div
     class="w-100 h-100 flex items-center bg-white {vertical ? 'flex-column' : 'flex-row'}"
     style="font-size: {fontSize};">

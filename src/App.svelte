@@ -19,7 +19,6 @@
 
 	const params = new URLSearchParams(window.location.search);
 
-	let vertical = false;
 	let dark = true;
 
 	$: color = dark ? "#FFFFFF": "#202020";
@@ -203,7 +202,6 @@
 		dates={dates}
 		sponsors={sponsors}
 		sponsors2={sponsors2}
-		vertical={vertical}
 		dark={dark}
 	/>
 
@@ -239,7 +237,6 @@
 				dates={dates}
 				sponsors={sponsors}
 				sponsors2={sponsors2}
-				vertical={vertical}
 				dark={dark}
 			/>
 		</div>
