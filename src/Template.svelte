@@ -119,7 +119,7 @@
     </div>
 
     <div class="h-100 w-100 grid-layout__graphic black bg-blue">
-      <div class="h-100 w-100 ba b--white">
+      <div class="h-100 w-100 ba b--light-silver">
         <div class="aspect-ratio aspect-ratio--1x1">
           <div
             class="aspect-ratio--object cover "
