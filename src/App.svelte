@@ -113,6 +113,20 @@
 		window.dispatchEvent(new Event('resize'));
 	}
 
+	function navigateSizes(step) {
+		// TODO: Quick and dirty - Only works it step is 1 or -1
+		// TODO: also, the nav buttons should be links to correct sizes instead. Much easier to handle nav this way.
+		if (selectedSizeIndex + step >= sizes.length) {
+			selectedSizeIndex = 0;
+		} else if (selectedSizeIndex + step < 0) {
+			selectedSizeIndex = sizes.length - 1;
+		} else {
+			selectedSizeIndex = selectedSizeIndex + step;
+		}
+		selectedSize = sizes[selectedSizeIndex]
+		window.dispatchEvent(new Event('resize'));
+	}
+
 	function renderCanvas() {
 		let element = document.getElementById("canvasSource");
 		html2canvas(element, {
@@ -219,14 +233,16 @@
 	<!-- TEMPLATE PREVIEW -->
 
 	<div class="main-layout__preview-nav flex items-center justify-between h-100 bb b--moon-gray ph3">
-		<div>
+		<div class="w-33 truncate">
 			<strong>{selectedSize.name}</strong>
 			<br><small>{selectedSize.width}px × {selectedSize.height}px</small>
 		</div>
-		<div>
+		<div class="w-34 flex items-center justify-center">
+		  <a href="#0" class="dn flex-m flex-l items-center justify-center f6 link dim br-100 ba w2 h2 mh1 gray bg-white" on:click={() => navigateSizes(-1)}>{@html icons.chevronLeft}</a>
 		  <a href="#0" class="f6 link dim br1 ba ph3 pv2 mv2 dib gray" on:click={() => selectSizeVisible = true}>Sizes</a>
+		  <a href="#0" class="dn flex-m flex-l items-center justify-center f6 link dim br-100 ba w2 h2 mh1 gray bg-white" on:click={() => navigateSizes(1)}>{@html icons.chevronRight}</a>
 		</div>
-		<div>
+		<div class="w-33 tr">
 			<a href="#0" class="no-underline gray dim inline-flex items-center mv2 tc br2 pv2" on:click={renderCanvas} title="Download">
 				{@html icons.download}
 				<span class="f6 ml2">Download</span>

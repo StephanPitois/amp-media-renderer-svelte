@@ -44,6 +44,12 @@ button,
     justify-content: space-evenly;
 }
 
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+ }
+
 /* Spacing */
 
 .padding-left-2 {
