@@ -1,4 +1,7 @@
 <script>
+	import { createEventDispatcher } from 'svelte';
+	import { scale } from 'svelte/transition';
+
     // Input
     export let questionText;
     export let possibleAnswers; // id, text
@@ -6,16 +9,13 @@
     // Input/Output
     export let visible = false;
 
-	import { createEventDispatcher } from 'svelte';
-
     const dispatch = createEventDispatcher();
 </script>
 
+{#if visible}
 <div
-    class="bg-white gray tc h-100 justify-center flex-column"
-    class:db={visible}
-    class:flex={visible}
-    class:dn={!visible}
+    transition:scale
+    class="flex bg-white gray tc h-100 justify-center flex-column"
     style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; z-index: 1000;">
     <h1 class="f3">{questionText}</h1>
     <ul class="list pl0 ml0 center mw7 ba b--light-silver">
@@ -37,3 +37,4 @@
         </li>
     </ul>
 </div>
+{/if}
