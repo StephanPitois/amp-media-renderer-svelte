@@ -53,7 +53,7 @@
 		{ name: 'Facebook Link / Ad', width: 1200, height: 628 },
 		{ name: 'Facebook Post', width: 1200, height: 900 },
 		{ name: 'Instagram Post', width: 1080, height: 1080 },
-		{ name: 'Instagram Story', width: 1080, height: 1920 },
+		// { name: 'Instagram Story', width: 1080, height: 1920 },
 		{ name: 'Twitter Header', width: 1080, height: 500 },
 		{ name: 'Twitter Post', width: 1024, height: 512 }
 	];
