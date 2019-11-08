@@ -118,8 +118,8 @@
       </div>
     </div>
 
-    <div class="h-100 w-100 grid-layout__graphic black bg-blue">
-      <div class="h-100 w-100 ba b--light-silver">
+    <div class="h-100 w-100 grid-layout__graphic">
+      <div class="h-100 w-100 ba b--mid-gray">
         <div class="aspect-ratio aspect-ratio--1x1">
           <div
             class="aspect-ratio--object cover "
@@ -129,7 +129,7 @@
       </div>
     </div>
 
-    <div class="h-100 w-100 grid-layout__info black bg-yellow">
+    <div class="h-100 w-100 grid-layout__info">
       <div
         class="padding-horizontal-10 template-text tc flex items-center justify-evenly flex-column w-100 h-100 fl light-gray"
         style="color: {color}; background-color: {backgroundColor};">
