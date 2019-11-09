@@ -13,6 +13,7 @@
     import TextEditor from "./TextEditor.svelte";
     import TextField from "./TextField.svelte";
     import MultipleChoiceQuestion from "./MultipleChoiceQuestion.svelte";
+    import Loader from "./Loader.svelte";
 
     // http://tachyons.io/docs/themes/skins/
     // @custom-media --breakpoint-not-small screen and (min-width: 30em);
@@ -80,6 +81,9 @@
     ];
     let selectDownloadOptionVisible = false;
 
+    let loaderVisible = false;
+    let loaderText = "";
+
     $: tplWidth = selectedSize.width + "px";
     $: tplHeight = selectedSize.height + "px";
     $: tplFontSize = selectedSize.width / 19.25 + "px";
@@ -143,7 +147,6 @@
     }
 
     function startDownload(event) {
-        console.log(event.detail.selectedAnswerId);
         if (event.detail.selectedAnswerId === 0) {
             // Selected Size Only / JPEG File
             downloadSingleSize();
@@ -164,7 +167,7 @@
             allowTaint: false,
             useCORS: true
         }).then(function(canvas) {
-            var a = document.createElement('a');
+            let a = document.createElement('a');
             a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
             a.download = `${title} - ${selectedSize.name} - ${selectedSize.width}x${selectedSize.height}.jpg`;
             a.click();
@@ -173,7 +176,8 @@
 
     function downloadAllSizes() {
         // MULTIPLE GRAPHICS IN ZIP ARCHIVE
-        var zip = new JSZip();
+        let zipFilename = `${title} - Graphics.zip`;
+        let zip = new JSZip();
         // TODO: add date, tool author... etc...
         zip.file(
             "README.txt",
@@ -183,6 +187,8 @@
         let genFilesRecursive = async index => {
             refreshPreview(index);
             await tick(); // <-- VERY important to allow the graphic to be resized
+            let filename = `${title} - ${selectedSize.name.replace("/", "")} - ${selectedSize.width}x${selectedSize.height}.jpg`;
+            loaderText = `Generating "${filename}"`;
             let element = document.getElementById("canvasSource");
             html2canvas(element, {
                 width: selectedSize.width,
@@ -193,22 +199,24 @@
                 useCORS: true
             }).then(function(canvas) {
                 canvas.toBlob(function(blob) {
-                let filename = `${title} - ${selectedSize.name.replace("/", "")} - ${selectedSize.width}x${selectedSize.height}.jpg`;
                 zip.file(filename, blob, { base64: true });
                 // Next iteration:
                 let nextIndex = index + 1;
                 if (nextIndex < sizes.length) {
                     genFilesRecursive(nextIndex);
                 } else {
-                    refreshPreview(indexBackup); // <-- Restore current index
+                    loaderText = `Generating "${zipFilename}"`;
                     zip.generateAsync({ type: "blob" }).then(function(content) {
                         // see FileSaver.js
-                        saveAs(content, `${title} - Graphics.zip`);
+                        saveAs(content, zipFilename);
+                        refreshPreview(indexBackup); // <-- Restore current index
+                        loaderVisible = false;
                     });
                 }
                 });
             });
         };
+        loaderVisible = true;
         let indexBackup = selectedSizeIndex; // <-- Back up current index
         genFilesRecursive(0);
     }
@@ -278,6 +286,11 @@
         possibleAnswers={possibleDownloadOptions}
         bind:visible={selectDownloadOptionVisible}
         on:answerSelected={startDownload} />
+
+    <!-- LOADER -->
+    <Loader
+        text={loaderText}
+        bind:visible={loaderVisible} />
 
     <!-- FULL SIZE TEMPLATE -->
     <Template
