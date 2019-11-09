@@ -58,7 +58,7 @@
         { name: "Facebook Event Cover", width: 1920, height: 1080 },
         { name: "Facebook Group Cover", width: 1640, height: 856 },
         { name: "Facebook Link / Ad", width: 1200, height: 628 },
-        { name: "Facebook Post", width: 1200, height: 900 },
+        // { name: "Facebook Post", width: 1200, height: 900 },
         { name: "Instagram Post", width: 1080, height: 1080 },
         // { name: 'Instagram Story', width: 1080, height: 1920 },
         { name: "Twitter Header", width: 1500, height: 500 },
