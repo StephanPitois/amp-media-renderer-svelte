@@ -5,7 +5,7 @@
     // Input
     export let questionText;
     export let possibleAnswers; // id, text
-    export let highlightedAnswerId;
+    export let highlightedAnswerId = null;
     // Input/Output
     export let visible = false;
 

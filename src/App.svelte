@@ -74,6 +74,12 @@
     let selectedSizeIndex = 1; // Facebook Event Cover
     let selectedSize = sizes[selectedSizeIndex];
 
+    let possibleDownloadOptions = [
+        { id: 0, text: "Selected Size Only / JPEG File" },
+        { id: 1, text: "All Available Sizes / ZIP File" }
+    ];
+    let selectDownloadOptionVisible = false;
+
     $: tplWidth = selectedSize.width + "px";
     $: tplHeight = selectedSize.height + "px";
     $: tplFontSize = selectedSize.width / 19.25 + "px";
@@ -136,13 +142,36 @@
         }
     }
 
-    function renderCanvas() {
-        // SINGLE GRAPHIC
-        //var a = document.createElement('a');
-        //a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
-        //a.download = `${title} - ${selectedSize.name} - ${selectedSize.width}x${selectedSize.height}.jpg`;
-        // a.click();
+    function startDownload(event) {
+        console.log(event.detail.selectedAnswerId);
+        if (event.detail.selectedAnswerId === 0) {
+            // Selected Size Only / JPEG File
+            downloadSingleSize();
+        } else {
+            // All Available Sizes / ZIP File
+            downloadAllSizes();
+        }
+    }
 
+    function downloadSingleSize() {
+        // SINGLE GRAPHIC
+        let element = document.getElementById("canvasSource");
+        html2canvas(element, {
+            width: selectedSize.width,
+            height: selectedSize.height,
+            windowWidth: selectedSize.width,
+            windowHeight: selectedSize.height,
+            allowTaint: false,
+            useCORS: true
+        }).then(function(canvas) {
+            var a = document.createElement('a');
+            a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+            a.download = `${title} - ${selectedSize.name} - ${selectedSize.width}x${selectedSize.height}.jpg`;
+            a.click();
+        });
+    }
+
+    function downloadAllSizes() {
         // MULTIPLE GRAPHICS IN ZIP ARCHIVE
         var zip = new JSZip();
         // TODO: add date, tool author... etc...
@@ -190,8 +219,9 @@
 
     function handleKeydown(e) {
         // TODO: this should be more generic
-        if (e.key === "Escape" && selectSizeVisible) {
+        if (e.key === "Escape") {
             selectSizeVisible = false;
+            selectDownloadOptionVisible = false;
         }
     }
 </script>
@@ -242,6 +272,13 @@
         bind:visible={selectSizeVisible}
         on:answerSelected={refreshPreview} />
 
+    <!-- SELECT A DOWNLOAD OPTIONS -->
+    <MultipleChoiceQuestion
+        questionText="Select a Download Option:"
+        possibleAnswers={possibleDownloadOptions}
+        bind:visible={selectDownloadOptionVisible}
+        on:answerSelected={startDownload} />
+
     <!-- FULL SIZE TEMPLATE -->
     <Template
         id="canvasSource"
@@ -291,7 +328,7 @@
             <a
                 href="#0"
                 class="no-underline gray dim inline-flex items-center mv2 tc br2 pv2"
-                on:click={renderCanvas}
+                on:click={() => (selectDownloadOptionVisible = true)}
                 title="Download">
                 {@html icons.download}
                 <span class="f6 ml2">Download</span>
