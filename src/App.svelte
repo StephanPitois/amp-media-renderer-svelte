@@ -188,7 +188,7 @@
             refreshPreview(index);
             await tick(); // <-- VERY important to allow the graphic to be resized
             let filename = `${title} - ${selectedSize.name.replace("/", "")} - ${selectedSize.width}x${selectedSize.height}.jpg`;
-            loaderText = `Generating "${filename}"`;
+            loaderText = `Generating "${filename}" . . .`;
             let element = document.getElementById("canvasSource");
             html2canvas(element, {
                 width: selectedSize.width,
@@ -205,7 +205,7 @@
                 if (nextIndex < sizes.length) {
                     genFilesRecursive(nextIndex);
                 } else {
-                    loaderText = `Generating "${zipFilename}"`;
+                    loaderText = `Generating "${zipFilename}" . . .`;
                     zip.generateAsync({ type: "blob" }).then(function(content) {
                         // see FileSaver.js
                         saveAs(content, zipFilename);
