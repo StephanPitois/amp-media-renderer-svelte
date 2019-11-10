@@ -7,6 +7,7 @@
     import config from "./config.js";
     import icons from "./icons.js";
     import utils from "./utils.js";
+    import data from "./data.js";
 
     import Tabs from "./Tabs.svelte";
     import Template from "./Template.svelte";
@@ -24,29 +25,17 @@
     //	- 30em = 480px
     //	- 60em = 960px
 
-    const params = new URLSearchParams(window.location.search);
-
     let dark = true;
 
     $: color = dark ? "#FFFFFF" : "#202020";
     $: backgroundColor = dark ? "#202020" : "#FFFFFF";
 
-    let title = params.get("title");
-    let dates = params.get("dates");
-    let brand = params.get("brand") || config.defaultBrand;
-
-    let sponsors = utils.stripHtml(params.get("sponsors") || "");
-    if (sponsors) {
-        sponsors = "Sponsored by " + sponsors;
-    }
+    let brand = config.defaultBrand;
+    let title = "";
+    let dates = "";
+    let sponsors = "";
     let sponsors2 = "";
-
-    // See also _redirects
-    let backgroundImageUrl =
-        (params.get("bgimage") || "").replace(
-        "https://www.ameliamusicalplayhouse.com/wp-content",
-        ""
-        ) || config.defaultImage;
+    let backgroundImageUrl = config.defaultImage; // See also _redirects
 
     let activeTab = "text";
     let tabs = [
@@ -81,8 +70,8 @@
     ];
     let selectDownloadOptionVisible = false;
 
-    let loaderVisible = false;
-    let loaderText = "";
+    let loaderVisible = true;
+    let loaderText = "Loading . . .";
 
     $: tplWidth = selectedSize.width + "px";
     $: tplHeight = selectedSize.height + "px";
@@ -93,6 +82,40 @@
     let tplFontSizePreview = "0"; // Arbitrary default value overriden on load/resize
 
     let horizontalSplit = false;
+
+    window.addEventListener("resize", resizePreview);
+
+    data.load()
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            loaderText = `${jqXHR.status} - ${jqXHR.statusText} - ${jqXHR.responseJSON.message}`;
+        })
+        .done(d => {
+
+            loaderVisible = false;
+            loaderText = "";
+
+            let options = data.convert(d);
+
+            title = options.productionTitle;
+            dates = options.dates;
+
+            sponsors = utils.stripHtml(options.sponsoredBy || "");
+            if (sponsors) {
+                sponsors = "Sponsored by " + sponsors;
+            }
+            sponsors2 = "";
+
+            // See also _redirects
+            backgroundImageUrl =
+                (options.imageUrl || "").replace(
+                "https://www.ameliamusicalplayhouse.com/wp-content",
+                ""
+                ) || config.defaultImage;
+        });
+
+    onMount(() => {
+        refreshPreview();
+    });
 
     function resizePreview(event) {
         let paddingPercentage = 10;
@@ -119,8 +142,6 @@
         tplHeightPreview = "" + newHeight.toFixed(2) + "px";
         tplFontSizePreview = "" + newFontSize.toFixed(2) + "px";
     }
-
-    window.addEventListener("resize", resizePreview);
 
     function refreshPreview(arg) {
         if (typeof arg === "number") {
@@ -220,10 +241,6 @@
         let indexBackup = selectedSizeIndex; // <-- Back up current index
         genFilesRecursive(0);
     }
-
-    onMount(() => {
-        refreshPreview();
-    });
 
     function handleKeydown(e) {
         // TODO: this should be more generic

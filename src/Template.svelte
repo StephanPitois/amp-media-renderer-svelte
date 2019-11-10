@@ -163,7 +163,7 @@
         class="w-100 h-100 items-center bg-white {vertical ? 'flex-column' : 'flex-row'}"
         style="font-size: {fontSize}; background-color: {backgroundColor};">
 
-        <div style={artStyle}>
+        <div style={artStyle} class="bg-white">
             <div class="aspect-ratio aspect-ratio--1x1">
                 <div
                     class="aspect-ratio--object cover"
@@ -177,20 +177,22 @@
                 class="padding-horizontal-10 template-text tc flex items-center
                 justify-evenly flex-column w-100 h-100 fl light-gray"
                 style="color: {color}; background-color: {backgroundColor};">
-                <div>
-                    {#if title}
-                        <div
-                            class="fw6 ttu padding-bottom-5"
-                            style="font-size: {fontSizes.title};">
-                            {title}
-                        </div>
-                    {/if}
-                    {#if dates}
-                        <div class="fw5 ttu" style="font-size: {fontSizes.dates};">
-                            {dates}
-                        </div>
-                    {/if}
-                </div>
+                {#if title || dates}
+                    <div>
+                        {#if title}
+                            <div
+                                class="fw6 ttu padding-bottom-5"
+                                style="font-size: {fontSizes.title};">
+                                {title}
+                            </div>
+                        {/if}
+                        {#if dates}
+                            <div class="fw5 ttu" style="font-size: {fontSizes.dates};">
+                                {dates}
+                            </div>
+                        {/if}
+                    </div>
+                {/if}
                 <div>
                     <img class="" style={logoStyle} src={logo} alt="AMP Logo" />
                     {#if brand}
