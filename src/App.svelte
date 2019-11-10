@@ -234,7 +234,6 @@
                     });
                 }
             } else {
-                console.log(config.defaultImage);
                 graphics.push({
                     sizeIndex: sizeIndex,
                     imageUrlIndex: -1,
