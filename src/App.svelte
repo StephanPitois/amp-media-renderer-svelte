@@ -211,23 +211,34 @@
         let sizesToDownload =
             downloadMultipleGraphicsOptions.sizes === 'all-sizes'
             ? sizes.map((size, index) => index)
-            : [selectedSizeIndex]
+            : [selectedSizeIndex];
 
         let imagesToDownload =
             downloadMultipleGraphicsOptions.images === 'all-images'
             ? imageUrls.map((imageUrl, index) => index)
-            : [imageUrls.indexOf(backgroundImageUrl)]
+            : [imageUrls.indexOf(backgroundImageUrl) || -1];
+
+        let hasImages = imagesToDownload.length > 0;
 
         // Create list of all sizes, all images that we are going to download
         let graphics = [];
         for (let sizesToDownloadIndex = 0; sizesToDownloadIndex < sizesToDownload.length; sizesToDownloadIndex++) {
             let sizeIndex = sizesToDownload[sizesToDownloadIndex];
-            for (let imagesToDownloadIndex = 0; imagesToDownloadIndex < imagesToDownload.length; imagesToDownloadIndex++) {
-                let imageUrlIndex = imagesToDownload[imagesToDownloadIndex];
+            if (hasImages) {
+                for (let imagesToDownloadIndex = 0; imagesToDownloadIndex < imagesToDownload.length; imagesToDownloadIndex++) {
+                    let imageUrlIndex = imagesToDownload[imagesToDownloadIndex];
+                    graphics.push({
+                        sizeIndex: sizeIndex,
+                        imageUrlIndex: imageUrlIndex,
+                        imageUrl: imageUrlIndex > 0 ? imageUrls[imageUrlIndex] : config.defaultImage
+                    });
+                }
+            } else {
+                console.log(config.defaultImage);
                 graphics.push({
                     sizeIndex: sizeIndex,
-                    imageUrlIndex: imageUrlIndex,
-                    imageUrl: imageUrls[imageUrlIndex]
+                    imageUrlIndex: -1,
+                    imageUrl: config.defaultImage
                 });
             }
         }
