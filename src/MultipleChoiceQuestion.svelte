@@ -24,7 +24,7 @@
                 <a
                     href="#0"
                     class="w-100 pv3 ph4 f5 link dim dib {highlightedAnswerId === possibleAnswer.id ? 'gray b' : 'gray'}"
-                    on:click={() => {
+                    on:click|preventDefault={() => {
                         visible = false;
                         dispatch('answerSelected', {
                             selectedAnswerId: possibleAnswer.id
@@ -33,7 +33,9 @@
             </li>
         {/each}
         <li class="pv3 ph4 b--light-silver">
-            <a href="#0" class="b f5 link dim dib gray" on:click={() => visible = false}>Cancel</a>
+            <a href="#0"
+               class="b f5 link dim dib gray"
+               on:click|preventDefault={() => visible = false}>Cancel</a>
         </li>
     </ul>
 </div>

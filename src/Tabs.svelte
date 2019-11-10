@@ -28,7 +28,7 @@
                 class:blue={activeTab === tab.id}
                 class:bg-white={activeTab === tab.id}
                 class:active={activeTab === tab.id}
-                on:click={clickHandler}>{tab.title}</a>
+                on:click|preventDefault={clickHandler}>{tab.title}</a>
         {/each}
     </div>
 </div>

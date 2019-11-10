@@ -338,19 +338,19 @@
             <a
                 href="#0"
                 class="dn flex-m flex-l items-center justify-center f6 link dim br-100 ba w2 h2 mh1 gray bg-white"
-                on:click={() => navigateSizes(-1)}>
+                on:click|preventDefault={() => navigateSizes(-1)}>
                 {@html icons.chevronLeft}
             </a>
             <a
                 href="#0"
                 class="f6 link dim br1 ba ph3 pv2 mv2 dib gray"
-                on:click={() => (selectSizeVisible = true)}>
+                on:click|preventDefault={() => (selectSizeVisible = true)}>
                 Sizes
             </a>
             <a
                 href="#0"
                 class="dn flex-m flex-l items-center justify-center f6 link dim br-100 ba w2 h2 mh1 gray bg-white"
-                on:click={() => navigateSizes(1)}>
+                on:click|preventDefault={() => navigateSizes(1)}>
                 {@html icons.chevronRight}
             </a>
         </div>
@@ -358,7 +358,7 @@
             <a
                 href="#0"
                 class="no-underline gray dim inline-flex items-center mv2 tc br2 pv2"
-                on:click={() => (selectDownloadOptionVisible = true)}
+                on:click|preventDefault={() => (selectDownloadOptionVisible = true)}
                 title="Download">
                 {@html icons.download}
                 <span class="f6 ml2">Download</span>

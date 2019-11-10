@@ -19,6 +19,8 @@
         <TextField label="Dates" bind:value={dates}/>
         <TextField label="Sponsors - Line 1" bind:value={sponsors}/>
         <TextField label="Sponsors - Line 2" bind:value={sponsors2}/>
-        <a href="#0" class="f6 link dim br1 ba ph3 pv2 mv2 dib gray" on:click={invertColors}>Invert Colors</a>
+        <a href="#0"
+           class="f6 link dim br1 ba ph3 pv2 mv2 dib gray"
+           on:click|preventDefault={invertColors}>Invert Colors</a>
     </form>
 </div>
