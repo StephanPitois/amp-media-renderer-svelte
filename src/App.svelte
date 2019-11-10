@@ -66,10 +66,10 @@
     let selectedSize = sizes[selectedSizeIndex];
 
     let possibleDownloadOptions = [
-        { id: 0, text: "Selected Image + Selected Size / JPEG File" },
-        { id: 1, text: "Selected Image + All Sizes / ZIP File" }
-        // { id: 2, text: "All Images + Selected Size / ZIP File" },
-        // { id: 3, text: "All Images + All Sizes / ZIP File" }
+        { id: 0, text: "Current Image + Current Size / JPEG File" },
+        { id: 1, text: "Current Image + All Sizes / ZIP File" },
+        { id: 2, text: "All Images + Current Size / ZIP File" },
+        { id: 3, text: "All Images + All Sizes / ZIP File" }
     ];
     let selectDownloadOptionVisible = false;
 
@@ -168,17 +168,23 @@
 
     function startDownload(event) {
         if (event.detail.selectedAnswerId === 0) {
-            // Select Image + Selected Size / JPEG File
-            downloadSingleSize();
+            // Current Image + Current Size / JPEG File
+            downloadSingleGraphic();
         } else if (event.detail.selectedAnswerId === 1) {
-            // Select Image + All Sizes / ZIP File
-            downloadAllSizes();
+            // Current Image + All Sizes / ZIP File
+            downloadMultipleGraphics({ images: 'current-image', sizes: 'all-sizes'});
+        } else if (event.detail.selectedAnswerId === 2) {
+            // All Images + Current Size / ZIP File
+            downloadMultipleGraphics({ images: 'all-images', sizes: 'current-size'});
+        } else if (event.detail.selectedAnswerId === 3) {
+            // All Images + All Sizes / ZIP File
+            downloadMultipleGraphics({ images: 'all-images', sizes: 'all-sizes'});
         } else {
-            window.alert("Note implmented");
+            window.alert("Not implemented");
         }
     }
 
-    function downloadSingleSize() {
+    function downloadSingleGraphic() {
         // SINGLE GRAPHIC
         let element = document.getElementById("canvasSource");
         html2canvas(element, {
@@ -196,20 +202,47 @@
         });
     }
 
-    function downloadAllSizes() {
+    function downloadMultipleGraphics(downloadMultipleGraphicsOptions) {
+
+        downloadMultipleGraphicsOptions = downloadMultipleGraphicsOptions || {};
+        downloadMultipleGraphicsOptions.sizes = downloadMultipleGraphicsOptions.sizes || 'all-sizes';
+        downloadMultipleGraphicsOptions.images = downloadMultipleGraphicsOptions.images || 'all-images';
+
+        let sizesToDownload =
+            downloadMultipleGraphicsOptions.sizes === 'all-sizes'
+            ? sizes.map((size, index) => index)
+            : [selectedSizeIndex]
+
+        let imagesToDownload =
+            downloadMultipleGraphicsOptions.images === 'all-images'
+            ? imageUrls.map((imageUrl, index) => index)
+            : [imageUrls.indexOf(backgroundImageUrl)]
+
+        // Create list of all sizes, all images that we are going to download
+        let graphics = [];
+        for (let sizesToDownloadIndex = 0; sizesToDownloadIndex < sizesToDownload.length; sizesToDownloadIndex++) {
+            let sizeIndex = sizesToDownload[sizesToDownloadIndex];
+            for (let imagesToDownloadIndex = 0; imagesToDownloadIndex < imagesToDownload.length; imagesToDownloadIndex++) {
+                let imageUrlIndex = imagesToDownload[imagesToDownloadIndex];
+                graphics.push({
+                    sizeIndex: sizeIndex,
+                    imageUrlIndex: imageUrlIndex,
+                    imageUrl: imageUrls[imageUrlIndex]
+                });
+            }
+        }
+
         // MULTIPLE GRAPHICS IN ZIP ARCHIVE
         let zipFilename = `${title} - Graphics.zip`;
         let zip = new JSZip();
-        // TODO: add date, tool author... etc...
-        zip.file(
-            "README.txt",
-            `Amelia Musical Playhouse\n\nGraphics for: ${title}\n`
-        );
+        zip.file("README.txt", `Amelia Musical Playhouse\n\nGraphics for: ${title}\n`);
 
+        // Note: index is a valid index of the graphics array
         let genFilesRecursive = async index => {
-            refreshPreview(index);
+            let graphic = graphics[index];
+            refreshPreview(graphic.sizeIndex);
             await tick(); // <-- VERY important to allow the graphic to be resized
-            let filename = `${title} - ${selectedSize.name.replace("/", "")} - ${selectedSize.width}x${selectedSize.height}.jpg`;
+            let filename = `${title} - ${selectedSize.name.replace("/", "")} - ${selectedSize.width}x${selectedSize.height} - Image ${graphic.imageUrlIndex}.jpg`;
             loaderText = `Generating "${filename}" . . .`;
             let element = document.getElementById("canvasSource");
             html2canvas(element, {
@@ -224,14 +257,17 @@
                 zip.file(filename, blob, { base64: true });
                 // Next iteration:
                 let nextIndex = index + 1;
-                if (nextIndex < sizes.length) {
+                if (nextIndex < graphics.length) {
+                    let nextGraphic = graphics[nextIndex];
+                    backgroundImageUrl = nextGraphic.imageUrl;
                     genFilesRecursive(nextIndex);
                 } else {
                     loaderText = `Generating "${zipFilename}" . . .`;
                     zip.generateAsync({ type: "blob" }).then(function(content) {
                         // see FileSaver.js
                         saveAs(content, zipFilename);
-                        refreshPreview(indexBackup); // <-- Restore current index
+                        backgroundImageUrl = imageBackup // <-- Restore image
+                        refreshPreview(indexBackup); // <-- Restore index
                         loaderVisible = false;
                     });
                 }
@@ -240,7 +276,8 @@
         };
         loaderVisible = true;
         let indexBackup = selectedSizeIndex; // <-- Back up current index
-        genFilesRecursive(0);
+        let imageBackup = backgroundImageUrl; // <-- Back up current index
+        genFilesRecursive(0); // start with graphics index 0
     }
 
     function handleKeydown(e) {
