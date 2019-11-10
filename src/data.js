@@ -47,9 +47,16 @@ function convert (data) {
     }
   }
 
-  // Background Image
-  let imageUrl = data.acf.amp_production_media_background_image;
-  let imageOpacity = 100 * (data.acf.amp_production_media_background_image_opacity || 0.1);
+  // Images / Show Logo
+  let imageUrls = data.acf.amp_production_media_images || [];
+
+  // Hacks
+  // See also _redirects
+  if (window.location.hostname !== 'localhost') {
+    for (let i = 0; i < imageUrls.length; i++) {
+      imageUrls[i] = (imageUrls[i] || '').replace('https://www.ameliamusicalplayhouse.com/wp-content', '');
+    }
+  }
 
   // Result
   let options = {
@@ -60,8 +67,7 @@ function convert (data) {
     billing: billing || '',
     licensingCredit: licensingCredit || '',
     sponsoredBy: sponsoredBy || '',
-    imageUrl: imageUrl || '',
-    imageOpacity: imageOpacity
+    imageUrls: imageUrls
   };
 
   return options;

@@ -36,11 +36,12 @@
     let sponsors = "";
     let sponsors2 = "";
     let backgroundImageUrl = config.defaultImage; // See also _redirects
+    let imageUrls = [];
 
     let activeTab = "text";
     let tabs = [
         { id: "text", title: "Text" },
-        { id: "graphics", title: "Graphics" }
+        { id: "images", title: "Images" }
     ];
 
     let sizes = [
@@ -65,8 +66,10 @@
     let selectedSize = sizes[selectedSizeIndex];
 
     let possibleDownloadOptions = [
-        { id: 0, text: "Selected Size Only / JPEG File" },
-        { id: 1, text: "All Available Sizes / ZIP File" }
+        { id: 0, text: "Selected Image + Selected Size / JPEG File" },
+        { id: 1, text: "Selected Image + All Sizes / ZIP File" }
+        // { id: 2, text: "All Images + Selected Size / ZIP File" },
+        // { id: 3, text: "All Images + All Sizes / ZIP File" }
     ];
     let selectDownloadOptionVisible = false;
 
@@ -105,12 +108,8 @@
             }
             sponsors2 = "";
 
-            // See also _redirects
-            backgroundImageUrl =
-                (options.imageUrl || "").replace(
-                "https://www.ameliamusicalplayhouse.com/wp-content",
-                ""
-                ) || config.defaultImage;
+            imageUrls = options.imageUrls || [];
+            backgroundImageUrl = imageUrls[0] || config.defaultImage;
         });
 
     onMount(() => {
@@ -169,11 +168,13 @@
 
     function startDownload(event) {
         if (event.detail.selectedAnswerId === 0) {
-            // Selected Size Only / JPEG File
+            // Select Image + Selected Size / JPEG File
             downloadSingleSize();
-        } else {
-            // All Available Sizes / ZIP File
+        } else if (event.detail.selectedAnswerId === 1) {
+            // Select Image + All Sizes / ZIP File
             downloadAllSizes();
+        } else {
+            window.alert("Note implmented");
         }
     }
 
@@ -401,13 +402,21 @@
                     bind:dark />
             </div>
             {/if}
-            {#if activeTab === 'graphics'}
+            {#if activeTab === 'images'}
             <div class="pa2 h-100">
-                <div class="pa2 black-80">
-                    <TextField label="Image URL" bind:value={backgroundImageUrl} />
-                    {#if backgroundImageUrl}
-                    <img src={backgroundImageUrl} class="w-50" alt="Show Logo" />
-                    {/if}
+                <div class="pa2 black-80 flex flex-wrap jusify-between">
+                    {#each imageUrls as imageUrl}
+                        <div
+                            class="w-25 pa1" >
+                            <img
+                                src={imageUrl}
+                                alt="Show Logo"
+                                class="cursor-pointer bb bw4"
+                                class:b--white={backgroundImageUrl !== imageUrl}
+                                class:b--blue={backgroundImageUrl === imageUrl}
+                                on:click|preventDefault={() => backgroundImageUrl = imageUrl} />
+                        </div>
+                    {/each}
                 </div>
             </div>
             {/if}
