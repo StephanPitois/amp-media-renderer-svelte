@@ -37,6 +37,17 @@
     let sponsors2 = "";
     let backgroundImageUrl = config.defaultImage; // See also _redirects
     let imageUrls = [];
+    let imageSizes = [];
+
+    let backgroundImageWidth = 1;
+    let backgroundImageHeight = 1;
+    $: {
+        let size = imageSizes[backgroundImageUrl];
+        if (size) {
+            backgroundImageWidth = size.w;
+            backgroundImageHeight = size.h;
+        }
+    }
 
     let activeTab = "text";
     let tabs = [
@@ -74,7 +85,7 @@
     let selectDownloadOptionVisible = false;
 
     let loaderVisible = true;
-    let loaderText = "Loading . . .";
+    let loaderText = "Loading . . . Please Wait";
 
     $: tplWidth = selectedSize.width + "px";
     $: tplHeight = selectedSize.height + "px";
@@ -94,9 +105,6 @@
         })
         .done(d => {
 
-            loaderVisible = false;
-            loaderText = "";
-
             let options = data.convert(d);
 
             title = options.productionTitle;
@@ -110,6 +118,30 @@
 
             imageUrls = options.imageUrls || [];
             backgroundImageUrl = imageUrls[0] || config.defaultImage;
+
+            loaderText = "Fetching Image Data . . .";
+            let steps = imageUrls.length;
+
+            // Fetch all image sizes now for better experience later and correct rendering of downloads
+            for (let i = 0; i < imageUrls.length; i++) {
+                let url = imageUrls[i];
+                let img = new Image();
+                jQuery(img).on('load', function() {
+                    if (img.width !== 0 && img.height !== 0) {
+                        imageSizes[url] = {
+                            w: img.width,
+                            h: img.height
+                        };
+                    }
+                    steps--;
+                    if (steps <= 0) {
+                        loaderVisible = false;
+                        loaderText = "";
+                    }
+                });
+                img.src = url.replace(/url\(|\)$/ig, '');
+            }
+
         });
 
     onMount(() => {
@@ -366,6 +398,8 @@
         fontSize={tplFontSize}
         {backgroundColor}
         backgroundImage="url({backgroundImageUrl})"
+        {backgroundImageWidth}
+        {backgroundImageHeight}
         {color}
         {brand}
         {title}
@@ -424,6 +458,8 @@
                 fontSize={tplFontSizePreview}
                 {backgroundColor}
                 backgroundImage="url({backgroundImageUrl})"
+                {backgroundImageWidth}
+                {backgroundImageHeight}
                 {color}
                 {brand}
                 {title}

@@ -6,6 +6,9 @@
     export let fontSize = "20px";
     export let backgroundColor;
     export let backgroundImage;
+    export let backgroundImageWidth;
+    export let backgroundImageHeight;
+
     export let color;
     export let brand;
     export let title;
@@ -64,20 +67,14 @@
     let aspectRatioClass = 'aspect-ratio--1x1';
     let aspectRatioWrapperClass = 'wrapper--1x1';
 
-    let caalc = function(image) {
-        var img = new Image();
-        jQuery(img).on('load', function() {
-            if (img.width !== 0 && img.height !== 0) {
-                let cr = closestRatio(supportedRatios, img.width / img.height);
-                aspectRatio = cr;
-                aspectRatioClass = `aspect-ratio--${cr.w}x${cr.h}`;
-                aspectRatioWrapperClass = `wrapper--${cr.w}x${cr.h}`;
-            }
-        });
-        img.src = image.replace(/url\(|\)$/ig, '');
-    };
-
-    $: caalc(backgroundImage);
+    $: {
+        if (backgroundImageWidth !== 0 && backgroundImageHeight !== 0) {
+            let cr = closestRatio(supportedRatios, backgroundImageWidth / backgroundImageHeight);
+            aspectRatio = cr;
+            aspectRatioClass = `aspect-ratio--${cr.w}x${cr.h}`;
+            aspectRatioWrapperClass = `wrapper--${cr.w}x${cr.h}`;
+        }
+    }
 
 </script>
 
