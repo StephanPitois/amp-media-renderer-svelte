@@ -187,7 +187,7 @@
 
         <div class="h-100 w-100 grid-layout__graphic">
             <div class="h-100 w-100 center flex items-center justify-center flex-column">
-                <div class="aspect-ratio {aspectRatioClass} xxx-aspect-ratio--1x1 ba bw1 b--white w-100">
+                <div class="aspect-ratio {aspectRatioClass} ba bw1 b--white w-100">
                     <div
                         class="aspect-ratio--object cover background-image"
                         style="background-image: {backgroundImage}; background-position:
