@@ -39,6 +39,46 @@
     $: canvasStyle = `width: ${width}; height: ${height}; color: ${color};`;
 
     $: logo = dark ? "logo.png" : "logo-black.png";
+
+    let supportedRatios = [
+        { w:  1, h:  1 },
+        { w:  4, h:  3 }, { w:  3, h:  4 },
+        { w:  6, h:  4 }, { w:  4, h:  6 },
+        { w:  7, h:  5 }, { w:  5, h:  7 },
+        { w:  8, h:  5 }, { w:  5, h:  8 },
+        { w: 16, h:  9 }, { w:  9, h: 16 }
+    ];
+
+    supportedRatios = supportedRatios.map(r => {
+        r.q = r.w / r.h;
+        return r;
+    });
+
+    let closestRatio = function(supportedRatios, goal) {
+        return supportedRatios.reduce(function(accumulator, currentValue) {
+            return (Math.abs(currentValue.q - goal) < Math.abs(accumulator.q - goal) ? currentValue : accumulator);
+        });
+    };
+
+    let aspectRatio = { w:  1, h:  1 };
+    let aspectRatioClass = 'aspect-ratio--1x1';
+    let aspectRatioWrapperClass = 'wrapper--1x1';
+
+    let caalc = function(image) {
+        var img = new Image();
+        jQuery(img).on('load', function() {
+            if (img.width !== 0 && img.height !== 0) {
+                let cr = closestRatio(supportedRatios, img.width / img.height);
+                aspectRatio = cr;
+                aspectRatioClass = `aspect-ratio--${cr.w}x${cr.h}`;
+                aspectRatioWrapperClass = `wrapper--${cr.w}x${cr.h}`;
+            }
+        });
+        img.src = image.replace(/url\(|\)$/ig, '');
+    };
+
+    $: caalc(backgroundImage);
+
 </script>
 
 <style>
@@ -50,34 +90,76 @@
     }
 
     .square.grid {
-        display: grid;
-        grid-template-columns: 1fr 4fr 1fr;
-        grid-template-rows: 1fr 4fr 1fr;
-        grid-template-areas:
-            "brand brand brand"
-            "lane-left graphic lane-right"
-            "info info info";
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
     }
 
-    .grid-layout__lane-left {
-        grid-area: lane-left;
+    .square.grid .grid-layout__brand {
+        height: 16.67%;
     }
 
-    .grid-layout__lane-right {
-        grid-area: lane-right;
+    .square.grid .grid-layout__info {
+        height: 16.67%;
     }
 
-    .grid-layout__brand {
-        grid-area: brand;
+    /* 1:1 */
+    .square.grid.wrapper--1x1 .grid-layout__graphic {
+        height: 66.66%;
+    }
+    .square.grid.wrapper--1x1 .grid-layout__graphic > div {
+        max-width: 66.66%;
     }
 
-    .grid-layout__graphic {
-        grid-area: graphic;
+    /* 16:9 */
+    .square.grid.wrapper--16x9 .grid-layout__graphic {
+        height: 45%; /* 80 * 9 / 16 */
+    }
+    .square.grid.wrapper--16x9 .grid-layout__graphic > div {
+        max-width: 80%;
     }
 
-    .grid-layout__info {
-        grid-area: info;
+    /* 4:3 */
+    .square.grid.wrapper--4x3 .grid-layout__graphic {
+        height: 60%; /* 80 * 3 / 4 */
     }
+    .square.grid.wrapper--4x3 .grid-layout__graphic > div {
+        max-width: 80%;
+    }
+
+    /* 3:4 */
+    .square.grid.wrapper--3x4 .grid-layout__graphic {
+        height: 66.66%;
+    }
+    .square.grid.wrapper--3x4 .grid-layout__graphic > div {
+        max-width: 49.995%; /* 66.66 / 4 * 3 */
+    }
+
+    /* 6:4 */
+    .square.grid.wrapper--6x4 .grid-layout__graphic {
+        height: 53.3333333333%; /* 80 * 4 / 6 */
+    }
+    .square.grid.wrapper--6x4 .grid-layout__graphic > div {
+        max-width: 80%;
+    }
+
+    /* 4:6 */
+    .square.grid.wrapper--4x6 .grid-layout__graphic {
+        height: 66.66%;
+    }
+    .square.grid.wrapper--4x6 .grid-layout__graphic > div {
+        max-width: 44.4466666667%; /* 60 / 6 * 4 */
+    }
+
+    /* 7:5 */
+    .square.grid.wrapper--7x5 .grid-layout__graphic {
+        height: 57.1428571429%; /* 80 * 5 / 7 */
+    }
+    .square.grid.wrapper--7x5 .grid-layout__graphic > div {
+        max-width: 80%;
+    }
+
 </style>
 
 <div
@@ -89,12 +171,8 @@
     <div
         class:dn={!isSquare}
         class:grid={isSquare}
-        class="square grid w-100 h-100 items-center bg-white"
+        class="square grid w-100 h-100 items-center bg-white {aspectRatioWrapperClass}"
         style="font-size: {fontSize}; background-color: {backgroundColor};">
-
-        <div class="h-100 grid-layout__lane-left" />
-
-        <div class="h-100 grid-layout__lane-right" />
 
         <div class="h-100 w-100 grid-layout__brand">
             <div class="h-100 w-100 flex items-center justify-evenly flex-column">
@@ -108,10 +186,10 @@
         </div>
 
         <div class="h-100 w-100 grid-layout__graphic">
-            <div class="h-100 w-100 ba bw1 b--white">
-                <div class="aspect-ratio aspect-ratio--1x1">
+            <div class="h-100 w-100 center flex items-center justify-center flex-column">
+                <div class="aspect-ratio {aspectRatioClass} xxx-aspect-ratio--1x1 ba bw1 b--white w-100">
                     <div
-                        class="aspect-ratio--object cover "
+                        class="aspect-ratio--object cover background-image"
                         style="background-image: {backgroundImage}; background-position:
                         center;" />
                 </div>
@@ -126,7 +204,7 @@
 
                 {#if title}
                     <div
-                        class="fw6 ttu xxx-padding-bottom-5"
+                        class="fw6 ttu"
                         style="font-size: {fontSizes.title};">
                         {title}
                     </div>

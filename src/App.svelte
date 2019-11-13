@@ -62,7 +62,7 @@
         };
     });
     let selectSizeVisible = false;
-    let selectedSizeIndex = 1; // Facebook Event Cover
+    let selectedSizeIndex = 4; // Instagram Post
     let selectedSize = sizes[selectedSizeIndex];
 
     let possibleDownloadOptions = [
