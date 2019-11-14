@@ -1,3 +1,19 @@
+<!-- FIXME: FIXME: FIXME: FIXME: FIXME: FIXME: FIXME: FIXME:
+
+    Known bugs:
+
+    - Some tachyons ratios are referenced but not fully implemented or something like that, causing
+      images to be disaplyed at the wrong size. Solution: add missing CSS classes to template for
+      those ratios with correct percentages
+
+    - When generating multiple graphics, if the current image is not image index 0, image 0
+      will be missing from the batch. At least that's what it looks like. Not sure ho to fix
+      this. Maybe refresh after switching to 0 - or move to 0 before starting the batch?
+
+    - Multi ratios not supported for templates other than square / Instagram
+
+-->
+
 <script>
     import JSZip from "../lib/jszip.min.js";
     import saveAs from "../lib/FileSaver.min.js";
@@ -300,8 +316,7 @@
                 // Next iteration:
                 let nextIndex = index + 1;
                 if (nextIndex < graphics.length) {
-                    let nextGraphic = graphics[nextIndex];
-                    backgroundImageUrl = nextGraphic.imageUrl;
+                    backgroundImageUrl = graphics[nextIndex].imageUrl;
                     genFilesRecursive(nextIndex);
                 } else {
                     loaderText = `Generating "${zipFilename}" . . .`;
@@ -319,7 +334,10 @@
         loaderVisible = true;
         let indexBackup = selectedSizeIndex; // <-- Back up current index
         let imageBackup = backgroundImageUrl; // <-- Back up current index
-        genFilesRecursive(0); // start with graphics index 0
+
+        // start with graphics index 0:
+        backgroundImageUrl = graphics[0].imageUrl;
+        genFilesRecursive(0);
     }
 
     function handleKeydown(e) {
