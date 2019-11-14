@@ -45,11 +45,16 @@
 
     let supportedRatios = [
         { w:  1, h:  1 },
-        { w:  4, h:  3 }, { w:  3, h:  4 },
-        { w:  6, h:  4 }, { w:  4, h:  6 },
-        { w:  7, h:  5 }, { w:  5, h:  7 },
-        { w:  8, h:  5 }, { w:  5, h:  8 },
-        { w: 16, h:  9 }, { w:  9, h: 16 }
+        { w:  4, h:  3 },
+        { w:  6, h:  4 },
+        { w:  7, h:  5 },
+        { w:  8, h:  5 },
+        { w: 16, h:  9 },
+        { w:  3, h:  4 },
+        { w:  4, h:  6 },
+        { w:  5, h:  7 },
+        { w:  5, h:  8 },
+        { w:  9, h: 16 }
     ];
 
     supportedRatios = supportedRatios.map(r => {
@@ -93,6 +98,17 @@
         justify-content: space-evenly;
     }
 
+    :root{
+        --image-square-height-as-percentage: 66.66%;
+        --image-square-width-as-percentage: 66.66%;
+
+        --image-tall-height-as-percentage: 66.66%;
+        --image-tall-height-factor: 66.66;
+
+        --image-wide-width-as-percentage: 80%;
+        --image-wide-width-factor: 80;
+    }
+
     .square.grid .grid-layout__brand {
         height: 16.67%;
     }
@@ -103,59 +119,39 @@
 
     /* 1:1 */
     .square.grid.wrapper--1x1 .grid-layout__graphic {
-        height: 66.66%;
+        height: var(--image-square-height-as-percentage);
     }
     .square.grid.wrapper--1x1 .grid-layout__graphic > div {
-        max-width: 66.66%;
+        max-width: var(--image-square-width-as-percentage);
     }
 
-    /* 16:9 */
-    .square.grid.wrapper--16x9 .grid-layout__graphic {
-        height: 45%; /* 80 * 9 / 16 */
-    }
+    .square.grid.wrapper--4x3 .grid-layout__graphic { height: 60%; /* 3 / 4 * 80 */ }
+    .square.grid.wrapper--6x4 .grid-layout__graphic { height: 53.3333333333%; /* 4 / 6 * 80 */ }
+    .square.grid.wrapper--7x5 .grid-layout__graphic { height: 57.1428571429%; /* 5 / 7 * 80 */ }
+    .square.grid.wrapper--8x5 .grid-layout__graphic { height: 57.1428571429%; /* 5 / 8 * 80 */ }
+    .square.grid.wrapper--16x9 .grid-layout__graphic { height: 45%; /* 9 / 16 * 80 */ }
+
+    .square.grid.wrapper--4x3 .grid-layout__graphic > div,
+    .square.grid.wrapper--6x4 .grid-layout__graphic > div,
+    .square.grid.wrapper--7x5 .grid-layout__graphic > div,
+    .square.grid.wrapper--8x5 .grid-layout__graphic > div,
     .square.grid.wrapper--16x9 .grid-layout__graphic > div {
-        max-width: 80%;
+        max-width: var(--image-wide-width-as-percentage);
     }
 
-    /* 4:3 */
-    .square.grid.wrapper--4x3 .grid-layout__graphic {
-        height: 60%; /* 80 * 3 / 4 */
-    }
-    .square.grid.wrapper--4x3 .grid-layout__graphic > div {
-        max-width: 80%;
-    }
-
-    /* 3:4 */
-    .square.grid.wrapper--3x4 .grid-layout__graphic {
-        height: 66.66%;
-    }
-    .square.grid.wrapper--3x4 .grid-layout__graphic > div {
-        max-width: 49.995%; /* 66.66 / 4 * 3 */
+    .square.grid.wrapper--3x4 .grid-layout__graphic,
+    .square.grid.wrapper--4x6 .grid-layout__graphic,
+    .square.grid.wrapper--5x7 .grid-layout__graphic,
+    .square.grid.wrapper--5x8 .grid-layout__graphic,
+    .square.grid.wrapper--9x19 .grid-layout__graphic {
+        height: var(--image-tall-height-as-percentage);
     }
 
-    /* 6:4 */
-    .square.grid.wrapper--6x4 .grid-layout__graphic {
-        height: 53.3333333333%; /* 80 * 4 / 6 */
-    }
-    .square.grid.wrapper--6x4 .grid-layout__graphic > div {
-        max-width: 80%;
-    }
-
-    /* 4:6 */
-    .square.grid.wrapper--4x6 .grid-layout__graphic {
-        height: 66.66%;
-    }
-    .square.grid.wrapper--4x6 .grid-layout__graphic > div {
-        max-width: 44.4466666667%; /* 60 / 6 * 4 */
-    }
-
-    /* 7:5 */
-    .square.grid.wrapper--7x5 .grid-layout__graphic {
-        height: 57.1428571429%; /* 80 * 5 / 7 */
-    }
-    .square.grid.wrapper--7x5 .grid-layout__graphic > div {
-        max-width: 80%;
-    }
+    .square.grid.wrapper--3x4 .grid-layout__graphic > div { max-width: 49.995%; /* 3 / 4 * 66.66 */ }
+    .square.grid.wrapper--4x6 .grid-layout__graphic > div { max-width: 44.44%; /* 4 / 6 * 66.66 */ }
+    .square.grid.wrapper--5x7 .grid-layout__graphic > div { max-width: 47.61428571%; /* 5 / 7 * 66.66 */ }
+    .square.grid.wrapper--5x8 .grid-layout__graphic > div { max-width: 41.6625%; /* 5 / 8 * 66.66 */ }
+    .square.grid.wrapper--9x16 .grid-layout__graphic > div { max-width: 37.49625%; /* 9 / 16 * 66.66 */ }
 
 </style>
 

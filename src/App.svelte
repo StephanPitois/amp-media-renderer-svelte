@@ -1,14 +1,6 @@
 <!-- FIXME: FIXME: FIXME: FIXME: FIXME: FIXME: FIXME: FIXME:
 
-    Known bugs:
-
-    - Some tachyons ratios are referenced but not fully implemented or something like that, causing
-      images to be disaplyed at the wrong size. Solution: add missing CSS classes to template for
-      those ratios with correct percentages
-
-    - When generating multiple graphics, if the current image is not image index 0, image 0
-      will be missing from the batch. At least that's what it looks like. Not sure ho to fix
-      this. Maybe refresh after switching to 0 - or move to 0 before starting the batch?
+    Known issues / missing features:
 
     - Multi ratios not supported for templates other than square / Instagram
 
