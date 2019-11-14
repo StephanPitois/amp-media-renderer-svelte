@@ -278,7 +278,7 @@
                     graphics.push({
                         sizeIndex: sizeIndex,
                         imageUrlIndex: imageUrlIndex,
-                        imageUrl: imageUrlIndex > 0 ? imageUrls[imageUrlIndex] : config.defaultImage
+                        imageUrl: imageUrlIndex >= 0 ? imageUrls[imageUrlIndex] : config.defaultImage
                     });
                 }
             } else {
