@@ -4,7 +4,17 @@
 
 ---
 
-# svelte app
+# AMP Media Renderer
+
+View in action:
+
+https://objective-volhard-a23ec9.netlify.com/?id=9606
+
+Made with Svelte:
+
+https://svelte.dev/
+
+## svelte app
 
 This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
 
